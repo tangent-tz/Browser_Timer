@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Update the timer display every second by requesting the current state
+    // Update the timer display every second by requesting the current state from background
     setInterval(() => {
         chrome.runtime.sendMessage({ action: "getState" }, (response) => {
             if (response && typeof response.remaining !== "undefined") {

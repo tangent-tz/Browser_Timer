@@ -5,6 +5,7 @@
   "description": "A lightweight extension to manage timers and automate simple actions based on video events.",
   "permissions": [
     "activeTab",
+    "tabs",
     "storage",
     "notifications"
   ],
