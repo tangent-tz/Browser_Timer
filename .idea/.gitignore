@@ -1,5 +1,10 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-# Editor-based HTTP Client requests
-/httpRequests/
+# Ignore JetBrains IDE settings
+.idea/
+*.iml
+modules.xml
+
+# Node modules (if applicable)
+node_modules/
+
+# Mac OS files
+.DS_Store
