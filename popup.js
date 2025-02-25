@@ -1,3 +1,5 @@
+// popup.js
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Popup script loaded");
 
@@ -5,12 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const minutesInput = document.getElementById("minutesInput");
     const secondsInput = document.getElementById("secondsInput");
     const startBtn = document.getElementById("startBtn");
-    const pauseBtn = document.getElementById("pauseBtn");
-    const resetBtn = document.getElementById("resetBtn");
-    const timerDisplay = document.getElementById("timerDisplay");
+    const timersList = document.getElementById("timersList");
 
-    if (!startBtn || !pauseBtn || !resetBtn) {
-        console.error("One or more button elements are missing from the popup!");
+    if (!startBtn) {
+        console.error("Start button is missing!");
         return;
     }
 
@@ -27,27 +27,54 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    pauseBtn.addEventListener("click", () => {
-        console.log("Pause button clicked");
-        chrome.runtime.sendMessage({ action: "pause" }, (response) => {
-            console.log("Response from background (pause):", response);
-        });
-    });
+    function updateTimersList() {
+        chrome.runtime.sendMessage({ action: "getTimers" }, (response) => {
+            if (response && response.timers) {
+                timersList.innerHTML = "";
+                response.timers.forEach(timer => {
+                    const timerDiv = document.createElement("div");
+                    timerDiv.className = "timer-entry";
+                    timerDiv.innerHTML = `
+                        <div>
+                          <strong>Tab:</strong> ${timer.tabTitle} | 
+                          <strong>Remaining:</strong> ${timer.remaining}s
+                        </div>
+                        <button data-timerid="${timer.id}" class="pause-btn">Pause</button>
+                        <button data-timerid="${timer.id}" class="reset-btn">Reset</button>
+                        <button data-timerid="${timer.id}" class="cancel-btn">Cancel</button>
+                    `;
+                    timersList.appendChild(timerDiv);
+                });
 
-    resetBtn.addEventListener("click", () => {
-        console.log("Reset button clicked");
-        chrome.runtime.sendMessage({ action: "reset" }, (response) => {
-            console.log("Response from background (reset):", response);
-            timerDisplay.textContent = "Time Remaining: 0s";
-        });
-    });
-
-    // Periodically update the timer display from the background state
-    setInterval(() => {
-        chrome.runtime.sendMessage({ action: "getState" }, (response) => {
-            if (response && typeof response.remaining !== "undefined") {
-                timerDisplay.textContent = `Time Remaining: ${response.remaining}s`;
+                // Attach event listeners for pause, reset, and cancel buttons
+                document.querySelectorAll(".pause-btn").forEach(button => {
+                    button.addEventListener("click", () => {
+                        const timerId = Number(button.getAttribute("data-timerid"));
+                        chrome.runtime.sendMessage({ action: "pause", timerId: timerId }, (response) => {
+                            console.log(response.status);
+                        });
+                    });
+                });
+                document.querySelectorAll(".reset-btn").forEach(button => {
+                    button.addEventListener("click", () => {
+                        const timerId = Number(button.getAttribute("data-timerid"));
+                        chrome.runtime.sendMessage({ action: "reset", timerId: timerId }, (response) => {
+                            console.log(response.status);
+                        });
+                    });
+                });
+                document.querySelectorAll(".cancel-btn").forEach(button => {
+                    button.addEventListener("click", () => {
+                        const timerId = Number(button.getAttribute("data-timerid"));
+                        chrome.runtime.sendMessage({ action: "cancel", timerId: timerId }, (response) => {
+                            console.log(response.status);
+                        });
+                    });
+                });
             }
         });
-    }, 1000);
+    }
+
+    // Update the timers list every second
+    setInterval(updateTimersList, 1000);
 });

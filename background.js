@@ -1,45 +1,51 @@
 // background.js
 
-let timer = {
-    duration: 0,       // Total duration (in seconds)
-    remaining: 0,      // Remaining time (in seconds)
-    intervalId: null,  // Interval identifier for timer updates
-    isRunning: false,  // Timer state
-    tabId: null        // ID of the tab where the timer was started
-};
+let timers = {};
 
-function startTimer(duration) {
-    if (timer.isRunning) return;
-    timer.duration = duration;
-    timer.remaining = duration;
-    timer.isRunning = true;
-
-    timer.intervalId = setInterval(() => {
-        if (timer.remaining > 0) {
-            timer.remaining--;
-            console.log("Time remaining:", timer.remaining, "seconds");
-        } else {
-            clearInterval(timer.intervalId);
-            timer.isRunning = false;
-            console.log("Timer completed!");
-            showNotification("Timer Finished", "Your timer has completed.");
-            closeStartedTab();
+// Function to start a timer with a given timerId
+function startTimer(timerId) {
+    if (!timers[timerId] || timers[timerId].isRunning) return;
+    timers[timerId].isRunning = true;
+    timers[timerId].intervalId = setInterval(() => {
+        if (timers[timerId] && timers[timerId].remaining > 0) {
+            timers[timerId].remaining--;
+            console.log(`Timer ${timerId} - Time remaining: ${timers[timerId].remaining}s`);
+            if (timers[timerId].remaining === 0) {
+                clearInterval(timers[timerId].intervalId);
+                timers[timerId].isRunning = false;
+                console.log(`Timer ${timerId} completed!`);
+                showNotification("Timer Finished", `Timer on "${timers[timerId].tabTitle}" has completed.`);
+                closeTab(timers[timerId].tabId);
+                // Automatically remove the timer from the list
+                delete timers[timerId];
+            }
         }
     }, 1000);
 }
 
-function pauseTimer() {
-    if (!timer.isRunning) return;
-    clearInterval(timer.intervalId);
-    timer.isRunning = false;
-    console.log("Timer paused at", timer.remaining, "seconds remaining.");
+function pauseTimer(timerId) {
+    if (timers[timerId] && timers[timerId].isRunning) {
+        clearInterval(timers[timerId].intervalId);
+        timers[timerId].isRunning = false;
+        console.log(`Timer ${timerId} paused at ${timers[timerId].remaining}s`);
+    }
 }
 
-function resetTimer() {
-    clearInterval(timer.intervalId);
-    timer.remaining = 0;
-    timer.isRunning = false;
-    console.log("Timer reset.");
+function resetTimer(timerId) {
+    if (timers[timerId]) {
+        clearInterval(timers[timerId].intervalId);
+        timers[timerId].remaining = timers[timerId].duration;
+        timers[timerId].isRunning = false;
+        console.log(`Timer ${timerId} reset.`);
+    }
+}
+
+function cancelTimer(timerId) {
+    if (timers[timerId]) {
+        clearInterval(timers[timerId].intervalId);
+        delete timers[timerId];
+        console.log(`Timer ${timerId} canceled.`);
+    }
 }
 
 function showNotification(title, message) {
@@ -51,49 +57,58 @@ function showNotification(title, message) {
     });
 }
 
-function closeStartedTab() {
-    if (timer.tabId) {
-        console.log("Attempting to close tab with id:", timer.tabId);
-        chrome.tabs.remove(timer.tabId, () => {
+function closeTab(tabId) {
+    if (tabId) {
+        chrome.tabs.remove(tabId, () => {
             if (chrome.runtime.lastError) {
                 console.error("Error closing tab:", chrome.runtime.lastError.message);
             } else {
-                console.log("Tab closed successfully.");
+                console.log("Tab closed successfully:", tabId);
             }
-            timer.tabId = null;
         });
-    } else {
-        console.error("No stored tab id found.");
     }
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log("Background received message:", request);
-
     if (request.action === "start") {
-        // Use chrome.tabs.query to reliably get the active tab
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (tabs && tabs.length > 0) {
-                timer.tabId = tabs[0].id;
-                console.log("Timer started from tab id:", timer.tabId);
+                const tabId = tabs[0].id;
+                const tabTitle = tabs[0].title || `Tab ${tabId}`;
+                const timerId = Date.now(); // unique id
+                const duration = request.duration;
+                timers[timerId] = {
+                    id: timerId,
+                    tabId: tabId,
+                    tabTitle: tabTitle,
+                    duration: duration,
+                    remaining: duration,
+                    isRunning: false,
+                    intervalId: null
+                };
+                console.log(`Starting timer ${timerId} on "${tabTitle}" for ${duration} seconds`);
+                startTimer(timerId);
+                sendResponse({ status: "Timer started", timerId: timerId });
             } else {
                 console.error("No active tab found.");
+                sendResponse({ status: "Error: No active tab" });
             }
-            startTimer(request.duration);
-            sendResponse({ status: "Timer started" });
         });
-        return true; // Keep the message channel open for asynchronous sendResponse
+        return true;
     } else if (request.action === "pause") {
-        pauseTimer();
-        sendResponse({ status: "Timer paused" });
+        const timerId = request.timerId;
+        pauseTimer(timerId);
+        sendResponse({ status: `Timer ${timerId} paused` });
     } else if (request.action === "reset") {
-        resetTimer();
-        sendResponse({ status: "Timer reset" });
-    } else if (request.action === "getState") {
-        sendResponse({
-            remaining: timer.remaining,
-            isRunning: timer.isRunning
-        });
+        const timerId = request.timerId;
+        resetTimer(timerId);
+        sendResponse({ status: `Timer ${timerId} reset` });
+    } else if (request.action === "cancel") {
+        const timerId = request.timerId;
+        cancelTimer(timerId);
+        sendResponse({ status: `Timer ${timerId} canceled` });
+    } else if (request.action === "getTimers") {
+        sendResponse({ timers: Object.values(timers) });
     }
     return true;
 });
