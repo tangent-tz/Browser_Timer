@@ -1,10 +1,9 @@
-/* Reset and base styles */
+/* popup.css */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-
 body {
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(135deg, #4CAF50, #81C784);
@@ -13,8 +12,6 @@ body {
     justify-content: center;
     height: 100vh;
 }
-
-/* Card container for the popup */
 .container {
     background: #fff;
     border-radius: 10px;
@@ -23,21 +20,23 @@ body {
     padding: 20px;
     text-align: center;
 }
-
-/* Header */
 h1 {
     margin-bottom: 20px;
     font-size: 1.5rem;
     color: #333;
 }
-
-/* Grouping of inputs */
+.mode-selector {
+    margin-bottom: 15px;
+}
+.mode-selector label {
+    margin-right: 10px;
+    font-size: 1rem;
+}
 .input-group {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
 }
-
 .input-field {
     display: flex;
     flex-direction: column;
@@ -45,13 +44,11 @@ h1 {
     flex: 1;
     margin: 0 5px;
 }
-
 .input-field label {
     font-size: 0.8rem;
     color: #555;
     margin-bottom: 5px;
 }
-
 .input-field input {
     width: 60px;
     padding: 5px;
@@ -59,12 +56,9 @@ h1 {
     border-radius: 5px;
     text-align: center;
 }
-
-/* Buttons styling */
 .buttons {
     margin-bottom: 20px;
 }
-
 .buttons button {
     background: #4CAF50;
     border: none;
@@ -76,14 +70,22 @@ h1 {
     cursor: pointer;
     transition: background 0.3s ease;
 }
-
 .buttons button:hover {
     background: #388E3C;
 }
-
-/* Timer display styling */
-#timerDisplay {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
+#timersList {
+    margin-top: 20px;
+}
+.timer-entry {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+.timer-entry button {
+    margin-right: 5px;
+    padding: 5px 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
 }

@@ -2,14 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Browser Timer</title>
-    <!-- Link to Google Fonts -->
+    <title>YouTube Timer & Video Automation</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="popup.css">
 </head>
 <body>
 <div class="container">
-    <h1>Timer</h1>
+    <h1>YouTube Timer & Video Automation</h1>
+    <div class="mode-selector">
+        <label>
+            <input type="radio" name="mode" value="timer" checked> Timer Mode
+        </label>
+        <label>
+            <input type="radio" name="mode" value="video"> Video Tracking Mode
+        </label>
+    </div>
     <div class="input-group">
         <div class="input-field">
             <label for="hoursInput">Hours</label>
@@ -27,10 +34,7 @@
     <div class="buttons">
         <button id="startBtn">Start Timer</button>
     </div>
-    <!-- Container for listing multiple timers -->
-    <div id="timersList">
-        <!-- Timer entries will appear here -->
-    </div>
+    <div id="timersList"></div>
 </div>
 <script src="popup.js"></script>
 </body>

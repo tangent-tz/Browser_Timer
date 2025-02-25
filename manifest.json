@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Browser Timer & Video Automation",
+  "name": "YouTube Timer & Video Automation",
   "version": "1.0",
-  "description": "A lightweight extension to manage timers and automate simple actions based on video events.",
+  "description": "A lightweight extension to manage timers and automate actions on YouTube videos.",
   "permissions": [
     "activeTab",
     "tabs",
@@ -24,5 +24,12 @@
     "16": "icons/icon16.svg",
     "48": "icons/icon48.svg",
     "128": "icons/icon128.svg"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["videoTracker.js"],
+      "run_at": "document_end"
+    }
+  ]
 }

@@ -2,7 +2,7 @@
 
 let timers = {};
 
-// Function to start a timer with a given timerId
+// Timer functions (used only in Timer Mode)
 function startTimer(timerId) {
     if (!timers[timerId] || timers[timerId].isRunning) return;
     timers[timerId].isRunning = true;
@@ -16,7 +16,6 @@ function startTimer(timerId) {
                 console.log(`Timer ${timerId} completed!`);
                 showNotification("Timer Finished", `Timer on "${timers[timerId].tabTitle}" has completed.`);
                 closeTab(timers[timerId].tabId);
-                // Automatically remove the timer from the list
                 delete timers[timerId];
             }
         }
@@ -71,28 +70,35 @@ function closeTab(tabId) {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "start") {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            if (tabs && tabs.length > 0) {
-                const tabId = tabs[0].id;
-                const tabTitle = tabs[0].title || `Tab ${tabId}`;
-                const timerId = Date.now(); // unique id
-                const duration = request.duration;
-                timers[timerId] = {
-                    id: timerId,
-                    tabId: tabId,
-                    tabTitle: tabTitle,
-                    duration: duration,
-                    remaining: duration,
-                    isRunning: false,
-                    intervalId: null
-                };
-                console.log(`Starting timer ${timerId} on "${tabTitle}" for ${duration} seconds`);
-                startTimer(timerId);
-                sendResponse({ status: "Timer started", timerId: timerId });
-            } else {
-                console.error("No active tab found.");
-                sendResponse({ status: "Error: No active tab" });
+        chrome.storage.local.get("mode", (result) => {
+            if (result.mode !== "timer") {
+                console.log("Timer start ignored because not in Timer Mode.");
+                sendResponse({ status: "Error: Not in Timer Mode" });
+                return;
             }
+            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                if (tabs && tabs.length > 0) {
+                    const tabId = tabs[0].id;
+                    const tabTitle = tabs[0].title || `Tab ${tabId}`;
+                    const timerId = Date.now();
+                    const duration = request.duration;
+                    timers[timerId] = {
+                        id: timerId,
+                        tabId: tabId,
+                        tabTitle: tabTitle,
+                        duration: duration,
+                        remaining: duration,
+                        isRunning: false,
+                        intervalId: null
+                    };
+                    console.log(`Starting timer ${timerId} on "${tabTitle}" for ${duration} seconds`);
+                    startTimer(timerId);
+                    sendResponse({ status: "Timer started", timerId: timerId });
+                } else {
+                    console.error("No active tab found.");
+                    sendResponse({ status: "Error: No active tab" });
+                }
+            });
         });
         return true;
     } else if (request.action === "pause") {
@@ -109,6 +115,27 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ status: `Timer ${timerId} canceled` });
     } else if (request.action === "getTimers") {
         sendResponse({ timers: Object.values(timers) });
+    } else if (request.action === "videoEnded") {
+        // This action is triggered by the content script when a YouTube video ends.
+        chrome.storage.local.get("mode", (result) => {
+            if (result.mode === "video") {
+                if (sender && sender.tab && sender.tab.id) {
+                    console.log(`YouTube video ended on tab ${sender.tab.id} in Video Tracking Mode. Closing tab.`);
+                    closeTab(sender.tab.id);
+                    sendResponse({ status: `Tab ${sender.tab.id} closed due to video end` });
+                } else {
+                    sendResponse({ status: "Error: sender tab not found." });
+                }
+            } else {
+                console.log("VideoEnded event ignored because not in Video Mode.");
+                sendResponse({ status: "Not in Video Mode." });
+            }
+        });
+        return true;
+    } else if (request.action === "videoModeActive") {
+        console.log("Received videoModeActive message from content script.");
+        showNotification("Video Mode", "Video Tracking Mode is active.");
+        sendResponse({ status: "Video mode active" });
     }
     return true;
 });
