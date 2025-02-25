@@ -1,0 +1,49 @@
+/* popup.css */
+
+body {
+    margin: 10px;
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
+    width: 250px;
+    min-height: 200px;
+}
+
+h1 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.row {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+label {
+    margin-right: 5px;
+}
+
+#timerInput {
+    width: 100px;
+    padding: 5px;
+}
+
+button {
+    padding: 6px 12px;
+    margin-right: 5px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+#timerDisplay {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
