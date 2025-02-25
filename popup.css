@@ -1,11 +1,9 @@
-/* popup.css */
-
 body {
     margin: 10px;
     font-family: Arial, sans-serif;
     background-color: #f3f3f3;
     width: 250px;
-    min-height: 200px;
+    min-height: 250px;
 }
 
 h1 {
@@ -23,11 +21,13 @@ h1 {
 
 label {
     margin-right: 5px;
+    flex: 1;
 }
 
-#timerInput {
-    width: 100px;
+input[type="number"] {
+    flex: 1;
     padding: 5px;
+    margin-left: 5px;
 }
 
 button {

@@ -7,16 +7,31 @@
 </head>
 <body>
 <h1>Browser Timer</h1>
+
+<!-- Timer Input Fields -->
 <div class="row">
-    <label for="timerInput">Duration (seconds):</label>
-    <input type="number" id="timerInput" placeholder="Enter seconds" />
+    <label for="hoursInput">Hours:</label>
+    <input type="number" id="hoursInput" value="0" min="0" />
 </div>
+<div class="row">
+    <label for="minutesInput">Minutes:</label>
+    <input type="number" id="minutesInput" value="0" min="0" />
+</div>
+<div class="row">
+    <label for="secondsInput">Seconds:</label>
+    <input type="number" id="secondsInput" value="0" min="0" />
+</div>
+
+<!-- Timer Control Buttons -->
 <div class="row">
     <button id="startBtn">Start</button>
     <button id="pauseBtn">Pause</button>
     <button id="resetBtn">Reset</button>
 </div>
+
+<!-- Timer Display -->
 <div id="timerDisplay">Time Remaining: 0s</div>
+
 <script src="popup.js"></script>
 </body>
 </html>
