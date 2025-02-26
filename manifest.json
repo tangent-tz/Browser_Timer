@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Sleep Timer & Auto Tab Closer",
+  "name": "Tab Countdown Manager",
   "version": "1.0",
-  "description": "A lightweight extension to manage timers and automate actions on YouTube videos.",
+  "description": "A lightweight extension that automatically closes tabs after a predefined countdown, keeping your browser clutter-free and boosting productivity. Plus, its beta YouTube tracking mode closes video tabs when playback finishes",
   "permissions": [
     "activeTab",
     "tabs",
