@@ -1,23 +1,23 @@
 // background.js
 
-let timers = {};
-// Track tabs that are in Video Mode
-let videoTabs = {};
+let timers = {};    // Store active timers
+let videoTabs = {}; // Track which tabs have active video listeners
 
-// Timer functions (used only in Timer Mode)
+// ------------------- Timer Functions -------------------
 function startTimer(timerId) {
-    if (!timers[timerId] || timers[timerId].isRunning) return;
-    timers[timerId].isRunning = true;
-    timers[timerId].intervalId = setInterval(() => {
-        if (timers[timerId] && timers[timerId].remaining > 0) {
-            timers[timerId].remaining--;
-            console.log(`Timer ${timerId} - Time remaining: ${timers[timerId].remaining}s`);
-            if (timers[timerId].remaining === 0) {
-                clearInterval(timers[timerId].intervalId);
-                timers[timerId].isRunning = false;
-                console.log(`Timer ${timerId} completed!`);
-                showNotification("Timer Finished", `Timer on "${timers[timerId].tabTitle}" has completed.`);
-                closeTab(timers[timerId].tabId);
+    const timerObj = timers[timerId];
+    if (!timerObj || timerObj.isRunning) return;
+
+    timerObj.isRunning = true;
+    timerObj.intervalId = setInterval(() => {
+        if (timers[timerId]) {
+            timerObj.remaining--;
+            console.log(`Timer ${timerId} - Remaining: ${timerObj.remaining}s`);
+            if (timerObj.remaining <= 0) {
+                clearInterval(timerObj.intervalId);
+                timerObj.isRunning = false;
+                showNotification("Timer Finished", `Timer on "${timerObj.tabTitle}" completed.`);
+                closeTab(timerObj.tabId);
                 delete timers[timerId];
             }
         }
@@ -25,18 +25,20 @@ function startTimer(timerId) {
 }
 
 function pauseTimer(timerId) {
-    if (timers[timerId] && timers[timerId].isRunning) {
-        clearInterval(timers[timerId].intervalId);
-        timers[timerId].isRunning = false;
-        console.log(`Timer ${timerId} paused at ${timers[timerId].remaining}s`);
+    const timerObj = timers[timerId];
+    if (timerObj && timerObj.isRunning) {
+        clearInterval(timerObj.intervalId);
+        timerObj.isRunning = false;
+        console.log(`Timer ${timerId} paused at ${timerObj.remaining}s`);
     }
 }
 
 function resetTimer(timerId) {
-    if (timers[timerId]) {
-        clearInterval(timers[timerId].intervalId);
-        timers[timerId].remaining = timers[timerId].duration;
-        timers[timerId].isRunning = false;
+    const timerObj = timers[timerId];
+    if (timerObj) {
+        clearInterval(timerObj.intervalId);
+        timerObj.remaining = timerObj.duration;
+        timerObj.isRunning = false;
         console.log(`Timer ${timerId} reset.`);
     }
 }
@@ -49,6 +51,17 @@ function cancelTimer(timerId) {
     }
 }
 
+function closeTab(tabId) {
+    if (!tabId) return;
+    chrome.tabs.remove(tabId, () => {
+        if (chrome.runtime.lastError) {
+            console.error("Error closing tab:", chrome.runtime.lastError.message);
+        } else {
+            console.log("Tab closed:", tabId);
+        }
+    });
+}
+
 function showNotification(title, message) {
     chrome.notifications.create({
         type: "basic",
@@ -58,97 +71,79 @@ function showNotification(title, message) {
     });
 }
 
-function closeTab(tabId) {
-    if (tabId) {
-        chrome.tabs.remove(tabId, () => {
-            if (chrome.runtime.lastError) {
-                console.error("Error closing tab:", chrome.runtime.lastError.message);
-            } else {
-                console.log("Tab closed successfully:", tabId);
-            }
-        });
-    }
+// ------------------- Video Tracking -------------------
+function trackThisTab(tabId, tabTitle) {
+    // Mark this tab as "tracked"
+    videoTabs[tabId] = { tabId, tabTitle };
+    console.log("Now tracking video on tab:", tabId, tabTitle);
+    showNotification("Video Tracking", `Started tracking video on '${tabTitle}'`);
 }
 
+// ------------------- Message Listener -------------------
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === "start") {
-        chrome.storage.local.get("mode", (result) => {
-            if (result.mode !== "timer") {
-                console.log("Timer start ignored because not in Timer Mode.");
-                sendResponse({ status: "Error: Not in Timer Mode" });
+    if (request.action === "startTimer") {
+        // Start a new timer for the active tab
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (!tabs[0]) {
+                sendResponse({ status: "No active tab" });
                 return;
             }
-            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                if (tabs && tabs.length > 0) {
-                    const tabId = tabs[0].id;
-                    const tabTitle = tabs[0].title || `Tab ${tabId}`;
-                    const timerId = Date.now();
-                    const duration = request.duration;
-                    timers[timerId] = {
-                        id: timerId,
-                        tabId: tabId,
-                        tabTitle: tabTitle,
-                        duration: duration,
-                        remaining: duration,
-                        isRunning: false,
-                        intervalId: null
-                    };
-                    console.log(`Starting timer ${timerId} on "${tabTitle}" for ${duration} seconds`);
-                    startTimer(timerId);
-                    sendResponse({ status: "Timer started", timerId: timerId });
-                } else {
-                    console.error("No active tab found.");
-                    sendResponse({ status: "Error: No active tab" });
-                }
-            });
+            const tabId = tabs[0].id;
+            const tabTitle = tabs[0].title || `Tab ${tabId}`;
+            const duration = request.duration;
+            const timerId = Date.now();
+
+            timers[timerId] = {
+                id: timerId,
+                tabId,
+                tabTitle,
+                duration,
+                remaining: duration,
+                isRunning: false,
+                intervalId: null
+            };
+
+            console.log(`Starting timer ${timerId} on "${tabTitle}" for ${duration} seconds`);
+            startTimer(timerId);
+            sendResponse({ status: "Timer started", timerId });
         });
         return true;
-    } else if (request.action === "pause") {
-        const timerId = request.timerId;
-        pauseTimer(timerId);
-        sendResponse({ status: `Timer ${timerId} paused` });
-    } else if (request.action === "reset") {
-        const timerId = request.timerId;
-        resetTimer(timerId);
-        sendResponse({ status: `Timer ${timerId} reset` });
-    } else if (request.action === "cancel") {
-        const timerId = request.timerId;
-        cancelTimer(timerId);
-        sendResponse({ status: `Timer ${timerId} canceled` });
+
+    } else if (request.action === "pauseTimer") {
+        pauseTimer(request.timerId);
+        sendResponse({ status: `Timer ${request.timerId} paused` });
+
+    } else if (request.action === "resetTimer") {
+        resetTimer(request.timerId);
+        sendResponse({ status: `Timer ${request.timerId} reset` });
+
+    } else if (request.action === "cancelTimer") {
+        cancelTimer(request.timerId);
+        sendResponse({ status: `Timer ${request.timerId} canceled` });
+
     } else if (request.action === "getTimers") {
         sendResponse({ timers: Object.values(timers) });
+
     } else if (request.action === "videoEnded") {
-        // Triggered when a YouTube video ends in Video Mode.
-        chrome.storage.local.get("mode", (result) => {
-            if (result.mode === "video") {
-                if (sender && sender.tab && sender.tab.id) {
-                    console.log(`YouTube video ended on tab ${sender.tab.id} in Video Tracking Mode. Closing tab.`);
-                    closeTab(sender.tab.id);
-                    // Remove from videoTabs tracking
-                    delete videoTabs[sender.tab.id];
-                    sendResponse({ status: `Tab ${sender.tab.id} closed due to video end` });
-                } else {
-                    sendResponse({ status: "Error: sender tab not found." });
-                }
-            } else {
-                console.log("VideoEnded event ignored because not in Video Mode.");
-                sendResponse({ status: "Not in Video Mode." });
-            }
-        });
-        return true;
-    } else if (request.action === "videoModeActive") {
-        console.log("Received videoModeActive message from content script.");
-        showNotification("Video Mode", "Video Tracking Mode is active.");
-        // Store the tab in videoTabs
-        if (sender && sender.tab && sender.tab.id) {
-            const tabId = sender.tab.id;
-            const tabTitle = sender.tab.title || `Tab ${tabId}`;
-            videoTabs[tabId] = { tabId, tabTitle };
-            console.log("Tracking video on tab:", tabId, tabTitle);
+        // A YouTube video ended on a tab that is being tracked -> close the tab
+        if (sender.tab && sender.tab.id) {
+            console.log("Video ended on tab", sender.tab.id);
+            closeTab(sender.tab.id);
+            delete videoTabs[sender.tab.id];
+            sendResponse({ status: `Tab ${sender.tab.id} closed on video end` });
+        } else {
+            sendResponse({ status: "No sender tab found" });
         }
-        sendResponse({ status: "Video mode active" });
+
+    } else if (request.action === "videoModeActive") {
+        // The content script tells us it's now tracking video for this tab
+        if (sender.tab && sender.tab.id) {
+            trackThisTab(sender.tab.id, sender.tab.title || `Tab ${sender.tab.id}`);
+            sendResponse({ status: "Video tracking active" });
+        }
+
     } else if (request.action === "getVideoTabs") {
+        // Return the array of tracked video tabs
         sendResponse({ videoTabs: Object.values(videoTabs) });
     }
-    return true;
 });

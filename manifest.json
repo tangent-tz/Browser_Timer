@@ -28,7 +28,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
-      "js": ["videoTracker.js"],
+      "js": ["videotracker.js"],
       "run_at": "document_end"
     }
   ]
