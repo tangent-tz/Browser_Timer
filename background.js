@@ -1,6 +1,8 @@
 // background.js
 
 let timers = {};
+// Track tabs that are in Video Mode
+let videoTabs = {};
 
 // Timer functions (used only in Timer Mode)
 function startTimer(timerId) {
@@ -116,12 +118,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else if (request.action === "getTimers") {
         sendResponse({ timers: Object.values(timers) });
     } else if (request.action === "videoEnded") {
-        // This action is triggered by the content script when a YouTube video ends.
+        // Triggered when a YouTube video ends in Video Mode.
         chrome.storage.local.get("mode", (result) => {
             if (result.mode === "video") {
                 if (sender && sender.tab && sender.tab.id) {
                     console.log(`YouTube video ended on tab ${sender.tab.id} in Video Tracking Mode. Closing tab.`);
                     closeTab(sender.tab.id);
+                    // Remove from videoTabs tracking
+                    delete videoTabs[sender.tab.id];
                     sendResponse({ status: `Tab ${sender.tab.id} closed due to video end` });
                 } else {
                     sendResponse({ status: "Error: sender tab not found." });
@@ -135,7 +139,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else if (request.action === "videoModeActive") {
         console.log("Received videoModeActive message from content script.");
         showNotification("Video Mode", "Video Tracking Mode is active.");
+        // Store the tab in videoTabs
+        if (sender && sender.tab && sender.tab.id) {
+            const tabId = sender.tab.id;
+            const tabTitle = sender.tab.title || `Tab ${tabId}`;
+            videoTabs[tabId] = { tabId, tabTitle };
+            console.log("Tracking video on tab:", tabId, tabTitle);
+        }
         sendResponse({ status: "Video mode active" });
+    } else if (request.action === "getVideoTabs") {
+        sendResponse({ videoTabs: Object.values(videoTabs) });
     }
     return true;
 });
