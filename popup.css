@@ -39,8 +39,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    /* Remove or change the fixed height */
+    /* height: 100vh; */
 }
+
 
 .container {
     background-color: var(--container-bg-color);
@@ -49,9 +51,11 @@ body {
     width: 320px;
     padding: 16px;
     text-align: center;
-    min-height: 400px;
+    /* Remove min-height or adjust it as needed */
+    /* min-height: 400px; */
     color: var(--text-color);
 }
+
 
 /* Tabs styles */
 .tabs {
