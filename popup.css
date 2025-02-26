@@ -39,8 +39,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Remove or change the fixed height */
-    /* height: 100vh; */
 }
 
 
@@ -51,8 +49,6 @@ body {
     width: 320px;
     padding: 16px;
     text-align: center;
-    /* Remove min-height or adjust it as needed */
-    /* min-height: 400px; */
     color: var(--text-color);
 }
 
