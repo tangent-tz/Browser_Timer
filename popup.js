@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     div.innerHTML = `
           <div>
-            <strong>Tab:</strong> ${tab.tabTitle} (ID: ${tab.tabId})
+            <strong>Tab:</strong> ${tab.tabTitle}
           </div>
           <button class="stop-tracking-btn" data-tabid="${tab.tabId}">Stop Tracking</button>
         `;
