@@ -20,13 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const totalSeconds = h * 3600 + m * 60 + s;
 
         if (totalSeconds <= 0) {
-            console.warn("Please enter a valid time > 0.");
             return;
         }
 
-        chrome.runtime.sendMessage({ action: "startTimer", duration: totalSeconds }, (resp) => {
-            console.log("startTimer response:", resp);
-        });
+        chrome.runtime.sendMessage({ action: "startTimer", duration: totalSeconds }, () => {});
     });
 
     function updateTimersList() {
@@ -74,14 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2) TRACK VIDEO ON CURRENT TAB
     // --------------------------------------------------
     trackVideoBtn.addEventListener("click", () => {
-        // Send a message to the content script on the active tab to start tracking
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (!tabs[0]) return;
             const tabId = tabs[0].id;
-            // Send message to that tab's content script
-            chrome.tabs.sendMessage(tabId, { action: "startTrackingVideo" }, (response) => {
-                console.log("startTrackingVideo response:", response);
-            });
+            chrome.tabs.sendMessage(tabId, { action: "startTrackingVideo" }, () => {});
         });
     });
 
@@ -93,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 videoTabsList.innerHTML += "<p>No videos currently tracked.</p>";
             } else {
                 resp.videoTabs.forEach(tab => {
-                    // Create a container for each tracked video tab
                     const div = document.createElement("div");
                     div.className = "video-entry";
 
@@ -106,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     videoTabsList.appendChild(div);
                 });
 
-                // Add click listeners for each new button
                 document.querySelectorAll(".stop-tracking-btn").forEach(btn => {
                     btn.addEventListener("click", () => {
                         const tabId = Number(btn.getAttribute("data-tabid"));

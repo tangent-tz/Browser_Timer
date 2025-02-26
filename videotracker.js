@@ -1,15 +1,10 @@
 // videotracker.js
 // Content script injected into YouTube pages.
 
-console.log("videotracker.js loaded on YouTube page");
-
 function attachVideoListeners(video) {
     if (!video.dataset.listenerAttached) {
         video.addEventListener("ended", () => {
-            console.log("Detected video ended; notifying background.js");
-            chrome.runtime.sendMessage({ action: "videoEnded" }, (resp) => {
-                console.log("videoEnded response:", resp);
-            });
+            chrome.runtime.sendMessage({ action: "videoEnded" }, () => {});
         });
         video.dataset.listenerAttached = "true";
     }
@@ -38,15 +33,12 @@ function initVideoTracking() {
     observer.observe(document.body, { childList: true, subtree: true });
 
     // Let background.js know we've activated video tracking
-    chrome.runtime.sendMessage({ action: "videoModeActive" }, (resp) => {
-        console.log("videoModeActive response:", resp);
-    });
+    chrome.runtime.sendMessage({ action: "videoModeActive" }, () => {});
 }
 
 // Listen for the popup's "startTrackingVideo" message
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "startTrackingVideo") {
-        console.log("Received startTrackingVideo in content script. Attaching listeners now...");
         initVideoTracking();
         sendResponse({ status: "Tracking initiated on this tab." });
     }
