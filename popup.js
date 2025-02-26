@@ -1,12 +1,32 @@
-// popup.js
-
 document.addEventListener("DOMContentLoaded", () => {
+    // Tab switching logic
+    const tabTimer = document.getElementById("tabTimer");
+    const tabVideo = document.getElementById("tabVideo");
+    const timerSection = document.getElementById("timerSection");
+    const videoSection = document.getElementById("videoSection");
+
+    tabTimer.addEventListener("click", () => {
+        tabTimer.classList.add("active");
+        tabVideo.classList.remove("active");
+        timerSection.classList.add("active");
+        videoSection.classList.remove("active");
+    });
+
+    tabVideo.addEventListener("click", () => {
+        tabVideo.classList.add("active");
+        tabTimer.classList.remove("active");
+        videoSection.classList.add("active");
+        timerSection.classList.remove("active");
+    });
+
+    // Timer elements
     const hoursInput = document.getElementById("hoursInput");
     const minutesInput = document.getElementById("minutesInput");
     const secondsInput = document.getElementById("secondsInput");
     const startTimerBtn = document.getElementById("startTimerBtn");
     const timersList = document.getElementById("timersList");
 
+    // Video elements
     const trackVideoBtn = document.getElementById("trackVideoBtn");
     const videoTabsList = document.getElementById("videoTabsList");
 
@@ -20,10 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const totalSeconds = h * 3600 + m * 60 + s;
 
         if (totalSeconds <= 0) {
+            console.warn("Please enter a valid time > 0.");
             return;
         }
 
-        chrome.runtime.sendMessage({ action: "startTimer", duration: totalSeconds }, () => {});
+        chrome.runtime.sendMessage({ action: "startTimer", duration: totalSeconds }, (resp) => {
+            console.log("startTimer response:", resp);
+        });
     });
 
     function updateTimersList() {
@@ -33,23 +56,31 @@ document.addEventListener("DOMContentLoaded", () => {
             resp.timers.forEach(timer => {
                 const div = document.createElement("div");
                 div.className = "timer-entry";
+                let controlButton = timer.isRunning
+                    ? `<button class="pause-btn" data-timerid="${timer.id}">Pause</button>`
+                    : `<button class="resume-btn" data-timerid="${timer.id}">Resume</button>`;
                 div.innerHTML = `
           <div>
             <strong>Tab:</strong> ${timer.tabTitle} |
             <strong>Remaining:</strong> ${timer.remaining}s
           </div>
-          <button class="pause-btn" data-timerid="${timer.id}">Pause</button>
+          ${controlButton}
           <button class="reset-btn" data-timerid="${timer.id}">Reset</button>
           <button class="cancel-btn" data-timerid="${timer.id}">Cancel</button>
         `;
                 timersList.appendChild(div);
             });
 
-            // Pause/Reset/Cancel listeners
             document.querySelectorAll(".pause-btn").forEach(btn => {
                 btn.addEventListener("click", () => {
                     const timerId = Number(btn.getAttribute("data-timerid"));
                     chrome.runtime.sendMessage({ action: "pauseTimer", timerId });
+                });
+            });
+            document.querySelectorAll(".resume-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const timerId = Number(btn.getAttribute("data-timerid"));
+                    chrome.runtime.sendMessage({ action: "resumeTimer", timerId });
                 });
             });
             document.querySelectorAll(".reset-btn").forEach(btn => {
@@ -68,13 +99,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --------------------------------------------------
-    // 2) TRACK VIDEO ON CURRENT TAB
+    // 2) VIDEO TRACKING
     // --------------------------------------------------
     trackVideoBtn.addEventListener("click", () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (!tabs[0]) return;
             const tabId = tabs[0].id;
-            chrome.tabs.sendMessage(tabId, { action: "startTrackingVideo" }, () => {});
+            chrome.tabs.sendMessage(tabId, { action: "startTrackingVideo" }, (response) => {
+                console.log("startTrackingVideo response:", response);
+            });
         });
     });
 
@@ -90,11 +123,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     div.className = "video-entry";
 
                     div.innerHTML = `
-          <div>
-            <strong>Tab:</strong> ${tab.tabTitle}
-          </div>
-          <button class="stop-tracking-btn" data-tabid="${tab.tabId}">Stop Tracking</button>
-        `;
+            <div>
+              <strong>Tab:</strong> ${tab.tabTitle}
+            </div>
+            <button class="stop-tracking-btn" data-tabid="${tab.tabId}">Stop Tracking</button>
+          `;
                     videoTabsList.appendChild(div);
                 });
 
@@ -102,13 +135,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     btn.addEventListener("click", () => {
                         const tabId = Number(btn.getAttribute("data-tabid"));
                         chrome.runtime.sendMessage({ action: "stopTrackingVideo", tabId });
-                    });
-                });
-
-                document.querySelectorAll(".close-tab-btn").forEach(btn => {
-                    btn.addEventListener("click", () => {
-                        const tabId = Number(btn.getAttribute("data-tabid"));
-                        chrome.runtime.sendMessage({ action: "closeTrackedTab", tabId });
                     });
                 });
             }

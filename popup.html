@@ -9,34 +9,41 @@
 <div class="container">
     <h1>Timer & YouTube Tracking</h1>
 
-    <!-- TIMER INPUTS -->
-    <div class="input-group">
-        <div class="input-field">
-            <label for="hoursInput">Hours</label>
-            <input type="number" id="hoursInput" value="0" min="0">
-        </div>
-        <div class="input-field">
-            <label for="minutesInput">Minutes</label>
-            <input type="number" id="minutesInput" value="0" min="0">
-        </div>
-        <div class="input-field">
-            <label for="secondsInput">Seconds</label>
-            <input type="number" id="secondsInput" value="0" min="0">
-        </div>
+    <!-- Tab Headers -->
+    <div class="tabs">
+        <button id="tabTimer" class="tab active">Timer</button>
+        <button id="tabVideo" class="tab">Video (BETA)</button>
     </div>
-    <button id="startTimerBtn">Start Timer</button>
-    <div id="timersList"></div>
 
-    <hr />
+    <!-- Timer Section (Default) -->
+    <div id="timerSection" class="tab-content active">
+        <div class="input-group">
+            <div class="input-field">
+                <label for="hoursInput">Hours</label>
+                <input type="number" id="hoursInput" value="0" min="0">
+            </div>
+            <div class="input-field">
+                <label for="minutesInput">Minutes</label>
+                <input type="number" id="minutesInput" value="0" min="0">
+            </div>
+            <div class="input-field">
+                <label for="secondsInput">Seconds</label>
+                <input type="number" id="secondsInput" value="0" min="0">
+            </div>
+        </div>
+        <button id="startTimerBtn">Start Timer</button>
+        <div id="timersList"></div>
+    </div>
 
-    <!-- SINGLE BUTTON TO TRACK VIDEO ON THE CURRENT TAB -->
-    <button id="trackVideoBtn">Track Video</button>
-    <div id="videoTabsList">
-        <h3>Tracked Videos</h3>
-        <!-- Populated dynamically -->
+    <!-- Video Section -->
+    <div id="videoSection" class="tab-content">
+        <button id="trackVideoBtn">Track Video</button>
+        <div id="videoTabsList">
+            <h3>Tracked Videos</h3>
+            <!-- Populated dynamically -->
+        </div>
     </div>
 </div>
-
 <script src="popup.js"></script>
 </body>
 </html>

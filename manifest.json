@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Timer & Video Automation",
+  "name": "YouTube Sleep Timer & Auto Tab Closer",
   "version": "1.0",
   "description": "A lightweight extension to manage timers and automate actions on YouTube videos.",
   "permissions": [

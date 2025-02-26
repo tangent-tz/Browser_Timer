@@ -105,6 +105,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         pauseTimer(request.timerId);
         sendResponse({ status: `Timer ${request.timerId} paused` });
 
+    } else if (request.action === "resumeTimer") {
+        startTimer(request.timerId);
+        sendResponse({ status: `Timer ${request.timerId} resumed` });
+
     } else if (request.action === "resetTimer") {
         resetTimer(request.timerId);
         sendResponse({ status: `Timer ${request.timerId} reset` });
