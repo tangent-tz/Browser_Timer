@@ -1,5 +1,3 @@
-// popup.js
-
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Popup script loaded");
 
@@ -9,10 +7,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const startBtn = document.getElementById("startBtn");
     const timersList = document.getElementById("timersList");
     const modeRadios = document.querySelectorAll('input[name="mode"]');
+    const inputGroup = document.querySelector(".input-group");
 
+    // Function to toggle timer input visibility
+    function toggleInputGroup(mode) {
+        if (mode === "video") {
+            inputGroup.style.display = "none";
+        } else {
+            inputGroup.style.display = "flex";
+        }
+    }
+
+    // Attach change event for mode radios
     modeRadios.forEach(radio => {
         radio.addEventListener("change", (e) => {
             const mode = e.target.value;
+            toggleInputGroup(mode);  // Hide/show inputs based on mode
             chrome.storage.local.set({ mode: mode }, () => {
                 console.log("Mode set to", mode);
                 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -24,10 +34,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // On load, set mode and toggle inputs accordingly
     chrome.storage.local.get("mode", (result) => {
         const mode = result.mode || "timer";
         const radioToSelect = document.querySelector(`input[name="mode"][value="${mode}"]`);
         if (radioToSelect) radioToSelect.checked = true;
+        toggleInputGroup(mode);
     });
 
     startBtn.addEventListener("click", () => {
