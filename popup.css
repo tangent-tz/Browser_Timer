@@ -19,7 +19,11 @@ body {
     width: 300px;
     padding: 20px;
     text-align: center;
+
+    /* Add this: */
+    min-height: 350px; /* or whatever height you prefer */
 }
+
 h1 {
     margin-bottom: 20px;
     font-size: 1.5rem;
