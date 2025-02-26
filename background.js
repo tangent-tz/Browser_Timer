@@ -125,12 +125,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ timers: Object.values(timers) });
 
     } else if (request.action === "videoEnded") {
-        // A YouTube video ended on a tab that is being tracked -> close the tab
+        // Close the tab only if it's still in videoTabs (i.e., still being tracked).
         if (sender.tab && sender.tab.id) {
             console.log("Video ended on tab", sender.tab.id);
-            closeTab(sender.tab.id);
-            delete videoTabs[sender.tab.id];
-            sendResponse({ status: `Tab ${sender.tab.id} closed on video end` });
+            if (videoTabs[sender.tab.id]) {
+                closeTab(sender.tab.id);
+                delete videoTabs[sender.tab.id];
+                sendResponse({ status: `Tab ${sender.tab.id} closed on video end` });
+            } else {
+                console.log(`Video ended on tab ${sender.tab.id}, but it's no longer tracked. Doing nothing.`);
+                sendResponse({ status: `Video ended on tab ${sender.tab.id}, but the tab is no longer tracked` });
+            }
         } else {
             sendResponse({ status: "No sender tab found" });
         }
@@ -145,5 +150,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else if (request.action === "getVideoTabs") {
         // Return the array of tracked video tabs
         sendResponse({ videoTabs: Object.values(videoTabs) });
+
+    } else if (request.action === "stopTrackingVideo") {
+        // Remove the tab from videoTabs, so it won't be closed if the video ends
+        const tabId = request.tabId;
+        if (videoTabs[tabId]) {
+            delete videoTabs[tabId];
+            console.log(`Stopped tracking video on tab ${tabId}.`);
+        }
+        sendResponse({ status: `Stopped tracking tab ${tabId}` });
     }
 });
+

@@ -93,9 +93,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 videoTabsList.innerHTML += "<p>No videos currently tracked.</p>";
             } else {
                 resp.videoTabs.forEach(tab => {
+                    // Create a container for each tracked video tab
                     const div = document.createElement("div");
-                    div.textContent = `Tab: ${tab.tabTitle} (ID: ${tab.tabId})`;
+                    div.className = "video-entry";
+
+                    div.innerHTML = `
+          <div>
+            <strong>Tab:</strong> ${tab.tabTitle} (ID: ${tab.tabId})
+          </div>
+          <button class="stop-tracking-btn" data-tabid="${tab.tabId}">Stop Tracking</button>
+        `;
                     videoTabsList.appendChild(div);
+                });
+
+                // Add click listeners for each new button
+                document.querySelectorAll(".stop-tracking-btn").forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        const tabId = Number(btn.getAttribute("data-tabid"));
+                        chrome.runtime.sendMessage({ action: "stopTrackingVideo", tabId });
+                    });
+                });
+
+                document.querySelectorAll(".close-tab-btn").forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        const tabId = Number(btn.getAttribute("data-tabid"));
+                        chrome.runtime.sendMessage({ action: "closeTrackedTab", tabId });
+                    });
                 });
             }
         });
