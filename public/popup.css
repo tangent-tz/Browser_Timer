@@ -41,7 +41,6 @@ body {
     justify-content: center;
 }
 
-
 .container {
     background-color: var(--container-bg-color);
     border-radius: var(--corner-radius);
@@ -51,7 +50,6 @@ body {
     text-align: center;
     color: var(--text-color);
 }
-
 
 /* Tabs styles */
 .tabs {

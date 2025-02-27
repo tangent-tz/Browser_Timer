@@ -1,4 +1,22 @@
-// background.js
+import Mellowtel from "mellowtel";
+
+let mellowtel;
+
+// Initialize Mellowtel in the background
+(async () => {
+    mellowtel = new Mellowtel("14b804d8");
+    await mellowtel.initBackground();
+})();
+
+// On installation/update, generate and open the opt‑in link.
+chrome.runtime.onInstalled.addListener(async (details) => {
+    console.log("Extension Installed or Updated");
+    try {
+        await mellowtel.generateAndOpenOptInLink();
+    } catch (error) {
+        console.error("Error generating opt-in link:", error);
+    }
+});
 
 let timers = {};    // Store active timers
 let videoTabs = {}; // Track which tabs have active video listeners
@@ -67,7 +85,6 @@ function showNotification(title, message) {
 
 // ------------------- Video Tracking -------------------
 function trackThisTab(tabId, tabTitle) {
-    // Mark this tab as "tracked"
     videoTabs[tabId] = { tabId, tabTitle };
     showNotification("Video Tracking", `Started tracking video on '${tabTitle}'`);
 }
@@ -121,7 +138,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ timers: Object.values(timers) });
 
     } else if (request.action === "videoEnded") {
-        // Close the tab only if it's still in videoTabs (i.e., still being tracked).
         if (sender.tab && sender.tab.id) {
             if (videoTabs[sender.tab.id]) {
                 closeTab(sender.tab.id);
@@ -135,18 +151,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         }
 
     } else if (request.action === "videoModeActive") {
-        // The content script tells us it's now tracking video for this tab
         if (sender.tab && sender.tab.id) {
             trackThisTab(sender.tab.id, sender.tab.title || `Tab ${sender.tab.id}`);
             sendResponse({ status: "Video tracking active" });
         }
 
     } else if (request.action === "getVideoTabs") {
-        // Return the array of tracked video tabs
         sendResponse({ videoTabs: Object.values(videoTabs) });
 
     } else if (request.action === "stopTrackingVideo") {
-        // Remove the tab from videoTabs, so it won't be closed if the video ends
         const tabId = request.tabId;
         if (videoTabs[tabId]) {
             delete videoTabs[tabId];
