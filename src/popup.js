@@ -8,10 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
     tabTimer.addEventListener("click", () => {
         tabTimer.classList.add("active");
         tabSettings.classList.remove("active");
-        // tabVideo.classList.remove("active");
         timerSection.classList.add("active");
         settingsSection.classList.remove("active");
-        // videoSection.classList.remove("active");
     });
 
     tabSettings.addEventListener("click", () => {
