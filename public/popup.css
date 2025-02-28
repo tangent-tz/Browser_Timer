@@ -150,21 +150,3 @@ button:hover {
     margin-right: 6px;
     font-size: 0.8rem;
 }
-
-#videoTabsList {
-    margin-top: 16px;
-}
-
-#videoTabsList h3 {
-    margin-bottom: 8px;
-}
-
-#videoTabsList div {
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 8px;
-    margin-bottom: 6px;
-    font-size: 0.9rem;
-    background-color: var(--input-bg);
-    color: var(--text-color);
-}

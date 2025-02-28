@@ -29,8 +29,6 @@ chrome.tabs.onRemoved.addListener((closedTabId, removeInfo) => {
 });
 
 let timers = {};    // Store active timers
-let videoTabs = {}; // Track which tabs have active video listeners
-
 // ------------------- Timer Functions -------------------
 function startTimer(timerId) {
     const timerObj = timers[timerId];
@@ -93,12 +91,6 @@ function showNotification(title, message) {
     });
 }
 
-// ------------------- Video Tracking -------------------
-// function trackThisTab(tabId, tabTitle) {
-//     videoTabs[tabId] = { tabId, tabTitle };
-//     showNotification("Video Tracking", `Started tracking video on '${tabTitle}'`);
-// }
-
 // ------------------- Message Listener -------------------
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "startTimer") {
@@ -145,35 +137,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ status: `Timer ${request.timerId} canceled` });
 
     } else if (request.action === "getTimers") {
-        sendResponse({ timers: Object.values(timers) });
-
-    }// else if (request.action === "videoEnded") {
-    //     if (sender.tab && sender.tab.id) {
-    //         if (videoTabs[sender.tab.id]) {
-    //             closeTab(sender.tab.id);
-    //             delete videoTabs[sender.tab.id];
-    //             sendResponse({ status: `Tab ${sender.tab.id} closed on video end` });
-    //         } else {
-    //             sendResponse({ status: `Video ended on tab ${sender.tab.id}, but the tab is no longer tracked` });
-    //         }
-    //     } else {
-    //         sendResponse({ status: "No sender tab found" });
-    //     }
-    //
-    //  } else if (request.action === "videoModeActive") {
-    //     if (sender.tab && sender.tab.id) {
-    //         trackThisTab(sender.tab.id, sender.tab.title || `Tab ${sender.tab.id}`);
-    //         sendResponse({ status: "Video tracking active" });
-    //     }
-    //
-    // } else if (request.action === "getVideoTabs") {
-    //     sendResponse({ videoTabs: Object.values(videoTabs) });
-    //
-    // } else if (request.action === "stopTrackingVideo") {
-    //     const tabId = request.tabId;
-    //     if (videoTabs[tabId]) {
-    //         delete videoTabs[tabId];
-    //     }
-    //     sendResponse({ status: `Stopped tracking tab ${tabId}` });
-    // }
+        sendResponse({timers: Object.values(timers)});
+    }
 });

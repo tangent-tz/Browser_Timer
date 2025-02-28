@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Tab switching logic
     const tabTimer = document.getElementById("tabTimer");
     const timerSection = document.getElementById("timerSection");
-    // const videoSection = document.getElementById("videoSection");
     const settingsSection = document.getElementById("settingsSection");
     const tabSettings = document.getElementById("tabSettings");
 
@@ -15,12 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // videoSection.classList.remove("active");
     });
 
-    // tabVideo.addEventListener("click", () => {
-    //     tabVideo.classList.add("active");
-    //     tabTimer.classList.remove("active");
-    //     videoSection.classList.add("active");
-    //     timerSection.classList.remove("active");
-    // });
     tabSettings.addEventListener("click", () => {
         tabSettings.classList.add("active");
         tabTimer.classList.remove("active");
@@ -34,10 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const secondsInput = document.getElementById("secondsInput");
     const startTimerBtn = document.getElementById("startTimerBtn");
     const timersList = document.getElementById("timersList");
-
-    // // Video elements
-    // const trackVideoBtn = document.getElementById("trackVideoBtn");
-    // const videoTabsList = document.getElementById("videoTabsList");
 
     // --------------------------------------------------
     // 1) TIMER: START / LIST
@@ -107,49 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // // --------------------------------------------------
-    // // 2) VIDEO TRACKING
-    // // --------------------------------------------------
-    // trackVideoBtn.addEventListener("click", () => {
-    //     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    //         if (!tabs[0]) return;
-    //         const tabId = tabs[0].id;
-    //         chrome.tabs.sendMessage(tabId, { action: "startTrackingVideo" }, (response) => {
-    //             console.log("startTrackingVideo response:", response);
-    //         });
-    //     });
-    // });
-
-    // function updateVideoTabsList() {
-    //     chrome.runtime.sendMessage({ action: "getVideoTabs" }, (resp) => {
-    //         if (!resp || !resp.videoTabs) return;
-    //         videoTabsList.innerHTML = "<h3>Tracked Videos</h3>";
-    //         if (resp.videoTabs.length === 0) {
-    //             videoTabsList.innerHTML += "<p>No videos currently tracked.</p>";
-    //         } else {
-    //             resp.videoTabs.forEach(tab => {
-    //                 const div = document.createElement("div");
-    //                 div.className = "video-entry";
-    //
-    //                 div.innerHTML = `
-    //         <div>
-    //           <strong>Tab:</strong> ${tab.tabTitle}
-    //         </div>
-    //         <button class="stop-tracking-btn" data-tabid="${tab.tabId}">Stop Tracking</button>
-    //       `;
-    //                 videoTabsList.appendChild(div);
-    //             });
-    //
-    //             document.querySelectorAll(".stop-tracking-btn").forEach(btn => {
-    //                 btn.addEventListener("click", () => {
-    //                     const tabId = Number(btn.getAttribute("data-tabid"));
-    //                     chrome.runtime.sendMessage({ action: "stopTrackingVideo", tabId });
-    //                 });
-    //             });
-    //         }
-    //     });
-    // }
-
     // --------------------------------------------------
     // 3) Periodic Updates
     // --------------------------------------------------
@@ -158,9 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // updateVideoTabsList();
     }, 1000);
 
-    // --------------------------------------------------
-    // 4) MELLOWTEL: Open Settings Link
-    // --------------------------------------------------
+
     const settingsBtn = document.getElementById("mellowtelSettingsBtn");
     if (settingsBtn) {
         settingsBtn.addEventListener("click", async () => {
