@@ -7,7 +7,6 @@ module.exports = {
         background: path.join(__dirname, 'src', 'background.js'),
         popup: path.join(__dirname, 'src', 'popup.js'),
         content_start_mellowtel: path.join(__dirname, 'src', 'content_start_mellowtel.js'),
-        videotracker: path.join(__dirname, 'src', 'videotracker.js'),
     },
     output: {
         path: path.join(__dirname, 'dist'),

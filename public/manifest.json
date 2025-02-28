@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Tab Countdown Manager",
   "version": "1.0",
-  "description": "A lightweight extension that automatically closes tabs after a predefined countdown, with beta YouTube tracking mode and integrated Mellowtel opt-in/opt-out settings.",
+  "description": "A lightweight extension that automatically closes tabs after a predefined countdown.",
   "permissions": [
     "activeTab",
     "tabs",
@@ -30,11 +30,6 @@
     "128": "icons/icon128.png"
   },
   "content_scripts": [
-    {
-      "matches": ["*://*.youtube.com/*"],
-      "js": ["videotracker.js"],
-      "run_at": "document_end"
-    },
     {
       "matches": ["<all_urls>"],
       "js": ["content_start_mellowtel.js"],
