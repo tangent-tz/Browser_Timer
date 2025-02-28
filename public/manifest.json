@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Tab Countdown Manager",
+  "name": "Tab Timer",
   "version": "1.0",
   "description": "A lightweight extension that automatically closes tabs after a predefined countdown.",
   "permissions": [
