@@ -18,6 +18,16 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     }
 });
 
+chrome.tabs.onRemoved.addListener((closedTabId, removeInfo) => {
+    Object.keys(timers).forEach(timerId => {
+        if (timers[timerId].tabId === closedTabId) {
+            clearInterval(timers[timerId].intervalId);
+            delete timers[timerId];
+            console.log(`Timer for tab ${closedTabId} cleared because the tab was closed manually.`);
+        }
+    });
+});
+
 let timers = {};    // Store active timers
 let videoTabs = {}; // Track which tabs have active video listeners
 
