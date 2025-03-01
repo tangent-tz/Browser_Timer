@@ -103,8 +103,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             const tabId = tabs[0].id;
             const tabTitle = tabs[0].title || `Tab ${tabId}`;
             const duration = request.duration;
-            const timerId = Date.now();
 
+            // Remove any existing timer for this tab
+            Object.keys(timers).forEach(timerId => {
+                if (timers[timerId].tabId === tabId) {
+                    clearInterval(timers[timerId].intervalId);
+                    delete timers[timerId];
+                }
+            });
+
+            const timerId = Date.now();
             timers[timerId] = {
                 id: timerId,
                 tabId,
@@ -137,6 +145,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ status: `Timer ${request.timerId} canceled` });
 
     } else if (request.action === "getTimers") {
-        sendResponse({timers: Object.values(timers)});
+        sendResponse({ timers: Object.values(timers) });
     }
 });
