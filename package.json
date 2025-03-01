@@ -1,5 +1,5 @@
 {
-  "name": "timed_tab_closer",
+  "name": "auto_tab_timer",
   "version": "1.0.0",
   "main": "webpack.config.js",
   "scripts": {

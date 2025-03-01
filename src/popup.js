@@ -4,6 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerSection = document.getElementById("timerSection");
     const settingsSection = document.getElementById("settingsSection");
     const tabSettings = document.getElementById("tabSettings");
+    const notificationsToggle = document.getElementById("notificationsToggle");
+
+    if (notificationsToggle) {
+        // Load saved setting, defaulting to true if not set
+        chrome.storage.sync.get("notificationsEnabled", (data) => {
+            notificationsToggle.checked = data.notificationsEnabled !== false;
+        });
+        // Save new setting when checkbox is toggled
+        notificationsToggle.addEventListener("change", () => {
+            chrome.storage.sync.set({ notificationsEnabled: notificationsToggle.checked });
+        });
+    }
+
 
     tabTimer.addEventListener("click", () => {
         tabTimer.classList.add("active");

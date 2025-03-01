@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 230">
+  <!-- Background with diagonal split -->
+  <polygon points="0,0 920,0 460,230 0,230" fill="#4f4caf"/>
+  <polygon points="920,0 920,230 460,230" fill="#536edc"/>
+  <!-- Icon on the left -->
+  <g transform="translate(230, 115)">
+    <circle cx="0" cy="0" r="80" fill="#fff"/>
+    <line x1="0" y1="0" x2="0" y2="-50" stroke="#4f4caf" stroke-width="8" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="40" y2="0" stroke="#4f4caf" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <!-- Title and tagline on the right -->
+  <text x="680" y="105" font-size="48" fill="#fff" font-family="Arial, sans-serif" text-anchor="middle">
+    Auto Tab Timer
+  </text>
+  <text x="680" y="155" font-size="24" fill="#fff" font-family="Arial, sans-serif" text-anchor="middle">
+    Manage your tabs effortlessly
+  </text>
+</svg>

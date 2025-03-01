@@ -1,12 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 128 128">
-    <!-- Outer circle -->
-    <circle cx="64" cy="64" r="60" fill="#4CAF50"/>
-    <!-- Inner circle for contrast -->
-    <circle cx="64" cy="64" r="50" fill="#ffffff"/>
+    <!-- Rounded square background -->
+    <rect x="0" y="0" width="128" height="128" rx="20" fill="#4f4caf"/>
+    <!-- Clock face -->
+    <circle cx="64" cy="64" r="36" fill="#fff"/>
     <!-- Hour hand -->
-    <line x1="64" y1="64" x2="64" y2="40" stroke="#4CAF50" stroke-width="8" stroke-linecap="round"/>
+    <line x1="64" y1="64" x2="64" y2="40" stroke="#4f4caf" stroke-width="4" stroke-linecap="round"/>
     <!-- Minute hand -->
-    <line x1="64" y1="64" x2="90" y2="64" stroke="#4CAF50" stroke-width="8" stroke-linecap="round"/>
-    <!-- Center dot -->
-    <circle cx="64" cy="64" r="6" fill="#4CAF50"/>
+    <line x1="64" y1="64" x2="80" y2="64" stroke="#4f4caf" stroke-width="4" stroke-linecap="round"/>
 </svg>

@@ -83,11 +83,15 @@ function closeTab(tabId) {
 }
 
 function showNotification(title, message) {
-    chrome.notifications.create({
-        type: "basic",
-        iconUrl: "icons/icon48.png",
-        title: title,
-        message: message
+    chrome.storage.sync.get("notificationsEnabled", (data) => {
+        // If notifications are disabled, do nothing
+        if (data.notificationsEnabled === false) return;
+        chrome.notifications.create({
+            type: "basic",
+            iconUrl: "icons/icon48.png",
+            title: title,
+            message: message
+        });
     });
 }
 

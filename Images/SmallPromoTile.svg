@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 280">
+    <!-- Background -->
+    <rect width="440" height="280" rx="20" fill="#4f4caf"/>
+    <!-- Icon element (placed on the left) -->
+    <circle cx="110" cy="140" r="80" fill="#fff"/>
+    <line x1="110" y1="140" x2="110" y2="100" stroke="#4f4caf" stroke-width="8" stroke-linecap="round"/>
+    <line x1="110" y1="140" x2="140" y2="140" stroke="#4f4caf" stroke-width="8" stroke-linecap="round"/>
+    <!-- Extension name -->
+    <text x="315" y="150" font-size="32" fill="#fff" font-family="Arial, sans-serif" text-anchor="middle">
+        Auto Tab Timer
+    </text>
+</svg>

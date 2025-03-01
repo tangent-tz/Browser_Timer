@@ -150,3 +150,9 @@ button:hover {
     margin-right: 6px;
     font-size: 0.8rem;
 }
+
+.settings-item {
+    margin-bottom: 10px;
+    /* Make sure each item is block-level */
+    display: block;
+}
