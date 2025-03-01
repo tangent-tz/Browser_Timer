@@ -1,5 +1,5 @@
 {
-  "name": "browser_timer",
+  "name": "timed_tab_closer",
   "version": "1.0.0",
   "main": "webpack.config.js",
   "scripts": {
