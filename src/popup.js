@@ -112,24 +112,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // --------------------------------------------------
     setInterval(() => {
         updateTimersList();
-        // updateVideoTabsList();
     }, 1000);
-
-    //
-    // const settingsBtn = document.getElementById("mellowtelSettingsBtn");
-    // if (settingsBtn) {
-    //     settingsBtn.addEventListener("click", async () => {
-    //         try {
-    //             // Dynamically import Mellowtel
-    //             const MellowtelModule = await import(/* webpackChunkName: "mellowtel-chunk" */ 'mellowtel');
-    //             const Mellowtel = MellowtelModule.default;
-    //             const mellowtel = new Mellowtel('14b804d8');
-    //             const settingsLink = await mellowtel.generateSettingsLink();
-    //             console.log("Generated Settings Link:", settingsLink);
-    //             window.open(settingsLink, "_blank");
-    //         } catch (error) {
-    //             console.error("Error generating settings link:", error);
-    //         }
-    //     });
-    // }
 });

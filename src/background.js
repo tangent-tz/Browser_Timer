@@ -1,22 +1,3 @@
-// import Mellowtel from "mellowtel";
-//
-// let mellowtel;
-//
-// (async () => {
-//     mellowtel = new Mellowtel('14b804d8');
-//     await mellowtel.initBackground();
-// })();
-//
-// // On installation/update, generate and open the opt‑in link.
-// chrome.runtime.onInstalled.addListener(async (details) => {
-//     console.log("Extension Installed or Updated");
-//     try {
-//         await mellowtel.generateAndOpenOptInLink();
-//     } catch (error) {
-//         console.error("Error generating opt-in link:", error);
-//     }
-// });
-
 chrome.tabs.onRemoved.addListener((closedTabId, removeInfo) => {
     Object.keys(timers).forEach(timerId => {
         if (timers[timerId].tabId === closedTabId) {
@@ -62,6 +43,7 @@ function resetTimer(timerId) {
         clearInterval(timerObj.intervalId);
         timerObj.remaining = timerObj.duration;
         timerObj.isRunning = false;
+        startTimer(timerId);
     }
 }
 
