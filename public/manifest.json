@@ -2,23 +2,19 @@
   "manifest_version": 3,
   "name": "Auto Tab Timer",
   "version": "1.0.1",
-  "description": "A simple and efficient extension that automatically closes tabs after a set countdown.",
+  "description": "Automatically closes tabs after a countdown.",
   "permissions": [
     "activeTab",
     "tabs",
     "storage",
-    "notifications"
+    "notifications",
+    "alarms"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
-    }
+    "default_popup": "popup.html"
   },
   "icons": {
     "16": "icons/icon16.png",
