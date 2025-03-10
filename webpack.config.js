@@ -2,11 +2,10 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    mode: 'production', // Change to 'production' for production builds
+    mode: 'production',
     entry: {
         background: path.join(__dirname, 'src', 'background.js'),
         popup: path.join(__dirname, 'src', 'popup.js'),
-        content_start_mellowtel: path.join(__dirname, 'src', 'content_start_mellowtel.js'),
     },
     output: {
         path: path.join(__dirname, 'dist'),
