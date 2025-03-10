@@ -122,6 +122,21 @@ function cancelTimer(timerId, callback) {
     });
 }
 
+// Show a notification with the given title and message.
+
+function showNotification(title, message) {
+    chrome.storage.sync.get("notificationsEnabled", (data) => {
+        // If notifications are disabled, do nothing
+        if (data.notificationsEnabled === false) return;
+        chrome.notifications.create({
+            type: "basic",
+            iconUrl: "icons/icon48.png",
+            title: title,
+            message: message
+        });
+    });
+}
+
 
 // When an alarm fires, check the timer state and either expire or reschedule.
 chrome.alarms.onAlarm.addListener((alarm) => {
@@ -141,6 +156,8 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         const remaining = Math.floor((timerObj.targetTime - Date.now()) / 1000);
         console.log(`Timer ${timerId}: remaining ${remaining} seconds`);
         if (remaining <= 0) {
+            // Call the notification function before closing the tab.
+            showNotification("Timer Finished", `Timer on "${timerObj.tabTitle}" completed.`);
             // Timer expired: close the tab.
             chrome.tabs.remove(timerObj.tabId, () => {
                 if (chrome.runtime.lastError) {
