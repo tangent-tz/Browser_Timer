@@ -20,7 +20,7 @@ Perfect for falling asleep while watching youtube videos ([T90 Official](https:/
 
 ### Compiled Version
 
-You can also download the latest compiled version (ZIP file) from the release tag on the [Releases](https://github.com/tangent-tz/BrowserTimer/tags) page.
+You can also download the latest compiled version (ZIP file) from the release tag on the [Releases](https://github.com/tangent-tz/Browser_Timer/tags) page.
 
 ## Installation
 
