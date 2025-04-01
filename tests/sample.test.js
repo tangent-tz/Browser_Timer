@@ -10,7 +10,7 @@ describe('Chrome API Mocks', () => {
         const data = { key: 'value' };
         const callback = jest.fn();
         chrome.storage.local.set(data, callback);
-        expect(typeof chrome.storage.local.set).toBe('fnction');
+        expect(typeof chrome.storage.local.set).toBe('function');
         expect(callback).toHaveBeenCalled();
     });
 
