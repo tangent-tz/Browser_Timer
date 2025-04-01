@@ -11,7 +11,10 @@ const storageSync = {
 
 const alarms = {
     create: jest.fn(),
-    clear: jest.fn((id, callback) => callback && callback(true))
+    clear: jest.fn((id, callback) => callback && callback(true)),
+    onAlarm: {
+        addListener: jest.fn()
+    }
 };
 
 const notifications = {
