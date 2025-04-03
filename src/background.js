@@ -228,3 +228,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return true;
     }
 });
+// Export functions for testing.
+module.exports = {
+    startTimer,
+    pauseTimer,
+    resumeTimer,
+    resetTimer,
+    cancelTimer,
+    showNotification,
+    getTimerKey // if needed in tests
+};
