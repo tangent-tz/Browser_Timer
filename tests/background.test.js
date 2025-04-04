@@ -53,3 +53,58 @@ describe('startTimer', () => {
         );
     });
 });
+
+const { pauseTimer } = require('../src/background.js');
+
+describe('pauseTimer', () => {
+    let originalDateNow;
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        // Fix the current time for predictable results.
+        originalDateNow = Date.now;
+        const fakeTime = 1000000;
+        Date.now = jest.fn(() => fakeTime);
+    });
+
+    afterEach(() => {
+        Date.now = originalDateNow;
+    });
+
+    test('should update timer state to paused with correct remaining time and clear the alarm', (done) => {
+        const timerId = 'testTimer';
+        const key = 'timer_' + timerId;
+        // Set up a fake active timer with targetTime 30 seconds in the future.
+        const fakeTimer = {
+            timerId,
+            tabId: 1,
+            tabTitle: 'Test Tab',
+            originalDuration: 60,
+            startTime: Date.now(),
+            targetTime: Date.now() + 30000, // 30 seconds remaining
+            paused: false
+        };
+
+        // Override chrome.storage.local.get to return our fake timer.
+        chrome.storage.local.get.mockImplementation((getKey, callback) => {
+            callback({ [getKey]: fakeTimer });
+        });
+
+        // Call pauseTimer and verify its behavior in the callback.
+        pauseTimer(timerId, () => {
+            // Check that chrome.storage.local.set was called with the updated timer object.
+            const setCallArg = chrome.storage.local.set.mock.calls[0][0];
+            expect(setCallArg[key]).toBeDefined();
+            expect(setCallArg[key].paused).toBe(true);
+            expect(setCallArg[key].remaining).toBe(30);
+            // Ensure that startTime and targetTime have been removed.
+            expect(setCallArg[key].startTime).toBeUndefined();
+            expect(setCallArg[key].targetTime).toBeUndefined();
+
+            // Verify that chrome.alarms.clear was called with the timerId.
+            expect(chrome.alarms.clear).toHaveBeenCalledWith(timerId, expect.any(Function));
+
+            done();
+        });
+    });
+});
