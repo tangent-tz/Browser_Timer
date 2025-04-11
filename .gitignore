@@ -8,3 +8,7 @@ node_modules/
 
 # Mac OS files
 .DS_Store
+
+#build
+dist/
+/package-lock.json
