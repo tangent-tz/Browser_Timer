@@ -22,7 +22,10 @@ const notifications = {
 };
 
 const tabs = {
-    remove: jest.fn((tabId, callback) => callback && callback())
+    remove: jest.fn((tabId, callback) => callback && callback()),
+    onRemoved: {
+        addListener: jest.fn()
+    }
 };
 
 module.exports = {
