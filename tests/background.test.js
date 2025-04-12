@@ -176,3 +176,66 @@ describe('resumeTimer', () => {
     });
 });
 
+
+const { resetTimer } = require('../src/background.js'); // Adjust the path if necessary
+describe('resetTimer', () => {
+    let originalDateNow;
+
+    beforeEach(() => {
+        // Clear mocks before each test.
+        jest.clearAllMocks();
+        // Override Date.now() for predictable test results.
+        originalDateNow = Date.now;
+        const fixedTime = 1000000; // fixed current time
+        Date.now = jest.fn(() => fixedTime);
+    });
+
+    afterEach(() => {
+        // Restore original Date.now()
+        Date.now = originalDateNow;
+    });
+
+    test('should reset targetTime based on originalDuration and re-schedule the alarm', (done) => {
+        const timerId = 'testReset';
+        const key = 'timer_' + timerId;
+        // Create a fake timer simulating an ongoing timer.
+        const fakeTimer = {
+            timerId,
+            tabId: 1,
+            tabTitle: 'Test Tab',
+            originalDuration: 120, // seconds (2 minutes)
+            startTime: Date.now() - 30000,  // started 30 seconds ago
+            targetTime: Date.now() + 90000, // originally 90 seconds remaining
+            paused: false
+        };
+
+        // Stub chrome.storage.local.get to return the fake timer.
+        chrome.storage.local.get.mockImplementation((getKey, callback) => {
+            callback({ [getKey]: fakeTimer });
+        });
+
+        // Call resetTimer() – assuming it accepts timerId and a callback.
+        resetTimer(timerId, () => {
+            // Expected new targetTime based on the full originalDuration.
+            const expectedTargetTime = Date.now() + fakeTimer.originalDuration * 1000;
+            // Extract updated timer from chrome.storage.local.set call.
+            const updatedTimer = chrome.storage.local.set.mock.calls[0][0][key];
+
+            // Validate that the timer has been reset correctly.
+            expect(updatedTimer.timerId).toBe(timerId);
+            expect(updatedTimer.originalDuration).toBe(fakeTimer.originalDuration);
+            expect(updatedTimer.targetTime).toBe(expectedTargetTime);
+            expect(updatedTimer.paused).toBe(false);
+
+            // Check that chrome.alarms.create is invoked with the correct delay.
+            expect(chrome.alarms.create).toHaveBeenCalledWith(
+                timerId,
+                { delayInMinutes: fakeTimer.originalDuration / 60 }
+            );
+
+            done();
+        });
+    });
+});
+
+
