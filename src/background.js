@@ -1,6 +1,3 @@
-// background.js
-
-// Helper to generate a storage key for a timer.
 function getTimerKey(timerId) {
     return "timer_" + timerId;
 }
@@ -126,7 +123,6 @@ function cancelTimer(timerId, callback) {
 
 function showNotification(title, message) {
     chrome.storage.sync.get("notificationsEnabled", (data) => {
-        // If notifications are disabled, do nothing
         if (data.notificationsEnabled === false) return;
         chrome.notifications.create({
             type: "basic",
@@ -156,7 +152,6 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         const remaining = Math.floor((timerObj.targetTime - Date.now()) / 1000);
         console.log(`Timer ${timerId}: remaining ${remaining} seconds`);
         if (remaining <= 0) {
-            // Call the notification function before closing the tab.
             showNotification("Timer Finished", `Timer on "${timerObj.tabTitle}" completed.`);
             // Timer expired: close the tab.
             chrome.tabs.remove(timerObj.tabId, () => {
@@ -170,7 +165,6 @@ chrome.alarms.onAlarm.addListener((alarm) => {
                 console.log(`Timer ${timerId} removed after expiration`);
             });
         } else {
-            // Reschedule the alarm for the remaining time.
             chrome.alarms.create(timerId, { delayInMinutes: remaining / 60 });
             console.log(`Rescheduled alarm for timer ${timerId} in ${remaining} seconds`);
         }
@@ -189,7 +183,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             const tabTitle = tabs[0].title || `Tab ${tabId}`;
             const duration = request.duration; // in seconds
             const timerId = Date.now().toString();
-            // Optionally: Remove any existing timer for this tab.
             startTimer(timerId, tabId, tabTitle, duration);
             sendResponse({ status: "Timer started", timerId });
         });
@@ -215,7 +208,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
         return true;
     } else if (request.action === "getTimers") {
-        // Retrieve all timer objects stored with keys starting with "timer_".
         chrome.storage.local.get(null, (items) => {
             const timers = [];
             for (let key in items) {
@@ -247,6 +239,49 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
             }
         }
     });
+});
+
+function updateBadge() {
+    // Query for the active tab in the current window.
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (!tabs || tabs.length === 0) return; // No active tab found.
+        const activeTab = tabs[0];
+        const activeTabId = activeTab.id;
+
+        chrome.storage.local.get(null, (items) => {
+            let activeTimer = null;
+            for (const key in items) {
+                if (key.startsWith("timer_")) {
+                    const timer = items[key];
+                    // Select the timer if it belongs to the active tab and is not paused.
+                    if (timer.tabId === activeTabId && !timer.paused) {
+                        activeTimer = timer;
+                        break;
+                    }
+                }
+            }
+            if (activeTimer) {
+                const remaining = activeTimer.targetTime
+                    ? Math.max(0, Math.floor((activeTimer.targetTime - Date.now()) / 1000))
+                    : activeTimer.remaining || 0;
+                // Update the badge if time is remaining; otherwise, clear it.
+                if (remaining > 0) {
+                    chrome.action.setBadgeText({ text: remaining.toString(), tabId: activeTabId });
+                } else {
+                    chrome.action.setBadgeText({ text: "", tabId: activeTabId });
+                }
+            } else {
+                // No active timer for this tab – clear the badge.
+                chrome.action.setBadgeText({ text: "", tabId: activeTabId });
+            }
+        });
+    });
+}
+
+setInterval(updateBadge, 1000);
+
+chrome.tabs.onActivated.addListener(() => {
+    updateBadge();
 });
 
 // Export functions for testing.

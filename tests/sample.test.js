@@ -63,11 +63,8 @@ describe('Chrome API Mocks', () => {
 
     test('chrome.runtime.sendMessage should be a function', () => {
         expect(typeof chrome.runtime.sendMessage).toBe('function');
-        // Optionally, you can call it with a test message
         const callback = jest.fn();
         chrome.runtime.sendMessage({ action: 'test' }, callback);
-        // Note: In our mock, sendMessage may not trigger callback unless we manually call it.
-        // So here we just check that it was called.
         expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({ action: 'test' }, callback);
     });
 
