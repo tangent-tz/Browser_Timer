@@ -141,7 +141,6 @@ describe("Popup Timer List Rendering", () => {
             remaining: 100                   // 100 seconds remaining directly provided
         };
 
-        // Override chrome.runtime.sendMessage so that when "getTimers" is sent, our dummy data is returned.
         jest.spyOn(chrome.runtime, 'sendMessage').mockImplementation((msg, callback) => {
             if (msg.action === "getTimers") {
                 callback({ timers: [activeTimer, pausedTimer] });
@@ -151,36 +150,25 @@ describe("Popup Timer List Rendering", () => {
             }
         });
 
-        // Allow a brief delay for the updateTimersList interval callback to run.
         setTimeout(() => {
             const timersList = document.getElementById("timersList");
-            // There should be two timer entries rendered.
             const timerEntries = timersList.querySelectorAll(".timer-entry");
             expect(timerEntries.length).toBe(2);
 
             // Verify active timer entry.
             const activeEntry = timerEntries[0].innerHTML;
             expect(activeEntry).toContain("Active Tab");
-            // Calculate expected remaining seconds for active timer: ~60 seconds.
             expect(activeEntry).toContain("60s");
-            // Since the active timer is running, it should display a "Pause" button.
             expect(activeEntry).toContain("pause-btn");
-
-            // Verify paused timer entry.
             const pausedEntry = timerEntries[1].innerHTML;
             expect(pausedEntry).toContain("Paused Tab");
             expect(pausedEntry).toContain("100s");
-            // Since the paused timer is paused, it should have a "Resume" button.
             expect(pausedEntry).toContain("resume-btn");
-
-            // Additionally, both timer entries should include "Reset" and "Cancel" buttons.
             expect(activeEntry).toContain("reset-btn");
             expect(activeEntry).toContain("cancel-btn");
             expect(pausedEntry).toContain("reset-btn");
             expect(pausedEntry).toContain("cancel-btn");
 
-            // Simulate clicks:
-            // For example, simulate clicking the Pause button on the active timer.
             const pauseButton = timerEntries[0].querySelector(".pause-btn");
             pauseButton.click();
             expect(chrome.runtime.sendMessage).toHaveBeenCalledWith(
