@@ -30,15 +30,18 @@ const tabs = {
 
 module.exports = {
     storage: {
-        local: storageLocal,
-        sync: storageSync
+        sync: {
+            get: jest.fn((key, callback) => callback({ notificationsEnabled: true })),
+            set: jest.fn(),
+        },
     },
     alarms,
     notifications,
     tabs,
     runtime: {
+        sendMessage: jest.fn(),  // mock the sendMessage function
         onMessage: {
-            addListener: jest.fn()
-        }
+            addListener: jest.fn(),
+        },
     }
 };
