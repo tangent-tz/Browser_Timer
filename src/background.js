@@ -290,5 +290,6 @@ module.exports = {
     pauseTimer,
     resumeTimer,
     resetTimer,
-    cancelTimer
+    cancelTimer,
+    updateBadge
 };
