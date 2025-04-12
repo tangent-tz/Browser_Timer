@@ -1,44 +1,65 @@
-const storageLocal = {
-    set: jest.fn((data, callback) => callback && callback()),
-    get: jest.fn((key, callback) => callback && callback({})),
-    remove: jest.fn((key, callback) => callback && callback())
-};
+// mocks/createChromeMock.js
 
-const storageSync = {
-    get: jest.fn((key, callback) => callback && callback({})),
-    set: jest.fn((data, callback) => callback && callback())
-};
+function createStorageLocalMock() {
+    return {
+        set: jest.fn((data, callback) => callback && callback()),
+        get: jest.fn((key, callback) => callback && callback({})),
+        remove: jest.fn((key, callback) => callback && callback())
+    };
+}
 
-const alarms = {
-    create: jest.fn(),
-    clear: jest.fn((id, callback) => callback && callback(true)),
-    onAlarm: {
-        addListener: jest.fn()
-    }
-};
+function createStorageSyncMock() {
+    return {
+        get: jest.fn((key, callback) => callback && callback({})),
+        set: jest.fn((data, callback) => callback && callback())
+    };
+}
 
-const notifications = {
-    create: jest.fn()
-};
+function createAlarmsMock() {
+    return {
+        create: jest.fn(),
+        clear: jest.fn((id, callback) => callback && callback(true)),
+        onAlarm: {
+            addListener: jest.fn()
+        }
+    };
+}
 
-const tabs = {
-    remove: jest.fn((tabId, callback) => callback && callback()),
-    onRemoved: {
-        addListener: jest.fn()
-    }
-};
+function createNotificationsMock() {
+    return {
+        create: jest.fn()
+    };
+}
 
-module.exports = {
-    storage: {
-        local: storageLocal,
-        sync: storageSync
-    },
-    alarms,
-    notifications,
-    tabs,
-    runtime: {
+function createTabsMock() {
+    return {
+        remove: jest.fn((tabId, callback) => callback && callback()),
+        onRemoved: {
+            addListener: jest.fn()
+        }
+    };
+}
+
+function createRuntimeMock() {
+    return {
+        sendMessage: jest.fn(),
         onMessage: {
             addListener: jest.fn()
         }
-    }
-};
+    };
+}
+
+function createChromeMock() {
+    return {
+        storage: {
+            local: createStorageLocalMock(),
+            sync: createStorageSyncMock()
+        },
+        alarms: createAlarmsMock(),
+        notifications: createNotificationsMock(),
+        tabs: createTabsMock(),
+        runtime: createRuntimeMock()
+    };
+}
+
+module.exports = { createChromeMock };
