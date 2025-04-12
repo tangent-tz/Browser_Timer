@@ -108,3 +108,71 @@ describe('pauseTimer', () => {
         });
     });
 });
+
+// tests for resumeTimer() functionality
+
+const { resumeTimer } = require('../src/background.js'); // Adjust the path if necessary
+
+describe('resumeTimer', () => {
+    let originalDateNow;
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        // Override Date.now() for predictable timing
+        originalDateNow = Date.now;
+        const fakeTime = 1000000;
+        Date.now = jest.fn(() => fakeTime);
+    });
+
+    afterEach(() => {
+        Date.now = originalDateNow;
+    });
+
+    test('should resume a paused timer by recalculating startTime and targetTime and schedule a new alarm for the remaining duration', (done) => {
+        const timerId = 'testResumeTimer';
+        const key = 'timer_' + timerId;
+        const remainingDuration = 20; // seconds remaining when paused
+
+        // Setup a paused timer object.
+        const pausedTimer = {
+            timerId,
+            tabId: 1,
+            tabTitle: 'Test Tab',
+            originalDuration: 60,
+            paused: true,
+            remaining: remainingDuration  // paused timer stores the remaining seconds
+        };
+
+        // Mock chrome.storage.local.get to return our paused timer object.
+        chrome.storage.local.get.mockImplementation((getKey, callback) => {
+            callback({ [getKey]: pausedTimer });
+        });
+
+        // Call the function under test.
+        resumeTimer(timerId, () => {
+            // Verify that chrome.storage.local.set was called with the updated timer object.
+            const setCallArg = chrome.storage.local.set.mock.calls[0][0];
+            const updatedTimer = setCallArg[key];
+
+            expect(updatedTimer).toBeDefined();
+            // The timer should no longer be paused.
+            expect(updatedTimer.paused).toBe(false);
+            // The remaining property should be removed.
+            expect(updatedTimer.remaining).toBeUndefined();
+
+            // Check that startTime is recalculated to be the current time.
+            const currentTime = Date.now();
+            expect(updatedTimer.startTime).toBe(currentTime);
+            // And targetTime is the current time plus the remaining duration (converted to milliseconds)
+            expect(updatedTimer.targetTime).toBe(currentTime + remainingDuration * 1000);
+
+            // Confirm that a new alarm is scheduled with the remaining duration.
+            expect(chrome.alarms.create).toHaveBeenCalledWith(
+                timerId,
+                { delayInMinutes: remainingDuration / 60 }
+            );
+            done();
+        });
+    });
+});
+
