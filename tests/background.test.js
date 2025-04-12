@@ -238,4 +238,41 @@ describe('resetTimer', () => {
     });
 });
 
+const { cancelTimer } = require('../src/background.js'); // Adjust path as needed
 
+describe('cancelTimer', () => {
+    const timerId = 'testCancelTimer';
+    const key = 'timer_' + timerId;
+
+    beforeEach(() => {
+        // Clear previous mocks before each test case.
+        jest.clearAllMocks();
+
+        // Simulate storing a timer instance.
+        chrome.storage.local.set({ [key]: {
+                timerId,
+                tabId: 1,
+                tabTitle: 'Test Tab',
+                originalDuration: 60,
+                startTime: Date.now(),
+                targetTime: Date.now() + 60000,
+                paused: false
+            }}, () => {});
+
+        // Simulate setting an alarm.
+        chrome.alarms.create(timerId, { delayInMinutes: 1 });
+    });
+
+    test('should remove timer from storage and clear associated alarm', (done) => {
+        // Call cancelTimer() to cancel the timer
+        cancelTimer(timerId, () => {
+            // Verify that chrome.storage.local.remove was called with the proper key.
+            expect(chrome.storage.local.remove).toHaveBeenCalledWith(key, expect.any(Function));
+
+            // Verify that chrome.alarms.clear was called with the timerId.
+            expect(chrome.alarms.clear).toHaveBeenCalledWith(timerId, expect.any(Function));
+
+            done();
+        });
+    });
+});
