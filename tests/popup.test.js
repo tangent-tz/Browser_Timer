@@ -1,5 +1,5 @@
-global.chrome = require('../mocks/chrome');
-
+const { createChromeMock } = require('../mocks/chrome');
+global.chrome = createChromeMock();
 describe('Popup - Start Timer functionality', () => {
     beforeEach(() => {
         document.body.innerHTML = `
