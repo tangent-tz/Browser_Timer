@@ -1,5 +1,3 @@
-// mocks/createChromeMock.js
-
 function createStorageLocalMock() {
     return {
         set: jest.fn((data, callback) => callback && callback()),
@@ -35,6 +33,9 @@ function createTabsMock() {
     return {
         remove: jest.fn((tabId, callback) => callback && callback()),
         onRemoved: {
+            addListener: jest.fn()
+        },
+        onActivated: {
             addListener: jest.fn()
         }
     };
