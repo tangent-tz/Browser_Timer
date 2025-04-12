@@ -1,6 +1,6 @@
 // tests/background.test.js
-global.chrome = require('../mocks/chrome'); // Adjust if your mocks folder is named differently
-
+const { createChromeMock } = require('../mocks/chrome');
+global.chrome = createChromeMock();
 const { startTimer } = require('../src/background.js'); // Update the path if necessary
 
 describe('startTimer', () => {
