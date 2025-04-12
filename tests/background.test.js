@@ -1,4 +1,3 @@
-// tests/background.test.js
 const { createChromeMock } = require('../mocks/chrome');
 global.chrome = createChromeMock();
 const { startTimer } = require('../src/background.js'); // Update the path if necessary
@@ -8,7 +7,6 @@ describe('startTimer', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        // Override Date.now() for predictable timing
         originalDateNow = Date.now;
         const fakeTime = 1000000;
         Date.now = jest.fn(() => fakeTime);
@@ -27,10 +25,8 @@ describe('startTimer', () => {
         const targetTime = startTime + duration * 1000;
         const key = 'timer_' + timerId;
 
-        // Call the function under test
         startTimer(timerId, tabId, tabTitle, duration);
 
-        // Verify that chrome.storage.local.set was called with a timer object containing the correct properties
         expect(chrome.storage.local.set).toHaveBeenCalledWith(
             expect.objectContaining({
                 [key]: expect.objectContaining({
@@ -46,7 +42,6 @@ describe('startTimer', () => {
             expect.any(Function)
         );
 
-        // Verify that chrome.alarms.create was called with the correct timerId and delay (in minutes)
         expect(chrome.alarms.create).toHaveBeenCalledWith(
             timerId,
             { delayInMinutes: duration / 60 }
@@ -61,7 +56,6 @@ describe('pauseTimer', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        // Fix the current time for predictable results.
         originalDateNow = Date.now;
         const fakeTime = 1000000;
         Date.now = jest.fn(() => fakeTime);
@@ -74,7 +68,6 @@ describe('pauseTimer', () => {
     test('should update timer state to paused with correct remaining time and clear the alarm', (done) => {
         const timerId = 'testTimer';
         const key = 'timer_' + timerId;
-        // Set up a fake active timer with targetTime 30 seconds in the future.
         const fakeTimer = {
             timerId,
             tabId: 1,
@@ -85,23 +78,17 @@ describe('pauseTimer', () => {
             paused: false
         };
 
-        // Override chrome.storage.local.get to return our fake timer.
         chrome.storage.local.get.mockImplementation((getKey, callback) => {
             callback({ [getKey]: fakeTimer });
         });
 
-        // Call pauseTimer and verify its behavior in the callback.
         pauseTimer(timerId, () => {
-            // Check that chrome.storage.local.set was called with the updated timer object.
             const setCallArg = chrome.storage.local.set.mock.calls[0][0];
             expect(setCallArg[key]).toBeDefined();
             expect(setCallArg[key].paused).toBe(true);
             expect(setCallArg[key].remaining).toBe(30);
-            // Ensure that startTime and targetTime have been removed.
             expect(setCallArg[key].startTime).toBeUndefined();
             expect(setCallArg[key].targetTime).toBeUndefined();
-
-            // Verify that chrome.alarms.clear was called with the timerId.
             expect(chrome.alarms.clear).toHaveBeenCalledWith(timerId, expect.any(Function));
 
             done();
@@ -109,7 +96,6 @@ describe('pauseTimer', () => {
     });
 });
 
-// tests for resumeTimer() functionality
 
 const { resumeTimer } = require('../src/background.js'); // Adjust the path if necessary
 
@@ -118,7 +104,6 @@ describe('resumeTimer', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        // Override Date.now() for predictable timing
         originalDateNow = Date.now;
         const fakeTime = 1000000;
         Date.now = jest.fn(() => fakeTime);
@@ -133,7 +118,6 @@ describe('resumeTimer', () => {
         const key = 'timer_' + timerId;
         const remainingDuration = 20; // seconds remaining when paused
 
-        // Setup a paused timer object.
         const pausedTimer = {
             timerId,
             tabId: 1,
@@ -143,30 +127,20 @@ describe('resumeTimer', () => {
             remaining: remainingDuration  // paused timer stores the remaining seconds
         };
 
-        // Mock chrome.storage.local.get to return our paused timer object.
         chrome.storage.local.get.mockImplementation((getKey, callback) => {
             callback({ [getKey]: pausedTimer });
         });
 
-        // Call the function under test.
         resumeTimer(timerId, () => {
-            // Verify that chrome.storage.local.set was called with the updated timer object.
             const setCallArg = chrome.storage.local.set.mock.calls[0][0];
             const updatedTimer = setCallArg[key];
 
             expect(updatedTimer).toBeDefined();
-            // The timer should no longer be paused.
             expect(updatedTimer.paused).toBe(false);
-            // The remaining property should be removed.
             expect(updatedTimer.remaining).toBeUndefined();
-
-            // Check that startTime is recalculated to be the current time.
             const currentTime = Date.now();
             expect(updatedTimer.startTime).toBe(currentTime);
-            // And targetTime is the current time plus the remaining duration (converted to milliseconds)
             expect(updatedTimer.targetTime).toBe(currentTime + remainingDuration * 1000);
-
-            // Confirm that a new alarm is scheduled with the remaining duration.
             expect(chrome.alarms.create).toHaveBeenCalledWith(
                 timerId,
                 { delayInMinutes: remainingDuration / 60 }
@@ -182,23 +156,19 @@ describe('resetTimer', () => {
     let originalDateNow;
 
     beforeEach(() => {
-        // Clear mocks before each test.
         jest.clearAllMocks();
-        // Override Date.now() for predictable test results.
         originalDateNow = Date.now;
         const fixedTime = 1000000; // fixed current time
         Date.now = jest.fn(() => fixedTime);
     });
 
     afterEach(() => {
-        // Restore original Date.now()
         Date.now = originalDateNow;
     });
 
     test('should reset targetTime based on originalDuration and re-schedule the alarm', (done) => {
         const timerId = 'testReset';
         const key = 'timer_' + timerId;
-        // Create a fake timer simulating an ongoing timer.
         const fakeTimer = {
             timerId,
             tabId: 1,
@@ -209,25 +179,18 @@ describe('resetTimer', () => {
             paused: false
         };
 
-        // Stub chrome.storage.local.get to return the fake timer.
         chrome.storage.local.get.mockImplementation((getKey, callback) => {
             callback({ [getKey]: fakeTimer });
         });
 
-        // Call resetTimer() – assuming it accepts timerId and a callback.
         resetTimer(timerId, () => {
-            // Expected new targetTime based on the full originalDuration.
             const expectedTargetTime = Date.now() + fakeTimer.originalDuration * 1000;
-            // Extract updated timer from chrome.storage.local.set call.
             const updatedTimer = chrome.storage.local.set.mock.calls[0][0][key];
 
-            // Validate that the timer has been reset correctly.
             expect(updatedTimer.timerId).toBe(timerId);
             expect(updatedTimer.originalDuration).toBe(fakeTimer.originalDuration);
             expect(updatedTimer.targetTime).toBe(expectedTargetTime);
             expect(updatedTimer.paused).toBe(false);
-
-            // Check that chrome.alarms.create is invoked with the correct delay.
             expect(chrome.alarms.create).toHaveBeenCalledWith(
                 timerId,
                 { delayInMinutes: fakeTimer.originalDuration / 60 }
@@ -245,10 +208,8 @@ describe('cancelTimer', () => {
     const key = 'timer_' + timerId;
 
     beforeEach(() => {
-        // Clear previous mocks before each test case.
         jest.clearAllMocks();
 
-        // Simulate storing a timer instance.
         chrome.storage.local.set({ [key]: {
                 timerId,
                 tabId: 1,
@@ -259,17 +220,12 @@ describe('cancelTimer', () => {
                 paused: false
             }}, () => {});
 
-        // Simulate setting an alarm.
         chrome.alarms.create(timerId, { delayInMinutes: 1 });
     });
 
     test('should remove timer from storage and clear associated alarm', (done) => {
-        // Call cancelTimer() to cancel the timer
         cancelTimer(timerId, () => {
-            // Verify that chrome.storage.local.remove was called with the proper key.
             expect(chrome.storage.local.remove).toHaveBeenCalledWith(key, expect.any(Function));
-
-            // Verify that chrome.alarms.clear was called with the timerId.
             expect(chrome.alarms.clear).toHaveBeenCalledWith(timerId, expect.any(Function));
 
             done();
