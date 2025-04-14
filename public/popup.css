@@ -184,3 +184,118 @@ button:hover {
     margin-bottom: 10px;
     display: block;
 }
+
+/* Timer Card Container */
+.timer-card {
+    background-color: var(--container-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--corner-radius);
+    margin-bottom: 10px;
+    padding: 12px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Header: Icon and Title */
+.timer-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.timer-thumbnail {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    margin-right: 8px;
+    border-radius: 4px;
+}
+
+.timer-title {
+    font-weight: 500;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Status Row */
+.timer-status-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.status-label {
+    font-weight: 500;
+    margin-right: 4px;
+    opacity: 0.9;
+}
+
+.status-icon {
+    color: green; /* Green indicates running status. Adjust if you use different colors for paused. */
+    margin-right: 4px;
+}
+
+.status-text {
+    color: green;
+    font-weight: 500;
+}
+
+/* Progress Bar */
+.timer-progress {
+    height: 6px;
+    background-color: var(--border-color);
+    border-radius: 3px;
+    margin-bottom: 6px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: green;
+    height: 100%;
+    width: 0;
+    transition: width 0.3s ease-in-out;
+}
+
+/* Remaining Time Row */
+.timer-remaining-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.remaining-label {
+    font-weight: 500;
+    margin-right: 4px;
+    opacity: 0.9;
+}
+
+.remaining-value {
+    color: #ddd;
+    font-weight: 500;
+}
+
+/* Control Buttons Row */
+.timer-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.timer-controls button {
+    flex: 1;
+    background: var(--button-bg);
+    border: none;
+    border-radius: 4px;
+    padding: 8px;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.timer-controls button:hover {
+    background: var(--button-bg-hover);
+}
