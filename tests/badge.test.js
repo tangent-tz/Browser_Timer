@@ -34,7 +34,7 @@ describe('Badge Update Logic', () => {
             cb({ "timer_test_timer": timer });
         });
         updateBadge();
-        expect(global.chrome.action.setBadgeText).toHaveBeenCalledWith({ text: "120", tabId: 1 });
+        expect(global.chrome.action.setBadgeText).toHaveBeenCalledWith({ text: "02:00", tabId: 1 });
         done();
     });
 
@@ -67,7 +67,7 @@ describe('Badge Update Logic', () => {
         global.chrome.action.setBadgeText = jest.fn();
 
         updateBadge();
-        expect(global.chrome.action.setBadgeText).toHaveBeenCalledWith({ text: "120", tabId: 1 });
+        expect(global.chrome.action.setBadgeText).toHaveBeenCalledWith({ text: "02:00", tabId: 1 });
 
         global.chrome.tabs.query.mockImplementation((query, cb) => {
             cb([{ id: 2 }]);
