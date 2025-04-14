@@ -249,9 +249,8 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
 });
 
 function updateBadge() {
-    // Query for the active tab in the current window.
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (!tabs || tabs.length === 0) return; // No active tab found.
+        if (!tabs || tabs.length === 0) return;
         const activeTab = tabs[0];
         const activeTabId = activeTab.id;
 
@@ -271,14 +270,26 @@ function updateBadge() {
                 const remaining = activeTimer.targetTime
                     ? Math.max(0, Math.floor((activeTimer.targetTime - Date.now()) / 1000))
                     : activeTimer.remaining || 0;
-                // Update the badge if time is remaining; otherwise, clear it.
                 if (remaining > 0) {
-                    chrome.action.setBadgeText({ text: remaining.toString(), tabId: activeTabId });
+                    let badgeText = "";
+                    if (remaining >= 3600) {
+                        const hours = Math.floor(remaining / 3600);
+                        const minutes = Math.floor((remaining % 3600) / 60);
+                        badgeText = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+                    }
+                    else if (remaining < 3600) {
+                        const minutes = Math.floor(remaining / 60);
+                        const seconds = remaining % 60;
+                        badgeText = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+                    }
+                    else {
+                        badgeText = `${remaining}s`;
+                    }
+                    chrome.action.setBadgeText({ text: badgeText, tabId: activeTabId });
                 } else {
                     chrome.action.setBadgeText({ text: "", tabId: activeTabId });
                 }
             } else {
-                // No active timer for this tab – clear the badge.
                 chrome.action.setBadgeText({ text: "", tabId: activeTabId });
             }
         });
@@ -286,7 +297,6 @@ function updateBadge() {
 }
 
 setInterval(updateBadge, 1000);
-
 chrome.tabs.onActivated.addListener(() => {
     updateBadge();
 });
