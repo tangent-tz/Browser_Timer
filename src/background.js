@@ -233,11 +233,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // Listener for manual tab closures and clear the associated timer
 chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
     chrome.storage.local.get(null, (items) => {
-        // Loop through all stored timer objects
         for (const key in items) {
             if (key.startsWith("timer_")) {
                 const timerObj = items[key];
-                // If the closed tab matches the timer's tab
                 if (timerObj.tabId === tabId) {
                     chrome.alarms.clear(timerObj.timerId, () => {
                         chrome.storage.local.remove(key, () => {
