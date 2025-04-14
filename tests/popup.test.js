@@ -61,7 +61,7 @@ describe('Popup - Start Timer functionality', () => {
         startTimerBtn.click();
 
         expect(sendMessageSpy).toHaveBeenCalledWith(
-            { action: 'startTimer', duration: expectedDuration },
+            { action: 'startTimer', duration: expectedDuration, tabFavicon: "icons/timer.svg", tabTitle: "Test Tab", tabId: 123 },
             expect.any(Function)
         );
     });
