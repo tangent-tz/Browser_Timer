@@ -156,3 +156,11 @@ button:hover {
     /* Make sure each item is block-level */
     display: block;
 }
+
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:5px; /* Adjust this value as needed to control spacing */
+    margin-top: 8px;
+}
