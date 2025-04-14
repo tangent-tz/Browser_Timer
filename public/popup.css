@@ -242,12 +242,78 @@ button:hover {
     font-weight: 500;
 }
 
+/* Timer Card Container - Compact Layout */
+.timer-card {
+    background-color: var(--container-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--corner-radius);
+    margin-bottom: 8px;    /* Reduced from 10px */
+    padding: 8px;          /* Reduced from 12px */
+    font-size: 0.85rem;    /* Slightly smaller font */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Header: Icon and Title */
+.timer-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;    /* Reduced bottom margin */
+}
+
+.timer-thumbnail {
+    width: 28px;           /* Slightly smaller image */
+    height: 28px;
+    object-fit: cover;
+    margin-right: 6px;     /* Reduced spacing */
+    border-radius: 4px;
+}
+
+.timer-title {
+    font-weight: 500;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Status Row */
+.timer-status-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;    /* Reduced margin */
+}
+
+.status-label {
+    font-weight: 500;
+    margin-right: 4px;
+    opacity: 0.9;
+}
+
+.status-icon {
+    color: green;
+    margin-right: 4px;
+}
+
+.status-text {
+    color: green;
+    font-weight: 500;
+}
+.status-icon.paused {
+    /* decide icon size */
+    font-size: 1rem;     /* Slightly smaller icon */
+    color: gray;        /* Orange indicates paused status */
+}
+.status-icon.running {
+    font-size: 0.8rem;     /* Slightly smaller icon */
+}
+
+
 /* Progress Bar */
 .timer-progress {
     height: 6px;
     background-color: var(--border-color);
     border-radius: 3px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;    /* Reduced margin */
     overflow: hidden;
 }
 
@@ -262,7 +328,7 @@ button:hover {
 .timer-remaining-row {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;    /* Reduced margin */
 }
 
 .remaining-label {
@@ -280,7 +346,7 @@ button:hover {
 .timer-controls {
     display: flex;
     justify-content: space-between;
-    gap: 6px;
+    gap: 4px;            /* Reduced gap between buttons */
 }
 
 .timer-controls button {
@@ -288,9 +354,9 @@ button:hover {
     background: var(--button-bg);
     border: none;
     border-radius: 4px;
-    padding: 8px;
+    padding: 6px;        /* Reduced padding */
     color: #fff;
-    font-size: 0.85rem;
+    font-size: 0.8rem;   /* Slightly smaller font */
     font-weight: 500;
     cursor: pointer;
     transition: background 0.3s ease;
