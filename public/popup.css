@@ -45,7 +45,7 @@ body {
     background-color: var(--container-bg-color);
     border-radius: var(--corner-radius);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    width: 320px;
+    width: 270px;
     padding: 16px;
     text-align: center;
     color: var(--text-color);
@@ -89,17 +89,18 @@ h1 {
 
 /* Timer input fields container */
 .input-group {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns, each takes 1 fraction of space */
+    gap: 10px; /* Spacing between columns */
     margin-bottom: 16px;
+    width: 100%;                          /* ensure the group fills the parent width */
 }
 
 .input-field {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    flex: 1;
-    margin: 0 4px;
+    align-items: center; /* Keeps label and input centered horizontally */
+    width: 100%;             /* each field spans its entire grid cell */
 }
 
 .input-field label {
@@ -109,13 +110,15 @@ h1 {
 }
 
 .input-field input {
-    width: 60px;
+    width: 90%;             /* make input fill the .input-field width */
     padding: 6px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
+    /* a bit right of center */
     text-align: center;
     background-color: var(--input-bg);
     color: var(--text-color);
+    text-indent: 12px;      /* Shift the first line 10px to the right */
 }
 
 /* Buttons */
