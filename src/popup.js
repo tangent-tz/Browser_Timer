@@ -91,20 +91,16 @@ document.addEventListener("DOMContentLoaded", () => {
         header.appendChild(titleSpan);
         card.appendChild(header);
 
-        // 2) Status row: Label, status icon, and Running/Paused text.
+        // 2) Status row: Label and Running/Paused text (no status icon).
         const statusRow = document.createElement("div");
         statusRow.className = "timer-status-row";
         const statusLabel = document.createElement("span");
         statusLabel.className = "status-label";
         statusLabel.textContent = "Status:";
-        const statusIcon = document.createElement("span");
-        statusIcon.className = "status-icon";
-        statusIcon.textContent = timer.paused ? "⏸" : "✔";
         const statusText = document.createElement("span");
         statusText.className = "status-text";
         statusText.textContent = timer.paused ? "Paused" : "Running";
         statusRow.appendChild(statusLabel);
-        statusRow.appendChild(statusIcon);
         statusRow.appendChild(statusText);
         card.appendChild(statusRow);
 
