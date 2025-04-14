@@ -138,15 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (timer.paused) {
             pauseResumeBtn.className = "resume-btn";
             pauseResumeBtn.textContent = "Resume";
-            statusIcon.classList.add("paused");
-            statusText.textContent = "Paused";
-            statusText.style.color = "gray";
         } else {
             pauseResumeBtn.className = "pause-btn";
             pauseResumeBtn.textContent = "Pause";
-            statusIcon.classList.remove("paused");
-            statusText.textContent = "Running";
-            statusText.style.color = "green";
+
         }
         const resetBtn = document.createElement("button");
         resetBtn.className = "reset-btn";

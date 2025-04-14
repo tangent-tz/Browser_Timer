@@ -277,34 +277,52 @@ button:hover {
 }
 
 /* Status Row */
+/* Parent container remains a flex layout */
 .timer-status-row {
     display: flex;
     align-items: center;
-    margin-bottom: 4px;    /* Reduced margin */
+    gap: 4px;
 }
 
+/* Status label remains unchanged */
 .status-label {
     font-weight: 500;
-    margin-right: 4px;
     opacity: 0.9;
 }
 
+/* Adjust the circle icon container */
 .status-icon {
-    color: green;
-    margin-right: 4px;
+    display: flex;               /* Flex container for centering */
+    align-items: center;
+    justify-content: center;
+    width: 20px;                 /* Increase size slightly if needed */
+    height: 20px;
+    border-radius: 50%;
+    background-color: green;     /* Green for "Running"; adjust if needed for "Paused" */
+    color: white;
+    font-size: 12px;
+    line-height: 1;              /* Ensure tight line-height */
+    /* Slight vertical tweak; adjust translateY value for better alignment */
+    transform: translateY(1px);
+    flex-shrink: 0;              /* Prevent shrinkage that might affect vertical positioning */
 }
 
+/* Set the text line-height to match the icon height */
 .status-text {
-    color: green;
     font-weight: 500;
+    line-height: 20px;           /* Should match .status-icon's height */
+    /* If necessary, you can also use a slight margin adjustment */
+    margin-top: 0;
 }
+
+/* Optional: For paused status, you can adjust via a modifier class */
 .status-icon.paused {
-    /* decide icon size */
-    font-size: 1rem;     /* Slightly smaller icon */
-    color: gray;        /* Orange indicates paused status */
+    background-color: gray;
+    transform: translateY(1px); /* Adjust if paused icon needs a different offset */
 }
-.status-icon.running {
-    font-size: 0.8rem;     /* Slightly smaller icon */
+
+.status-icon.paused::before {
+    content: "⏸";
 }
 
 
