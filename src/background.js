@@ -2,7 +2,6 @@ function getTimerKey(timerId) {
     return "timer_" + timerId;
 }
 
-// Start a new timer: store state persistently and schedule an alarm.
 function startTimer(timerId, tabId, tabTitle, duration, tabFavicon) {
     const startTime = Date.now();
     const targetTime = startTime + duration * 1000;
@@ -10,8 +9,8 @@ function startTimer(timerId, tabId, tabTitle, duration, tabFavicon) {
         timerId,
         tabId,
         tabTitle,
-        tabFavicon,  // Store the favicon URL
-        originalDuration: duration, // original full duration in seconds
+        tabFavicon,
+        originalDuration: duration,
         startTime,
         targetTime,
         paused: false
@@ -231,7 +230,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-// Listen for manual tab closures and clear the associated timer
+// Listener for manual tab closures and clear the associated timer
 chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
     chrome.storage.local.get(null, (items) => {
         // Loop through all stored timer objects

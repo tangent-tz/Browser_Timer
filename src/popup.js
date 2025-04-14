@@ -90,12 +90,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const elapsed = timer.originalDuration - remaining;
         const percentage = (elapsed / timer.originalDuration) * 100;
 
-        // ---------------------------
         // Create the card container.
         const card = document.createElement("div");
         card.className = "timer-card";
 
-        // 1) Header: Icon + (possibly truncated) tab title.
+        // 1) Header: Icon, tab title.
         const header = document.createElement("div");
         header.className = "timer-card-header";
         const icon = document.createElement("img");
@@ -110,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         header.appendChild(titleSpan);
         card.appendChild(header);
 
-        // 2) Status row: Label and Running/Paused text (no status icon).
+        // 2) Status row: Label and Running/Paused text
         const statusRow = document.createElement("div");
         statusRow.className = "timer-status-row";
         const statusLabel = document.createElement("span");
