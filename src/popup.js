@@ -77,11 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
     <strong>Remaining:</strong> ${remaining}s
   </div>
   <div class="timer-controls">
-    ${controlButton}
+    ${controlButton} <!-- Pause or Resume -->
     <button class="reset-btn" data-timerid="${timer.timerId}">Reset</button>
     <button class="cancel-btn" data-timerid="${timer.timerId}">Cancel</button>
   </div>
 `;
+
 
                 timersList.appendChild(div);
             });

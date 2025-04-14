@@ -144,6 +144,8 @@ button:hover {
     text-align: left;
     font-size: 0.9rem;
     color: var(--text-color);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .timer-entry button {
@@ -158,9 +160,8 @@ button:hover {
 }
 
 .timer-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap:5px; /* Adjust this value as needed to control spacing */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns, each 1 fraction unit */
+    gap: 8px; /* space between each button - adjust as needed */
     margin-top: 8px;
 }
