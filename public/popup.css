@@ -46,15 +46,16 @@ body {
     border-radius: var(--corner-radius);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     width: 290px;
-    padding: 12px;             /* Was 16px */
+    padding: 8px;            /* Reduced padding (from 16px) */
     text-align: center;
     color: var(--text-color);
 }
 
 /* Typography */
 h1 {
-    font-size: var(--heading-font-size);
-    margin-bottom: 12px;       /* Was 16px */
+    font-size: 1rem;         /* Reduced from 1.2rem for a compact look */
+    margin-bottom: 8px;       /* Reduced bottom margin */
+    padding: 0;
 }
 
 /* Tabs Component */
@@ -62,7 +63,7 @@ h1 {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 8px;        /* Was 10px */
+    margin-bottom: 6px;      /* Reduced margin */
 }
 
 .tab {
@@ -72,11 +73,12 @@ h1 {
     background: var(--container-bg-color);
     border: none;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.85rem;      /* Smaller font size */
     flex: 1;
-    padding: 8px;              /* Was 10px */
+    padding: 6px;            /* Reduced padding (was 10px) */
     text-align: center;
 }
+
 
 .tab.active {
     border-bottom: 3px solid var(--button-bg);
@@ -84,19 +86,17 @@ h1 {
 }
 
 .tab-icon {
+    width: 16px;             /* Smaller icon dimensions */
+    height: 16px;
+    margin-right: 4px;       /* Reduced spacing between icon and text */
     filter: brightness(0) invert(1);
     transition: filter 0.3s ease;
-    margin-right: 6px;
 }
 
-.tab:hover .tab-icon {
-    filter: brightness(0) invert(1);
-}
-
+.tab:hover .tab-icon,
 .tab.active .tab-icon {
     filter: invert(39%) sepia(15%) saturate(2816%) hue-rotate(195deg) brightness(93%) contrast(84%);
 }
-
 .tab-content {
     display: none;
 }
