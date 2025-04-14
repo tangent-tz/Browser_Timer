@@ -227,20 +227,19 @@ button:hover {
     margin-bottom: 6px;
 }
 
-.status-label {
-    font-weight: 500;
-    margin-right: 4px;
-    opacity: 0.9;
+
+.status-label,
+.status-text {
+    color: #4DAC58;
+    opacity: 0.9;         /* Remove any opacity differences */
+/* make bold */
+    font-weight: bold;
+    margin-right: 2px;    /* Reduced from 6px */
 }
 
 .status-icon {
-    color: green; /* Green indicates running status. Adjust if you use different colors for paused. */
+    color: #4DAC58; /* Green indicates running status. Adjust if you use different colors for paused. */
     margin-right: 4px;
-}
-
-.status-text {
-    color: green;
-    font-weight: 500;
 }
 
 /* Timer Card Container - Compact Layout */
