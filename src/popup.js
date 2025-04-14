@@ -44,8 +44,26 @@ document.addEventListener("DOMContentLoaded", () => {
             console.warn("Please enter a valid time greater than 0.");
             return;
         }
-        chrome.runtime.sendMessage({ action: "startTimer", duration: totalSeconds }, (response) => {
-            console.log("Timer started:", response);
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (!tabs[0]) {
+                console.warn("No active tab found");
+                return;
+            }
+            const tab = tabs[0];
+            const tabId = tab.id;
+            const tabTitle = tab.title || `Tab ${tabId}`;
+            // Capture the favicon from the active tab.
+            const tabFavicon = tab.favIconUrl || "icons/timer.svg";
+            // Send the favicon along with the timer start request.
+            chrome.runtime.sendMessage({
+                action: "startTimer",
+                duration: totalSeconds,
+                tabFavicon,
+                tabTitle,
+                tabId
+            }, (response) => {
+                console.log("Timer started:", response);
+            });
         });
     });
 
@@ -81,8 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const header = document.createElement("div");
         header.className = "timer-card-header";
         const icon = document.createElement("img");
-        icon.src = "icons/timer.svg";  // Use your timer icon; you could also use a tab favicon if available.
-        icon.alt = "Timer Icon";
+        // Use the stored tab favicon; if missing, default to your timer icon.
+        icon.src = timer.tabFavicon || "icons/timer.svg";
+        icon.alt = "Tab Icon";
         icon.className = "timer-thumbnail";
         const titleSpan = document.createElement("span");
         titleSpan.className = "timer-title";
