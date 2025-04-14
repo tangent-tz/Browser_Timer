@@ -72,14 +72,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     controlButton = `<button class="resume-btn" data-timerid="${timer.timerId}">Resume</button>`;
                 }
                 div.innerHTML = `
-          <div>
-            <strong>Tab:</strong> ${timer.tabTitle} |
-            <strong>Remaining:</strong> ${remaining}s
-          </div>
-          ${controlButton}
-          <button class="reset-btn" data-timerid="${timer.timerId}">Reset</button>
-          <button class="cancel-btn" data-timerid="${timer.timerId}">Cancel</button>
-        `;
+  <div>
+    <strong>Tab:</strong> ${timer.tabTitle} |
+    <strong>Remaining:</strong> ${remaining}s
+  </div>
+  <div class="timer-controls">
+    ${controlButton} <!-- Pause or Resume -->
+    <button class="reset-btn" data-timerid="${timer.timerId}">Reset</button>
+    <button class="cancel-btn" data-timerid="${timer.timerId}">Cancel</button>
+  </div>
+`;
+
+
                 timersList.appendChild(div);
             });
 
