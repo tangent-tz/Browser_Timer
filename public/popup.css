@@ -1,6 +1,5 @@
-/* Base styles and theme variables */
+/* Theme Variables */
 :root {
-    /* Light theme */
     --body-bg-color: #f2f2f2;
     --container-bg-color: #fff;
     --text-color: #333;
@@ -31,7 +30,7 @@
     padding: 0;
 }
 
-/* Layout */
+/* Base Layout */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: var(--body-bg-color);
@@ -46,15 +45,15 @@ body {
     border-radius: var(--corner-radius);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     width: 290px;
-    padding: 16px;
+    padding: 8px;
     text-align: center;
     color: var(--text-color);
 }
 
-/* Typography */
 h1 {
-    font-size: var(--heading-font-size);
-    margin-bottom: 16px;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    padding: 0;
 }
 
 /* Tabs Component */
@@ -62,7 +61,7 @@ h1 {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
 
 .tab {
@@ -72,9 +71,9 @@ h1 {
     background: var(--container-bg-color);
     border: none;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.85rem;
     flex: 1;
-    padding: 10px;
+    padding: 6px;
     text-align: center;
 }
 
@@ -84,15 +83,14 @@ h1 {
 }
 
 .tab-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
     filter: brightness(0) invert(1);
     transition: filter 0.3s ease;
-    margin-right: 6px;
 }
 
-.tab:hover .tab-icon {
-    filter: brightness(0) invert(1);
-}
-
+.tab:hover .tab-icon,
 .tab.active .tab-icon {
     filter: invert(39%) sepia(15%) saturate(2816%) hue-rotate(195deg) brightness(93%) contrast(84%);
 }
@@ -105,12 +103,12 @@ h1 {
     display: block;
 }
 
-/* Input Components */
+/* Input Groups */
 .input-group {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 12px;
     width: 100%;
 }
 
@@ -123,29 +121,29 @@ h1 {
 
 .input-field label {
     font-size: 0.8rem;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
     opacity: 0.8;
 }
 
 .input-field input {
     width: 90%;
-    padding: 6px;
+    padding: 4.5px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     text-align: center;
     background-color: var(--input-bg);
     color: var(--text-color);
-    text-indent: 12px;
+    text-indent: 9px;
 }
 
-/* Button Component */
+/* Button Styles */
 button {
     background: var(--button-bg);
     border: none;
     border-radius: 4px;
-    padding: 8px 12px;
+    padding: 6px 9px;
     color: #fff;
-    margin: 6px 0;
+    margin: 4px 0;
     cursor: pointer;
     transition: background 0.3s ease;
 }
@@ -154,33 +152,139 @@ button:hover {
     background: var(--button-bg-hover);
 }
 
-/* Timer Components */
-.timer-entry {
+/* Timer Card */
+.timer-card {
+    background-color: var(--container-bg-color);
     border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: var(--input-bg);
-    text-align: left;
-    font-size: 0.9rem;
-    color: var(--text-color);
-    width: 100%;
+    border-radius: var(--corner-radius);
+    margin-bottom: 8px;
+    padding: 8px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.timer-entry button {
+.timer-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.timer-thumbnail {
+    width: 28px;
+    height: 28px;
+    object-fit: cover;
     margin-right: 6px;
-    font-size: 0.8rem;
+    border-radius: 4px;
+}
+
+.timer-title {
+    font-weight: 500;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.timer-status-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.status-label {
+    font-weight: 500;
+    opacity: 0.9;
+    margin-right: 2px;
+    color: #4DAC58;
+    font-weight: bold;
+}
+
+.status-text {
+    font-weight: 500;
+    line-height: 20px;
+    color: #4DAC58;
+    opacity: 0.9;
+    font-weight: bold;
+}
+
+.status-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: green;
+    color: white;
+    font-size: 12px;
+    line-height: 1;
+    transform: translateY(1px);
+    flex-shrink: 0;
+}
+
+.status-icon.paused {
+    background-color: gray;
+    transform: translateY(1px);
+}
+
+.status-icon.paused::before {
+    content: "⏸";
+}
+
+/* Progress Bar */
+.timer-progress {
+    height: 6px;
+    background-color: var(--border-color);
+    border-radius: 3px;
+    margin-bottom: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: green;
+    height: 100%;
+    width: 0;
+    transition: width 0.3s ease-in-out;
+}
+
+.timer-remaining-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3px;
+}
+
+.remaining-label {
+    font-weight: 500;
+    margin-right: 4px;
+    opacity: 0.9;
+}
+
+.remaining-value {
+    color: #ddd;
+    font-weight: 500;
 }
 
 .timer-controls {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+    margin-top: 3px;
 }
 
-/* Settings Components */
-.settings-item {
-    margin-bottom: 10px;
-    display: block;
+.timer-controls button {
+    flex: 1;
+    background: var(--button-bg);
+    border: none;
+    border-radius: 4px;
+    padding: 6px;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.timer-controls button:hover {
+    background: var(--button-bg-hover);
 }

@@ -31,6 +31,9 @@ function createNotificationsMock() {
 
 function createTabsMock() {
     return {
+        query: jest.fn((queryInfo, callback) => {
+            callback && callback([{ id: 123, title: "Test Tab", favIconUrl: "icons/timer.svg" }]);
+        }),
         remove: jest.fn((tabId, callback) => callback && callback()),
         onRemoved: {
             addListener: jest.fn()

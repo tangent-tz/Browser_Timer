@@ -2,15 +2,15 @@ function getTimerKey(timerId) {
     return "timer_" + timerId;
 }
 
-// Start a new timer: store state persistently and schedule an alarm.
-function startTimer(timerId, tabId, tabTitle, duration) {
+function startTimer(timerId, tabId, tabTitle, duration, tabFavicon) {
     const startTime = Date.now();
     const targetTime = startTime + duration * 1000;
     const timerObj = {
         timerId,
         tabId,
         tabTitle,
-        originalDuration: duration, // original full duration in seconds
+        tabFavicon,
+        originalDuration: duration,
         startTime,
         targetTime,
         paused: false
@@ -174,18 +174,27 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 // Message listener for operations from the popup UI.
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "startTimer") {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            if (!tabs[0]) {
-                sendResponse({ status: "No active tab" });
-                return;
-            }
-            const tabId = tabs[0].id;
-            const tabTitle = tabs[0].title || `Tab ${tabId}`;
-            const duration = request.duration; // in seconds
+        // Use provided tab details if available
+        if (request.tabId && request.tabTitle) {
             const timerId = Date.now().toString();
-            startTimer(timerId, tabId, tabTitle, duration);
+            startTimer(timerId, request.tabId, request.tabTitle, request.duration, request.tabFavicon);
             sendResponse({ status: "Timer started", timerId });
-        });
+        } else {
+            // Fallback to querying active tab if not provided
+            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                if (!tabs[0]) {
+                    sendResponse({ status: "No active tab" });
+                    return;
+                }
+                const tab = tabs[0];
+                const tabId = tab.id;
+                const tabTitle = tab.title || `Tab ${tabId}`;
+                const tabFavicon = tab.favIconUrl || "icons/timer.svg";
+                const timerId = Date.now().toString();
+                startTimer(timerId, tabId, tabTitle, request.duration, tabFavicon);
+                sendResponse({ status: "Timer started", timerId });
+            });
+        }
         return true;
     } else if (request.action === "pauseTimer") {
         pauseTimer(request.timerId, () => {
@@ -221,14 +230,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-// Listen for manual tab closures and clear the associated timer
+// Listener for manual tab closures and clear the associated timer
 chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
     chrome.storage.local.get(null, (items) => {
-        // Loop through all stored timer objects
         for (const key in items) {
             if (key.startsWith("timer_")) {
                 const timerObj = items[key];
-                // If the closed tab matches the timer's tab
                 if (timerObj.tabId === tabId) {
                     chrome.alarms.clear(timerObj.timerId, () => {
                         chrome.storage.local.remove(key, () => {

@@ -61,7 +61,7 @@ describe('Popup - Start Timer functionality', () => {
         startTimerBtn.click();
 
         expect(sendMessageSpy).toHaveBeenCalledWith(
-            { action: 'startTimer', duration: expectedDuration },
+            { action: 'startTimer', duration: expectedDuration, tabFavicon: "icons/timer.svg", tabTitle: "Test Tab", tabId: 123 },
             expect.any(Function)
         );
     });
@@ -79,40 +79,40 @@ describe("Popup Timer List Rendering", () => {
 
         // Set up the popup HTML structure.
         document.body.innerHTML = `
-      <div class="container">
-        <h1>Auto Tab Timer</h1>
-        <div class="tabs">
-          <button id="tabTimer" class="tab active">Timer</button>
-          <button id="tabSettings" class="tab">Settings</button>
-        </div>
-        <div id="timerSection" class="tab-content active">
-          <div class="input-group">
-            <div class="input-field">
-              <label for="hoursInput">Hours</label>
-              <input type="number" id="hoursInput" value="0" min="0">
+          <div class="container">
+            <h1>Auto Tab Timer</h1>
+            <div class="tabs">
+              <button id="tabTimer" class="tab active">Timer</button>
+              <button id="tabSettings" class="tab">Settings</button>
             </div>
-            <div class="input-field">
-              <label for="minutesInput">Minutes</label>
-              <input type="number" id="minutesInput" value="0" min="0">
+            <div id="timerSection" class="tab-content active">
+              <div class="input-group">
+                <div class="input-field">
+                  <label for="hoursInput">Hours</label>
+                  <input type="number" id="hoursInput" value="0" min="0">
+                </div>
+                <div class="input-field">
+                  <label for="minutesInput">Minutes</label>
+                  <input type="number" id="minutesInput" value="0" min="0">
+                </div>
+                <div class="input-field">
+                  <label for="secondsInput">Seconds</label>
+                  <input type="number" id="secondsInput" value="0" min="0">
+                </div>
+              </div>
+              <button id="startTimerBtn">Start Timer</button>
+              <div id="timersList"></div>
             </div>
-            <div class="input-field">
-              <label for="secondsInput">Seconds</label>
-              <input type="number" id="secondsInput" value="0" min="0">
+            <div id="settingsSection" class="tab-content">
+              <div class="settings-item">
+                <label>
+                  <input type="checkbox" id="notificationsToggle" checked>
+                  Enable Notifications
+                </label>
+              </div>
             </div>
           </div>
-          <button id="startTimerBtn">Start Timer</button>
-          <div id="timersList"></div>
-        </div>
-        <div id="settingsSection" class="tab-content">
-          <div class="settings-item">
-            <label>
-              <input type="checkbox" id="notificationsToggle" checked>
-              Enable Notifications
-            </label>
-          </div>
-        </div>
-      </div>
-    `;
+        `;
         jest.clearAllMocks();
         require('../src/popup.js');
         document.dispatchEvent(new Event("DOMContentLoaded"));
@@ -138,7 +138,7 @@ describe("Popup Timer List Rendering", () => {
             tabTitle: "Paused Tab",
             originalDuration: 300,
             paused: true,
-            remaining: 100                   // 100 seconds remaining directly provided
+            remaining: 100  // 100 seconds remaining directly provided
         };
 
         jest.spyOn(chrome.runtime, 'sendMessage').mockImplementation((msg, callback) => {
@@ -152,23 +152,28 @@ describe("Popup Timer List Rendering", () => {
 
         setTimeout(() => {
             const timersList = document.getElementById("timersList");
-            const timerEntries = timersList.querySelectorAll(".timer-entry");
+            const timerEntries = timersList.querySelectorAll(".timer-card");
             expect(timerEntries.length).toBe(2);
 
             // Verify active timer entry.
             const activeEntry = timerEntries[0].innerHTML;
             expect(activeEntry).toContain("Active Tab");
-            expect(activeEntry).toContain("60s");
+            expect(activeEntry).toContain("00:01:00");
             expect(activeEntry).toContain("pause-btn");
+
+            // Verify paused timer entry.
             const pausedEntry = timerEntries[1].innerHTML;
             expect(pausedEntry).toContain("Paused Tab");
-            expect(pausedEntry).toContain("100s");
+            expect(pausedEntry).toContain("00:01:40");
             expect(pausedEntry).toContain("resume-btn");
+
+            // Both entries should contain reset and cancel button markers.
             expect(activeEntry).toContain("reset-btn");
             expect(activeEntry).toContain("cancel-btn");
             expect(pausedEntry).toContain("reset-btn");
             expect(pausedEntry).toContain("cancel-btn");
 
+            // Simulate a click on the active timer's pause button.
             const pauseButton = timerEntries[0].querySelector(".pause-btn");
             pauseButton.click();
             expect(chrome.runtime.sendMessage).toHaveBeenCalledWith(
@@ -180,3 +185,4 @@ describe("Popup Timer List Rendering", () => {
         }, 1100);
     });
 });
+

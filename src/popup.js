@@ -44,50 +44,146 @@ document.addEventListener("DOMContentLoaded", () => {
             console.warn("Please enter a valid time greater than 0.");
             return;
         }
-        chrome.runtime.sendMessage({ action: "startTimer", duration: totalSeconds }, (response) => {
-            console.log("Timer started:", response);
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (!tabs[0]) {
+                console.warn("No active tab found");
+                return;
+            }
+            const tab = tabs[0];
+            const tabId = tab.id;
+            const tabTitle = tab.title || `Tab ${tabId}`;
+            // Capture the favicon from the active tab.
+            const tabFavicon = tab.favIconUrl || "icons/timer.svg";
+            // Send the favicon along with the timer start request.
+            chrome.runtime.sendMessage({
+                action: "startTimer",
+                duration: totalSeconds,
+                tabFavicon,
+                tabTitle,
+                tabId
+            }, (response) => {
+                console.log("Timer started:", response);
+            });
         });
     });
 
+
+    function formatTime(seconds) {
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
+        const s = seconds % 60;
+        return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+    }
+
+    function createTimerCard(timer) {
+        // Determine the remaining time.
+        let remaining;
+        if (timer.paused && timer.remaining !== undefined) {
+            remaining = timer.remaining;
+        } else if (timer.targetTime) {
+            remaining = Math.max(0, Math.floor((timer.targetTime - Date.now()) / 1000));
+        } else {
+            remaining = timer.originalDuration;
+        }
+
+        // Calculate progress as a percentage.
+        const elapsed = timer.originalDuration - remaining;
+        const percentage = (elapsed / timer.originalDuration) * 100;
+
+        // Create the card container.
+        const card = document.createElement("div");
+        card.className = "timer-card";
+
+        // 1) Header: Icon, tab title.
+        const header = document.createElement("div");
+        header.className = "timer-card-header";
+        const icon = document.createElement("img");
+        // Use the stored tab favicon; if missing, default to your timer icon.
+        icon.src = timer.tabFavicon || "icons/timer.svg";
+        icon.alt = "Tab Icon";
+        icon.className = "timer-thumbnail";
+        const titleSpan = document.createElement("span");
+        titleSpan.className = "timer-title";
+        titleSpan.textContent = timer.tabTitle;
+        header.appendChild(icon);
+        header.appendChild(titleSpan);
+        card.appendChild(header);
+
+        // 2) Status row: Label and Running/Paused text
+        const statusRow = document.createElement("div");
+        statusRow.className = "timer-status-row";
+        const statusLabel = document.createElement("span");
+        statusLabel.className = "status-label";
+        statusLabel.textContent = "Status:";
+        const statusText = document.createElement("span");
+        statusText.className = "status-text";
+        statusText.textContent = timer.paused ? "Paused" : "Running";
+        statusRow.appendChild(statusLabel);
+        statusRow.appendChild(statusText);
+        card.appendChild(statusRow);
+
+        // 3) Progress bar.
+        const progressContainer = document.createElement("div");
+        progressContainer.className = "timer-progress";
+        const progressBar = document.createElement("div");
+        progressBar.className = "progress-bar";
+        progressBar.style.width = percentage + "%";
+        progressContainer.appendChild(progressBar);
+        card.appendChild(progressContainer);
+
+        // 4) Remaining time row.
+        const remainingRow = document.createElement("div");
+        remainingRow.className = "timer-remaining-row";
+        const remainingLabel = document.createElement("span");
+        remainingLabel.className = "remaining-label";
+        remainingLabel.textContent = "Remaining:";
+        const remainingValue = document.createElement("span");
+        remainingValue.className = "remaining-value";
+        remainingValue.textContent = formatTime(remaining);
+        remainingRow.appendChild(remainingLabel);
+        remainingRow.appendChild(remainingValue);
+        card.appendChild(remainingRow);
+
+        // 5) Control buttons: Pause/Resume, Reset, Cancel.
+        const controls = document.createElement("div");
+        controls.className = "timer-controls";
+        const pauseResumeBtn = document.createElement("button");
+        pauseResumeBtn.setAttribute("data-timerid", timer.timerId);
+        if (timer.paused) {
+            pauseResumeBtn.className = "resume-btn";
+            pauseResumeBtn.textContent = "Resume";
+        } else {
+            pauseResumeBtn.className = "pause-btn";
+            pauseResumeBtn.textContent = "Pause";
+
+        }
+        const resetBtn = document.createElement("button");
+        resetBtn.className = "reset-btn";
+        resetBtn.textContent = "Reset";
+        resetBtn.setAttribute("data-timerid", timer.timerId);
+        const cancelBtn = document.createElement("button");
+        cancelBtn.className = "cancel-btn";
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.setAttribute("data-timerid", timer.timerId);
+
+        controls.appendChild(pauseResumeBtn);
+        controls.appendChild(resetBtn);
+        controls.appendChild(cancelBtn);
+        card.appendChild(controls);
+
+        return card;
+    }
     // Update the timers list UI every second.
     function updateTimersList() {
         chrome.runtime.sendMessage({ action: "getTimers" }, (resp) => {
             if (!resp || !resp.timers) return;
             timersList.innerHTML = "";
             resp.timers.forEach(timer => {
-                let remaining;
-                if (timer.paused && timer.remaining !== undefined) {
-                    remaining = timer.remaining;
-                } else if (timer.targetTime) {
-                    remaining = Math.max(0, Math.floor((timer.targetTime - Date.now()) / 1000));
-                } else {
-                    remaining = timer.originalDuration;
-                }
-                const div = document.createElement("div");
-                div.className = "timer-entry";
-                let controlButton = "";
-                if (!timer.paused) {
-                    controlButton = `<button class="pause-btn" data-timerid="${timer.timerId}">Pause</button>`;
-                } else {
-                    controlButton = `<button class="resume-btn" data-timerid="${timer.timerId}">Resume</button>`;
-                }
-                div.innerHTML = `
-  <div>
-    <strong>Tab:</strong> ${timer.tabTitle} |
-    <strong>Remaining:</strong> ${remaining}s
-  </div>
-  <div class="timer-controls">
-    ${controlButton} <!-- Pause or Resume -->
-    <button class="reset-btn" data-timerid="${timer.timerId}">Reset</button>
-    <button class="cancel-btn" data-timerid="${timer.timerId}">Cancel</button>
-  </div>
-`;
-
-
-                timersList.appendChild(div);
+                const timerCard = createTimerCard(timer);
+                timersList.appendChild(timerCard);
             });
 
-            // Attach event listeners for timer controls.
+            // Reassign event listeners for control buttons.
             document.querySelectorAll(".pause-btn").forEach(btn => {
                 btn.addEventListener("click", () => {
                     const timerId = btn.getAttribute("data-timerid");
