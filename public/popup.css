@@ -1,12 +1,6 @@
-/* popup.css */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-/* Light theme variables */
+/* Base styles and theme variables */
 :root {
+    /* Light theme */
     --body-bg-color: #f2f2f2;
     --container-bg-color: #fff;
     --text-color: #333;
@@ -18,7 +12,6 @@
     --corner-radius: 8px;
 }
 
-/* Dark theme overrides */
 @media (prefers-color-scheme: dark) {
     :root {
         --body-bg-color: #2a2a2a;
@@ -31,7 +24,14 @@
     }
 }
 
-/* Body container layout */
+/* Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Layout */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: var(--body-bg-color);
@@ -45,26 +45,36 @@ body {
     background-color: var(--container-bg-color);
     border-radius: var(--corner-radius);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    width: 270px;
+    width: 290px;
     padding: 16px;
     text-align: center;
     color: var(--text-color);
 }
 
-/* Tabs styles */
+/* Typography */
+h1 {
+    font-size: var(--heading-font-size);
+    margin-bottom: 16px;
+}
+
+/* Tabs Component */
 .tabs {
     display: flex;
-    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 
 .tab {
-    flex: 1;
-    padding: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--container-bg-color);
     border: none;
     cursor: pointer;
     font-size: 1rem;
+    flex: 1;
+    padding: 10px;
     text-align: center;
 }
 
@@ -73,7 +83,20 @@ body {
     font-weight: bold;
 }
 
-/* Tab content sections */
+.tab-icon {
+    filter: brightness(0) invert(1);
+    transition: filter 0.3s ease;
+    margin-right: 6px;
+}
+
+.tab:hover .tab-icon {
+    filter: brightness(0) invert(1);
+}
+
+.tab.active .tab-icon {
+    filter: invert(39%) sepia(15%) saturate(2816%) hue-rotate(195deg) brightness(93%) contrast(84%);
+}
+
 .tab-content {
     display: none;
 }
@@ -82,25 +105,20 @@ body {
     display: block;
 }
 
-h1 {
-    font-size: var(--heading-font-size);
-    margin-bottom: 16px;
-}
-
-/* Timer input fields container */
+/* Input Components */
 .input-group {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three columns, each takes 1 fraction of space */
-    gap: 10px; /* Spacing between columns */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
     margin-bottom: 16px;
-    width: 100%;                          /* ensure the group fills the parent width */
+    width: 100%;
 }
 
 .input-field {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Keeps label and input centered horizontally */
-    width: 100%;             /* each field spans its entire grid cell */
+    align-items: center;
+    width: 100%;
 }
 
 .input-field label {
@@ -110,18 +128,17 @@ h1 {
 }
 
 .input-field input {
-    width: 90%;             /* make input fill the .input-field width */
+    width: 90%;
     padding: 6px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
-    /* a bit right of center */
     text-align: center;
     background-color: var(--input-bg);
     color: var(--text-color);
-    text-indent: 12px;      /* Shift the first line 10px to the right */
+    text-indent: 12px;
 }
 
-/* Buttons */
+/* Button Component */
 button {
     background: var(--button-bg);
     border: none;
@@ -137,7 +154,7 @@ button:hover {
     background: var(--button-bg-hover);
 }
 
-/* Timer list (Timer Mode) */
+/* Timer Components */
 .timer-entry {
     border: 1px solid var(--border-color);
     border-radius: 4px;
@@ -148,7 +165,6 @@ button:hover {
     font-size: 0.9rem;
     color: var(--text-color);
     width: 100%;
-    box-sizing: border-box;
 }
 
 .timer-entry button {
@@ -156,15 +172,15 @@ button:hover {
     font-size: 0.8rem;
 }
 
-.settings-item {
-    margin-bottom: 10px;
-    /* Make sure each item is block-level */
-    display: block;
-}
-
 .timer-controls {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns, each 1 fraction unit */
-    gap: 8px; /* space between each button - adjust as needed */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
     margin-top: 8px;
+}
+
+/* Settings Components */
+.settings-item {
+    margin-bottom: 10px;
+    display: block;
 }
