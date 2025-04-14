@@ -52,9 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const tab = tabs[0];
             const tabId = tab.id;
             const tabTitle = tab.title || `Tab ${tabId}`;
-            // Capture the favicon from the active tab.
             const tabFavicon = tab.favIconUrl || "icons/timer.svg";
-            // Send the favicon along with the timer start request.
             chrome.runtime.sendMessage({
                 action: "startTimer",
                 duration: totalSeconds,

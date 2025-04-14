@@ -174,27 +174,41 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 // Message listener for operations from the popup UI.
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "startTimer") {
-        // Use provided tab details if available
-        if (request.tabId && request.tabTitle) {
-            const timerId = Date.now().toString();
-            startTimer(timerId, request.tabId, request.tabTitle, request.duration, request.tabFavicon);
-            sendResponse({ status: "Timer started", timerId });
-        } else {
-            // Fallback to querying active tab if not provided
-            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                if (!tabs[0]) {
-                    sendResponse({ status: "No active tab" });
-                    return;
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (!tabs[0]) {
+                sendResponse({ status: "No active tab" });
+                return;
+            }
+            const tab = tabs[0];
+            const tabId = tab.id;
+            const tabTitle = tab.title || `Tab ${tabId}`;
+            const tabFavicon = tab.favIconUrl || "icons/timer.svg";
+
+            chrome.storage.local.get(null, (items) => {
+                let activeTimerKey = null;
+                for (const key in items) {
+                    if (key.startsWith("timer_")) {
+                        const timer = items[key];
+                        if (timer.tabId === tabId && !timer.paused) {
+                            activeTimerKey = key;
+                            break;
+                        }
+                    }
                 }
-                const tab = tabs[0];
-                const tabId = tab.id;
-                const tabTitle = tab.title || `Tab ${tabId}`;
-                const tabFavicon = tab.favIconUrl || "icons/timer.svg";
-                const timerId = Date.now().toString();
-                startTimer(timerId, tabId, tabTitle, request.duration, tabFavicon);
-                sendResponse({ status: "Timer started", timerId });
+                if (activeTimerKey) {
+                    // Update the existing timer with the new duration.
+                    const activeTimer = items[activeTimerKey];
+                    updateTimer(activeTimer.timerId, request.duration, () => {
+                        sendResponse({ status: "Timer updated", timerId: activeTimer.timerId });
+                    });
+                } else {
+                    // No active timer found for this tab: start a new one.
+                    const timerId = Date.now().toString();
+                    startTimer(timerId, tabId, tabTitle, request.duration, tabFavicon);
+                    sendResponse({ status: "Timer started", timerId });
+                }
             });
-        }
+        });
         return true;
     } else if (request.action === "pauseTimer") {
         pauseTimer(request.timerId, () => {
@@ -290,6 +304,36 @@ setInterval(updateBadge, 1000);
 chrome.tabs.onActivated.addListener(() => {
     updateBadge();
 });
+
+function updateTimer(timerId, newDuration, callback) {
+    const key = getTimerKey(timerId);
+    chrome.storage.local.get(key, (result) => {
+        const timerObj = result[key];
+        if (!timerObj) {
+            console.log(`Timer ${timerId} not found for update`);
+            if (callback) callback("Timer not found");
+            return;
+        }
+        const newStartTime = Date.now();
+        const newTargetTime = newStartTime + newDuration * 1000;
+        // Update the timer object with the new duration and times.
+        timerObj.originalDuration = newDuration;
+        timerObj.startTime = newStartTime;
+        timerObj.targetTime = newTargetTime;
+        timerObj.paused = false;
+        if (timerObj.remaining) {
+            delete timerObj.remaining;
+        }
+        // Clear the existing alarm, update storage, then create a new alarm.
+        chrome.alarms.clear(timerId, () => {
+            chrome.storage.local.set({ [key]: timerObj }, () => {
+                chrome.alarms.create(timerId, { delayInMinutes: newDuration / 60 });
+                console.log(`Timer ${timerId} updated to new duration: ${newDuration} seconds`);
+                if (callback) callback(null, timerObj);
+            });
+        });
+    });
+}
 
 // Export functions for testing.
 module.exports = {
