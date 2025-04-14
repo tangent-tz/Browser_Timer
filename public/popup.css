@@ -190,9 +190,9 @@ button:hover {
     background-color: var(--container-bg-color);
     border: 1px solid var(--border-color);
     border-radius: var(--corner-radius);
-    margin-bottom: 8px;    /* Reduced from 10px */
-    padding: 8px;          /* Reduced from 12px */
-    font-size: 0.85rem;    /* Slightly smaller font */
+    margin-bottom: 5px;    /* 75% of 6px */
+    padding: 3px;          /* 75% of 4px */
+    font-size: 0.8rem;     /* Slightly reduced font size */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -200,16 +200,17 @@ button:hover {
 .timer-card-header {
     display: flex;
     align-items: center;
-    margin-bottom: 4px;    /* reduced from 6px */
+    margin-bottom: 3px;    /* Reduced from 4px */
 }
 
 .timer-thumbnail {
-    width: 32px;
-    height: 32px;
+    width: 21px;           /* 75% of previous 28px */
+    height: 21px;
+    margin-right: 4.5px;    /* 75% of previous 6px */
     object-fit: cover;
-    margin-right: 8px;
     border-radius: 4px;
 }
+
 
 .timer-title {
     font-weight: 500;
@@ -346,7 +347,7 @@ button:hover {
 .timer-remaining-row {
     display: flex;
     align-items: center;
-    margin-bottom: 4px;    /* reduced from 6px */
+    margin-bottom: 3px;    /* Reduced from 4px */
 }
 
 .remaining-label {
@@ -365,7 +366,7 @@ button:hover {
     display: flex;
     justify-content: space-between;
     gap: 4px;
-    margin-top: 4px;       /* reduced from 8px */
+    margin-top: 3px;       /* Reduced from 4px */
 }
 
 .timer-controls button {
