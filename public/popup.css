@@ -1,6 +1,5 @@
-/* Base styles and theme variables */
+/* Theme Variables */
 :root {
-    /* Light theme */
     --body-bg-color: #f2f2f2;
     --container-bg-color: #fff;
     --text-color: #333;
@@ -31,7 +30,7 @@
     padding: 0;
 }
 
-/* Layout */
+/* Base Layout */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: var(--body-bg-color);
@@ -46,15 +45,14 @@ body {
     border-radius: var(--corner-radius);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     width: 290px;
-    padding: 8px;            /* Reduced padding (from 16px) */
+    padding: 8px;
     text-align: center;
     color: var(--text-color);
 }
 
-/* Typography */
 h1 {
-    font-size: 1rem;         /* Reduced from 1.2rem for a compact look */
-    margin-bottom: 8px;       /* Reduced bottom margin */
+    font-size: 1rem;
+    margin-bottom: 8px;
     padding: 0;
 }
 
@@ -63,7 +61,7 @@ h1 {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 6px;      /* Reduced margin */
+    margin-bottom: 6px;
 }
 
 .tab {
@@ -73,12 +71,11 @@ h1 {
     background: var(--container-bg-color);
     border: none;
     cursor: pointer;
-    font-size: 0.85rem;      /* Smaller font size */
+    font-size: 0.85rem;
     flex: 1;
-    padding: 6px;            /* Reduced padding (was 10px) */
+    padding: 6px;
     text-align: center;
 }
-
 
 .tab.active {
     border-bottom: 3px solid var(--button-bg);
@@ -86,9 +83,9 @@ h1 {
 }
 
 .tab-icon {
-    width: 16px;             /* Smaller icon dimensions */
+    width: 16px;
     height: 16px;
-    margin-right: 4px;       /* Reduced spacing between icon and text */
+    margin-right: 4px;
     filter: brightness(0) invert(1);
     transition: filter 0.3s ease;
 }
@@ -97,6 +94,7 @@ h1 {
 .tab.active .tab-icon {
     filter: invert(39%) sepia(15%) saturate(2816%) hue-rotate(195deg) brightness(93%) contrast(84%);
 }
+
 .tab-content {
     display: none;
 }
@@ -105,12 +103,12 @@ h1 {
     display: block;
 }
 
-/* Input Components */
+/* Input Groups */
 .input-group {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;                  /* Was 10px */
-    margin-bottom: 12px;       /* Was 16px */
+    gap: 8px;
+    margin-bottom: 12px;
     width: 100%;
 }
 
@@ -123,29 +121,29 @@ h1 {
 
 .input-field label {
     font-size: 0.8rem;
-    margin-bottom: 3px;        /* Was 4px */
+    margin-bottom: 3px;
     opacity: 0.8;
 }
 
 .input-field input {
     width: 90%;
-    padding: 4.5px;            /* Was 6px */
+    padding: 4.5px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     text-align: center;
     background-color: var(--input-bg);
     color: var(--text-color);
-    text-indent: 9px;          /* Was 12px */
+    text-indent: 9px;
 }
 
-/* Buttons: Reduce padding and margins */
+/* Button Styles */
 button {
     background: var(--button-bg);
     border: none;
     border-radius: 4px;
-    padding: 6px 9px;          /* Was 8px 12px */
+    padding: 6px 9px;
     color: #fff;
-    margin: 4px 0;             /* Was 6px 0 */
+    margin: 4px 0;
     cursor: pointer;
     transition: background 0.3s ease;
 }
@@ -153,118 +151,29 @@ button {
 button:hover {
     background: var(--button-bg-hover);
 }
-/* Timer Components */
-.timer-entry {
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 7.5px;            /* Was 10px */
-    margin-bottom: 7.5px;       /* Was 10px */
-    background-color: var(--input-bg);
-    text-align: left;
-    font-size: 0.9rem;
-    color: var(--text-color);
-    width: 100%;
-}
 
-.timer-entry button {
-    margin-right: 4.5px;       /* Was 6px */
-    font-size: 0.8rem;
-}
-
-.timer-controls {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-top: 8px;
-}
-
-/* Settings Components */
-.settings-item {
-    margin-bottom: 10px;
-    display: block;
-}
-
-/* Timer Card Container - Compact Layout */
+/* Timer Card */
 .timer-card {
     background-color: var(--container-bg-color);
     border: 1px solid var(--border-color);
     border-radius: var(--corner-radius);
-    margin-bottom: 5px;        /* Was 8px */
-    padding: 3px;              /* Was 4px earlier in compact layout */
-    font-size: 0.8rem;         /* Slightly reduced */
+    margin-bottom: 8px;
+    padding: 8px;
+    font-size: 0.85rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Header: Icon and Title */
 .timer-card-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 3px;        /* Was 4px */
-}
-
-.timer-thumbnail {
-    width: 21px;               /* 75% of previous 28px */
-    height: 21px;
-    margin-right: 4.5px;        /* 75% of previous 6px */
-    object-fit: cover;
-    border-radius: 4px;
-}
-
-
-
-.timer-title {
-    font-weight: 500;
-    flex-grow: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Status Row */
-.timer-status-row {
     display: flex;
     align-items: center;
     margin-bottom: 6px;
 }
 
-
-.status-label,
-.status-text {
-    color: #4DAC58;
-    opacity: 0.9;         /* Remove any opacity differences */
-/* make bold */
-    font-weight: bold;
-    margin-right: 2px;    /* Reduced from 6px */
-}
-
-.status-icon {
-    color: #4DAC58; /* Green indicates running status. Adjust if you use different colors for paused. */
-    margin-right: 4px;
-}
-
-/* Timer Card Container - Compact Layout */
-.timer-card {
-    background-color: var(--container-bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--corner-radius);
-    margin-bottom: 8px;    /* Reduced from 10px */
-    padding: 8px;          /* Reduced from 12px */
-    font-size: 0.85rem;    /* Slightly smaller font */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Header: Icon and Title */
-.timer-card-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 6px;    /* Reduced bottom margin */
-}
-
 .timer-thumbnail {
-    width: 28px;           /* Slightly smaller image */
+    width: 28px;
     height: 28px;
     object-fit: cover;
-    margin-right: 6px;     /* Reduced spacing */
+    margin-right: 6px;
     border-radius: 4px;
 }
 
@@ -276,62 +185,59 @@ button:hover {
     text-overflow: ellipsis;
 }
 
-/* Status Row */
-/* Parent container remains a flex layout */
 .timer-status-row {
     display: flex;
     align-items: center;
     gap: 4px;
+    margin-bottom: 6px;
 }
 
-/* Status label remains unchanged */
 .status-label {
     font-weight: 500;
     opacity: 0.9;
+    margin-right: 2px;
+    color: #4DAC58;
+    font-weight: bold;
 }
 
-/* Adjust the circle icon container */
-.status-icon {
-    display: flex;               /* Flex container for centering */
-    align-items: center;
-    justify-content: center;
-    width: 20px;                 /* Increase size slightly if needed */
-    height: 20px;
-    border-radius: 50%;
-    background-color: green;     /* Green for "Running"; adjust if needed for "Paused" */
-    color: white;
-    font-size: 12px;
-    line-height: 1;              /* Ensure tight line-height */
-    /* Slight vertical tweak; adjust translateY value for better alignment */
-    transform: translateY(1px);
-    flex-shrink: 0;              /* Prevent shrinkage that might affect vertical positioning */
-}
-
-/* Set the text line-height to match the icon height */
 .status-text {
     font-weight: 500;
-    line-height: 20px;           /* Should match .status-icon's height */
-    /* If necessary, you can also use a slight margin adjustment */
-    margin-top: 0;
+    line-height: 20px;
+    color: #4DAC58;
+    opacity: 0.9;
+    font-weight: bold;
 }
 
-/* Optional: For paused status, you can adjust via a modifier class */
+.status-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: green;
+    color: white;
+    font-size: 12px;
+    line-height: 1;
+    transform: translateY(1px);
+    flex-shrink: 0;
+}
+
 .status-icon.paused {
     background-color: gray;
-    transform: translateY(1px); /* Adjust if paused icon needs a different offset */
+    transform: translateY(1px);
 }
 
 .status-icon.paused::before {
     content: "⏸";
 }
 
-
 /* Progress Bar */
 .timer-progress {
     height: 6px;
     background-color: var(--border-color);
     border-radius: 3px;
-    margin-bottom: 4px;    /* Reduced margin */
+    margin-bottom: 4px;
     overflow: hidden;
 }
 
@@ -342,11 +248,10 @@ button:hover {
     transition: width 0.3s ease-in-out;
 }
 
-/* Remaining Time Row */
 .timer-remaining-row {
     display: flex;
     align-items: center;
-    margin-bottom: 3px;        /* Was 4px */
+    margin-bottom: 3px;
 }
 
 .remaining-label {
@@ -360,12 +265,11 @@ button:hover {
     font-weight: 500;
 }
 
-/* Control Buttons Row */
 .timer-controls {
     display: flex;
     justify-content: space-between;
     gap: 4px;
-    margin-top: 3px;           /* Was 4px */
+    margin-top: 3px;
 }
 
 .timer-controls button {
@@ -373,9 +277,9 @@ button:hover {
     background: var(--button-bg);
     border: none;
     border-radius: 4px;
-    padding: 6px;        /* Reduced padding */
+    padding: 6px;
     color: #fff;
-    font-size: 0.8rem;   /* Slightly smaller font */
+    font-size: 0.8rem;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.3s ease;
