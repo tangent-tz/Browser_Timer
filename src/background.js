@@ -189,7 +189,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 for (const key in items) {
                     if (key.startsWith("timer_")) {
                         const timer = items[key];
-                        if (timer.tabId === tabId && !timer.paused) {
+                        if (timer.tabId === tabId) {
                             activeTimerKey = key;
                             break;
                         }
