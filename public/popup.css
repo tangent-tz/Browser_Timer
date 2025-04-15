@@ -9,6 +9,7 @@
     --border-color: #ccc;
     --input-bg: #fff;
     --corner-radius: 8px;
+    --timer-text-color: #333;  /* Dark text for light mode */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,6 +21,7 @@
         --button-bg-hover: #6966bb;
         --border-color: #666;
         --input-bg: #4a4a4a;
+        --timer-text-color: #ddd;  /* Lighter text for dark mode */
     }
 }
 
@@ -261,7 +263,7 @@ button:hover {
 }
 
 .remaining-value {
-    color: #ddd;
+    color: var(--timer-text-color);
     font-weight: 500;
 }
 
