@@ -301,6 +301,22 @@ chrome.tabs.onActivated.addListener(() => {
     updateBadge();
 });
 
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.title) {
+        chrome.storage.local.get(null, (items) => {
+            for (const key in items) {
+                if (key.startsWith("timer_") && items[key].tabId === tabId) {
+                    let timer = items[key];
+                    timer.tabTitle = tab.title;
+                    chrome.storage.local.set({ [key]: timer }, () => {
+                        console.log(`Updated timer ${timer.timerId} with new title: ${tab.title}`);
+                    });
+                }
+            }
+        });
+    }
+});
+
 // Export functions for testing.
 module.exports = {
     startTimer,
