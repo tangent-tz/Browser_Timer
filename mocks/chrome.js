@@ -40,7 +40,10 @@ function createTabsMock() {
         },
         onActivated: {
             addListener: jest.fn()
-        }
+        },
+        onUpdated: {
+            addListener: jest.fn()
+        },
     };
 }
 
