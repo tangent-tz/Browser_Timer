@@ -352,6 +352,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
                 if (key.startsWith("timer_") && items[key].tabId === tabId) {
                     let timer = items[key];
                     timer.tabTitle = tab.title;
+                    timer.tabFavicon = tab.favIconUrl || "icons/timer.svg";
                     chrome.storage.local.set({ [key]: timer }, () => {
                         console.log(`Updated timer ${timer.timerId} with new title: ${tab.title}`);
                     });
