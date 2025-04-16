@@ -52,6 +52,9 @@ function createRuntimeMock() {
         sendMessage: jest.fn(),
         onMessage: {
             addListener: jest.fn()
+        },
+        onStartup: {
+            addListener: jest.fn()
         }
     };
 }

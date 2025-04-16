@@ -344,6 +344,23 @@ function updateTimer(timerId, newDuration, callback) {
         });
     });
 }
+chrome.runtime.onStartup.addListener(() => {
+    chrome.tabs.query({}, (tabs) => {
+        const openTabIds = tabs.map(tab => tab.id);
+        chrome.storage.local.get(null, (items) => {
+            Object.keys(items).forEach(key => {
+                if (key.startsWith("timer_")) {
+                    const timer = items[key];
+                    if (!openTabIds.includes(timer.tabId)) {
+                        chrome.storage.local.remove(key, () => {
+                            console.log(`Removed stale timer for tab ${timer.tabId}`);
+                        });
+                    }
+                }
+            });
+        });
+    });
+});
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.title) {
