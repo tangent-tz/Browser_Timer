@@ -1,4 +1,3 @@
-/* Theme Variables */
 :root {
     --body-bg-color: #f2f2f2;
     --container-bg-color: #fff;
@@ -9,7 +8,7 @@
     --border-color: #ccc;
     --input-bg: #fff;
     --corner-radius: 8px;
-    --timer-text-color: #333;  /* Dark text for light mode */
+    --timer-text-color: #333;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,9 +20,29 @@
         --button-bg-hover: #6966bb;
         --border-color: #666;
         --input-bg: #4a4a4a;
-        --timer-text-color: #ddd;  /* Lighter text for dark mode */
+        --timer-text-color: #ddd;
     }
 }
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --body-bg-color: #f2f2f2;
+        --container-bg-color: #ffffff;
+        --text-color: #333333;
+        --button-bg: #4f4caf;
+        --button-bg-hover: #536edc;
+        --border-color: #ccc;
+        --input-bg: #ffffff;
+        --timer-text-color: #333333;
+    }
+    .tab {
+        color: #000; /* stronger contrast for text */
+    }
+    .tab-icon {
+        filter: brightness(0) invert(1);
+    }
+}
+
 
 /* Reset */
 * {
