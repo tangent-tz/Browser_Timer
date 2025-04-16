@@ -51,8 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             const tab = tabs[0];
             const tabId = tab.id;
+            const tabUrl = tab.url;
             const tabTitle = tab.title || `Tab ${tabId}`;
             const tabFavicon = tab.favIconUrl || "icons/timer.svg";
+            if (tabUrl === "chrome://newtab/" || tabUrl === "edge://newtab/") {
+                return;
+            }
             chrome.runtime.sendMessage({
                 action: "startTimer",
                 duration: totalSeconds,
