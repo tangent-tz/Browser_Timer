@@ -38,6 +38,25 @@ describe('Badge Update Logic', () => {
         done();
     });
 
+    test('displays seconds on the badge when less than a minute remains', (done) => {
+        const timer = {
+            timerId: "test_timer_sec",
+            tabId: 1,
+            tabTitle: "Active Tab",
+            originalDuration: 45,
+            startTime: fixedTime,
+            targetTime: fixedTime + 45 * 1000,
+            paused: false
+        };
+
+        global.chrome.storage.local.get = jest.fn((key, cb) => {
+            cb({ "timer_test_timer_sec": timer });
+        });
+        updateBadge();
+        expect(global.chrome.action.setBadgeText).toHaveBeenCalledWith({ text: "45s", tabId: 1 });
+        done();
+    });
+
     test('clears the badge when no active timer is found for the active tab', (done) => {
         global.chrome.storage.local.get = jest.fn((key, cb) => {
             cb({});

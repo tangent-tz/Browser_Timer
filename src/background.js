@@ -291,7 +291,7 @@ function updateBadge() {
                         const minutes = Math.floor((remaining % 3600) / 60);
                         badgeText = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
                     }
-                    else if (remaining < 3600) {
+                    else if (remaining >= 60) {
                         const minutes = Math.floor(remaining / 60);
                         const seconds = remaining % 60;
                         badgeText = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
