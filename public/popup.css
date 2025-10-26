@@ -9,6 +9,17 @@
     --input-bg: #fff;
     --corner-radius: 8px;
     --timer-text-color: #333;
+    --button-text-color: #fff;
+    --tab-text-color: #000;
+    --tab-icon-filter: brightness(0) invert(1);
+    --tab-icon-highlight-filter: invert(39%) sepia(15%) saturate(2816%) hue-rotate(195deg) brightness(93%) contrast(84%);
+    --container-shadow-color: rgba(0, 0, 0, 0.2);
+    --card-shadow-color: rgba(0, 0, 0, 0.1);
+    --status-active-color: #4DAC58;
+    --status-icon-active-bg: green;
+    --status-icon-text-color: #fff;
+    --status-icon-paused-bg: gray;
+    --progress-bar-bg: green;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,6 +32,17 @@
         --border-color: #666;
         --input-bg: #4a4a4a;
         --timer-text-color: #ddd;
+        --button-text-color: #f5f5f5;
+        --tab-text-color: #f5f5f5;
+        --tab-icon-filter: brightness(0) invert(1);
+        --tab-icon-highlight-filter: invert(39%) sepia(15%) saturate(2816%) hue-rotate(195deg) brightness(93%) contrast(84%);
+        --container-shadow-color: rgba(0, 0, 0, 0.4);
+        --card-shadow-color: rgba(0, 0, 0, 0.3);
+        --status-active-color: #7bd68f;
+        --status-icon-active-bg: #4dac58;
+        --status-icon-text-color: #f5f5f5;
+        --status-icon-paused-bg: #777;
+        --progress-bar-bg: #4dac58;
     }
 }
 
@@ -34,12 +56,17 @@
         --border-color: #ccc;
         --input-bg: #ffffff;
         --timer-text-color: #333333;
-    }
-    .tab {
-        color: #000; /* stronger contrast for text */
-    }
-    .tab-icon {
-        filter: brightness(0) invert(1);
+        --button-text-color: #ffffff;
+        --tab-text-color: #000000;
+        --tab-icon-filter: brightness(0) invert(1);
+        --tab-icon-highlight-filter: invert(39%) sepia(15%) saturate(2816%) hue-rotate(195deg) brightness(93%) contrast(84%);
+        --container-shadow-color: rgba(0, 0, 0, 0.2);
+        --card-shadow-color: rgba(0, 0, 0, 0.1);
+        --status-active-color: #4DAC58;
+        --status-icon-active-bg: green;
+        --status-icon-text-color: #ffffff;
+        --status-icon-paused-bg: gray;
+        --progress-bar-bg: green;
     }
 }
 
@@ -64,7 +91,7 @@ body {
 .container {
     background-color: var(--container-bg-color);
     border-radius: var(--corner-radius);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px var(--container-shadow-color);
     width: 290px;
     padding: 8px;
     text-align: center;
@@ -96,6 +123,7 @@ h1 {
     flex: 1;
     padding: 6px;
     text-align: center;
+    color: var(--tab-text-color);
 }
 
 .tab.active {
@@ -107,13 +135,13 @@ h1 {
     width: 16px;
     height: 16px;
     margin-right: 4px;
-    filter: brightness(0) invert(1);
+    filter: var(--tab-icon-filter);
     transition: filter 0.3s ease;
 }
 
 .tab:hover .tab-icon,
 .tab.active .tab-icon {
-    filter: invert(39%) sepia(15%) saturate(2816%) hue-rotate(195deg) brightness(93%) contrast(84%);
+    filter: var(--tab-icon-highlight-filter);
 }
 
 .tab-content {
@@ -163,7 +191,7 @@ button {
     border: none;
     border-radius: 4px;
     padding: 6px 9px;
-    color: #fff;
+    color: var(--button-text-color);
     margin: 4px 0;
     cursor: pointer;
     transition: background 0.3s ease;
@@ -181,7 +209,7 @@ button:hover {
     margin-bottom: 8px;
     padding: 8px;
     font-size: 0.85rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px var(--card-shadow-color);
 }
 
 .timer-card-header {
@@ -217,14 +245,14 @@ button:hover {
     font-weight: 500;
     opacity: 0.9;
     margin-right: 2px;
-    color: #4DAC58;
+    color: var(--status-active-color);
     font-weight: bold;
 }
 
 .status-text {
     font-weight: 500;
     line-height: 20px;
-    color: #4DAC58;
+    color: var(--status-active-color);
     opacity: 0.9;
     font-weight: bold;
 }
@@ -236,8 +264,8 @@ button:hover {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: green;
-    color: white;
+    background-color: var(--status-icon-active-bg);
+    color: var(--status-icon-text-color);
     font-size: 12px;
     line-height: 1;
     transform: translateY(1px);
@@ -245,7 +273,7 @@ button:hover {
 }
 
 .status-icon.paused {
-    background-color: gray;
+    background-color: var(--status-icon-paused-bg);
     transform: translateY(1px);
 }
 
@@ -263,7 +291,7 @@ button:hover {
 }
 
 .progress-bar {
-    background: green;
+    background: var(--progress-bar-bg);
     height: 100%;
     width: 0;
     transition: width 0.3s ease-in-out;
@@ -299,7 +327,7 @@ button:hover {
     border: none;
     border-radius: 4px;
     padding: 6px;
-    color: #fff;
+    color: var(--button-text-color);
     font-size: 0.8rem;
     font-weight: 500;
     cursor: pointer;
