@@ -39,8 +39,22 @@ describe('Popup theme manager', () => {
 
         await new Promise((resolve) => setTimeout(resolve, 0));
 
+        const setProperty = document.documentElement.style.setProperty;
+
         expect(chrome.theme.getCurrent).toHaveBeenCalled();
         expect(chrome.theme.onUpdated.addListener).toHaveBeenCalledWith(expect.any(Function));
-        expect(document.documentElement.style.setProperty).toHaveBeenCalledWith('--popup-bg', '#101010');
+        expect(setProperty).toHaveBeenCalledWith('--body-bg-color', '#101010');
+
+        const appliedVariables = new Map(setProperty.mock.calls.map(([key, value]) => [key, value]));
+
+        expect(appliedVariables.get('--container-bg-color')).toBe('#202020');
+        expect(appliedVariables.has('--button-bg')).toBe(true);
+        expect(appliedVariables.has('--button-bg-hover')).toBe(true);
+        expect(appliedVariables.has('--button-text-color')).toBe(true);
+        expect(appliedVariables.has('--container-shadow-color')).toBe(true);
+        expect(appliedVariables.has('--status-active-color')).toBe(true);
+        expect(appliedVariables.has('--tab-icon-filter')).toBe(true);
+        expect(appliedVariables.has('--popup-bg')).toBe(false);
+        expect(appliedVariables.has('--button-text')).toBe(false);
     });
 });

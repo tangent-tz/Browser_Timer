@@ -1,10 +1,10 @@
 const POPUP_THEME_STORAGE_KEY = "popupThemeVariables";
 
 const POPUP_CSS_VARIABLES = {
-    frame: "--popup-bg",
-    toolbar: "--popup-surface",
+    frame: "--body-bg-color",
+    toolbar: "--container-bg-color",
     tab_text: "--text-color",
-    toolbar_button_icon: "--button-icon"
+    toolbar_button_icon: "--accent-color"
 };
 
 function createThemeManager() {
@@ -94,19 +94,62 @@ function createThemeManager() {
 
         const background = baseColors.frame || defaults.frame;
         const surface = baseColors.toolbar || shadeColor(background, 0.06);
-        const textColor = ensureReadableColor(background, baseColors.tab_text || defaults.tab_text);
-        const buttonIconColor = ensureReadableColor(surface, baseColors.toolbar_button_icon || textColor);
-        const buttonBackground = shadeColor(surface, -0.18);
-        const borderColor = shadeColor(surface, -0.25);
+        const surfaceRgb = parseColorToRgb(surface);
+        const surfaceIsLight = surfaceRgb ? luminance(surfaceRgb) >= 0.5 : true;
+
+        const textCandidate = baseColors.tab_text || defaults.tab_text;
+        const textColor = ensureReadableColor(surface, textCandidate, background);
+        const tabTextColor = ensureReadableColor(surface, textCandidate, background);
+
+        const accentCandidate = baseColors.toolbar_button_icon || textColor;
+        const accentColor = ensureReadableColor(surface, accentCandidate, background, true);
+        const accent = accentColor || textColor;
+
+        const buttonBackground = surfaceIsLight ? shadeColor(accent, -0.3) : shadeColor(accent, 0.3);
+        const buttonTextColor = ensureReadableColor(buttonBackground, textColor, surface, true);
+        const buttonHover = surfaceIsLight ? shadeColor(buttonBackground, -0.12) : shadeColor(buttonBackground, 0.12);
+
+        const borderColor = surfaceIsLight ? shadeColor(surface, -0.25) : shadeColor(surface, 0.25);
+        const inputBackground = surfaceIsLight ? shadeColor(surface, 0.04) : shadeColor(surface, 0.18);
+
+        const containerShadowColor = surfaceIsLight ? "rgba(0, 0, 0, 0.18)" : "rgba(0, 0, 0, 0.6)";
+        const cardShadowColor = surfaceIsLight ? "rgba(0, 0, 0, 0.14)" : "rgba(0, 0, 0, 0.5)";
+
+        const statusActiveColor = accent;
+        const statusIconActiveBg = surfaceIsLight ? shadeColor(accent, -0.18) : shadeColor(accent, 0.18);
+        const statusIconTextColor = ensureReadableColor(statusIconActiveBg, buttonTextColor, surface, true);
+        const statusIconPausedBg = surfaceIsLight ? shadeColor(borderColor, -0.08) : shadeColor(borderColor, 0.12);
+
+        const progressBarBg = accent;
+        const timerTextColor = ensureReadableColor(surface, textColor, background);
+
+        const tabIconFilter = surfaceIsLight ? "none" : "brightness(0) invert(1)";
+        const iconGlow = withAlpha(accent, surfaceIsLight ? 0.5 : 0.7);
+        const tabIconHighlightFilter = tabIconFilter === "none"
+            ? `drop-shadow(0 0 2px ${iconGlow})`
+            : `${tabIconFilter} drop-shadow(0 0 2px ${iconGlow})`;
 
         return {
-            [POPUP_CSS_VARIABLES.frame]: background,
-            [POPUP_CSS_VARIABLES.toolbar]: surface,
-            [POPUP_CSS_VARIABLES.tab_text]: textColor,
-            [POPUP_CSS_VARIABLES.toolbar_button_icon]: buttonIconColor,
+            "--body-bg-color": background,
+            "--container-bg-color": surface,
+            "--text-color": textColor,
+            "--tab-text-color": tabTextColor,
             "--button-bg": buttonBackground,
-            "--button-text": ensureReadableColor(buttonBackground, textColor),
-            "--border-color": borderColor
+            "--button-bg-hover": buttonHover,
+            "--button-text-color": buttonTextColor,
+            "--border-color": borderColor,
+            "--input-bg": inputBackground,
+            "--timer-text-color": timerTextColor,
+            "--container-shadow-color": containerShadowColor,
+            "--card-shadow-color": cardShadowColor,
+            "--tab-icon-filter": tabIconFilter,
+            "--tab-icon-highlight-filter": tabIconHighlightFilter,
+            "--status-active-color": statusActiveColor,
+            "--status-icon-active-bg": statusIconActiveBg,
+            "--status-icon-text-color": statusIconTextColor,
+            "--status-icon-paused-bg": statusIconPausedBg,
+            "--progress-bar-bg": progressBarBg,
+            "--corner-radius": "8px"
         };
     };
 
@@ -261,6 +304,14 @@ const shadeColor = (color, percent) => {
     const g = Math.round((t - rgb.g) * p + rgb.g);
     const b = Math.round((t - rgb.b) * p + rgb.b);
     return rgbToCss({ r, g, b, a: rgb.a });
+};
+
+const withAlpha = (color, alpha) => {
+    const rgb = parseColorToRgb(color);
+    if (!rgb) {
+        return `rgba(0, 0, 0, ${alpha})`;
+    }
+    return `rgba(${Math.round(rgb.r)}, ${Math.round(rgb.g)}, ${Math.round(rgb.b)}, ${clampAlpha(alpha)})`;
 };
 
 const getDefaultPalette = () => {
