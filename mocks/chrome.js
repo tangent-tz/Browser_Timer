@@ -29,6 +29,21 @@ function createNotificationsMock() {
     };
 }
 
+function createThemeMock() {
+    return {
+        getCurrent: jest.fn((callback) => callback && callback(null)),
+        onUpdated: {
+            addListener: jest.fn()
+        }
+    };
+}
+
+function createManagementMock() {
+    return {
+        getAll: jest.fn((callback) => callback && callback([]))
+    };
+}
+
 function createTabsMock() {
     return {
         query: jest.fn((queryInfo, callback) => {
@@ -67,6 +82,8 @@ function createChromeMock() {
         },
         alarms: createAlarmsMock(),
         notifications: createNotificationsMock(),
+        theme: createThemeMock(),
+        management: createManagementMock(),
         tabs: createTabsMock(),
         runtime: createRuntimeMock()
     };
