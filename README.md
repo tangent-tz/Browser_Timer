@@ -48,6 +48,49 @@ You can also download the latest compiled version (ZIP file) from the release ta
    - Switch to the **Settings** tab in the popup.
    - Toggle the **Enable Notifications** option to control if you wish to receive notifications when a timer finishes.
 
+## Localization
+
+Auto Tab Timer is available in multiple languages:
+
+- **English** (default)
+- **Spanish** (Español)
+- **Japanese** (日本語)
+- **Portuguese (Brazil)** (Português Brasileiro)
+
+The extension automatically detects your browser's language setting and displays the appropriate translation. All UI elements, notifications, and badge text are fully localized.
+
+### Supported Languages
+
+| Language | Code | Status |
+|----------|------|--------|
+| English  | `en` | ✅ Complete |
+| Spanish  | `es` | ✅ Complete |
+| Japanese | `ja` | ✅ Complete |
+| Portuguese (Brazil) | `pt_BR` | ✅ Complete |
+
+### Adding New Translations
+
+If you'd like to contribute a translation:
+
+1. Create a new folder in `_locales/` with the appropriate language code (e.g., `_locales/fr/` for French)
+2. Copy `_locales/en/messages.json` to your new locale folder
+3. Translate all message values while keeping the same keys
+4. Ensure all placeholder structures remain identical
+5. Test your translation by loading the extension with your browser set to that locale
+6. Submit a pull request with your translation
+
+**Note:** All locale files must maintain identical keys with the English version. Our automated tests will verify this.
+
+### Store Listings
+
+The Chrome Web Store and Microsoft Edge Add-ons store require separate localization of:
+- Extension title
+- Short description
+- Full description
+- Screenshots (optional but recommended)
+
+These are managed separately from the `_locales/` files and must be updated manually in each store.
+
 ## Support
 
 If you encounter any issues please report it to the Issues Section
