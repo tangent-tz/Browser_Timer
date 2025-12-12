@@ -35,22 +35,6 @@
     "message": "Iniciar temporizador",
     "description": "Start timer button text"
   },
-  "preset60Minutes": {
-    "message": "60 min",
-    "description": "Preset button for 60 minutes"
-  },
-  "preset30Minutes": {
-    "message": "30 min",
-    "description": "Preset button for 30 minutes"
-  },
-  "preset10Minutes": {
-    "message": "10 min",
-    "description": "Preset button for 10 minutes"
-  },
-  "quickPresetsLabel": {
-    "message": "Preajustes",
-    "description": "Label for preset buttons section"
-  },
   "enableNotifications": {
     "message": "Habilitar notificaciones",
     "description": "Notifications toggle label"
@@ -162,3 +146,4 @@
     }
   }
 }
+

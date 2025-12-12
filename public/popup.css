@@ -173,46 +173,6 @@ button:hover {
     background: var(--button-bg-hover);
 }
 
-.preset-buttons {
-    margin-bottom: 12px;
-    text-align: left;
-}
-
-.preset-label {
-    display: block;
-    font-size: 0.8rem;
-    margin-bottom: 6px;
-    opacity: 0.9;
-    font-weight: 500;
-}
-
-.preset-container {
-    display: flex;
-    gap: 6px;
-}
-
-.preset-btn {
-    flex: 1;
-    background: var(--button-bg);
-    border: none;
-    border-radius: 4px;
-    padding: 8px;
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.1s ease;
-    white-space: nowrap;
-}
-
-.preset-btn:hover {
-    background: var(--button-bg-hover);
-}
-
-.preset-btn:active {
-    transform: scale(0.97);
-}
-
 /* Timer Card */
 .timer-card {
     background-color: var(--container-bg-color);

@@ -35,22 +35,6 @@
     "message": "タイマーを開始",
     "description": "Start timer button text"
   },
-  "preset60Minutes": {
-    "message": "60分",
-    "description": "Preset button for 60 minutes"
-  },
-  "preset30Minutes": {
-    "message": "30分",
-    "description": "Preset button for 30 minutes"
-  },
-  "preset10Minutes": {
-    "message": "10分",
-    "description": "Preset button for 10 minutes"
-  },
-  "quickPresetsLabel": {
-    "message": "プリセット",
-    "description": "Label for preset buttons section"
-  },
   "enableNotifications": {
     "message": "通知を有効にする",
     "description": "Notifications toggle label"
@@ -162,3 +146,4 @@
     }
   }
 }
+

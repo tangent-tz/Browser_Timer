@@ -39,7 +39,6 @@ describe('Popup - Start Timer functionality', () => {
     `;
 
         jest.clearAllMocks();
-        jest.resetModules();
         require('../src/popup.js');
 
         document.dispatchEvent(new Event('DOMContentLoaded'));
@@ -115,7 +114,6 @@ describe("Popup Timer List Rendering", () => {
           </div>
         `;
         jest.clearAllMocks();
-        jest.resetModules();
         require('../src/popup.js');
         document.dispatchEvent(new Event("DOMContentLoaded"));
     });
@@ -188,86 +186,3 @@ describe("Popup Timer List Rendering", () => {
     });
 });
 
-describe('Popup Preset Buttons', () => {
-    beforeEach(() => {
-        document.body.innerHTML = `
-      <div class="container">
-        <h1>Auto Tab Timer</h1>
-        <div class="tabs">
-          <button id="tabTimer" class="tab active">Timer</button>
-          <button id="tabSettings" class="tab">Settings</button>
-        </div>
-        <div id="timerSection" class="tab-content active">
-          <div class="input-group">
-            <div class="input-field">
-              <label for="hoursInput">Hours</label>
-              <input type="number" id="hoursInput" value="0" min="0">
-            </div>
-            <div class="input-field">
-              <label for="minutesInput">Minutes</label>
-              <input type="number" id="minutesInput" value="0" min="0">
-            </div>
-            <div class="input-field">
-              <label for="secondsInput">Seconds</label>
-              <input type="number" id="secondsInput" value="0" min="0">
-            </div>
-          </div>
-          <div class="preset-buttons">
-            <span class="preset-label">Quick presets:</span>
-            <div class="preset-container">
-              <button class="preset-btn" data-preset="600">10 min</button>
-              <button class="preset-btn" data-preset="1800">30 min</button>
-              <button class="preset-btn" data-preset="3600">60 min</button>
-            </div>
-          </div>
-          <button id="startTimerBtn">Start Timer</button>
-          <div id="timersList"></div>
-        </div>
-        <div id="settingsSection" class="tab-content">
-          <div class="settings-item">
-            <label>
-              <input type="checkbox" id="notificationsToggle" checked>
-              Enable Notifications
-            </label>
-          </div>
-        </div>
-      </div>
-    `;
-        jest.clearAllMocks();
-        jest.resetModules();
-        require('../src/popup.js');
-        document.dispatchEvent(new Event('DOMContentLoaded'));
-    });
-
-    test('10-min preset triggers startTimer with 600s', () => {
-        const presetButton = document.querySelector('.preset-btn[data-preset="600"]');
-        const spy = jest.spyOn(chrome.runtime, 'sendMessage');
-        presetButton.click();
-        expect(spy).toHaveBeenCalledWith(
-            {
-                action: 'startTimer',
-                duration: 600,
-                tabFavicon: 'icons/timer.svg',
-                tabTitle: 'Test Tab',
-                tabId: 123
-            },
-            expect.any(Function)
-        );
-    });
-
-    test('60-min preset triggers startTimer with 3600s', () => {
-        const presetButton = document.querySelector('.preset-btn[data-preset="3600"]');
-        const spy = jest.spyOn(chrome.runtime, 'sendMessage');
-        presetButton.click();
-        expect(spy).toHaveBeenCalledWith(
-            {
-                action: 'startTimer',
-                duration: 3600,
-                tabFavicon: 'icons/timer.svg',
-                tabTitle: 'Test Tab',
-                tabId: 123
-            },
-            expect.any(Function)
-        );
-    });
-});
