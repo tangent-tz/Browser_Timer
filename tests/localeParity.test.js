@@ -13,18 +13,19 @@
 const fs = require('fs');
 const path = require('path');
 
+const localesDir = path.join(__dirname, '..', '_locales');
+const localeCodes = fs.readdirSync(localesDir).filter(code =>
+    fs.statSync(path.join(localesDir, code)).isDirectory()
+);
+const localeMessages = localeCodes.reduce((acc, code) => {
+    const content = fs.readFileSync(path.join(localesDir, code, 'messages.json'), 'utf8');
+    acc[code] = JSON.parse(content);
+    return acc;
+}, {});
+const enMessages = localeMessages.en;
+const nonEnglishLocales = localeCodes.filter(code => code !== 'en');
+
 describe('Locale Parity Validation', () => {
-    const localesDir = path.join(__dirname, '..', '_locales');
-    const enMessagesPath = path.join(localesDir, 'en', 'messages.json');
-
-    let enMessages;
-
-    beforeAll(() => {
-        // Load English messages as source of truth
-        const enContent = fs.readFileSync(enMessagesPath, 'utf8');
-        enMessages = JSON.parse(enContent);
-    });
-
     test('English locale file exists and is valid JSON', () => {
         expect(enMessages).toBeDefined();
         expect(typeof enMessages).toBe('object');
@@ -39,89 +40,65 @@ describe('Locale Parity Validation', () => {
         });
     });
 
-    test('Spanish locale has identical keys to English', () => {
-        const esMessagesPath = path.join(localesDir, 'es', 'messages.json');
-        expect(fs.existsSync(esMessagesPath)).toBe(true);
+    describe.each(nonEnglishLocales)('%s locale parity checks', (locale) => {
+        const localeMessagesMap = localeMessages[locale];
+        const localeLabel = locale;
 
-        const esContent = fs.readFileSync(esMessagesPath, 'utf8');
-        const esMessages = JSON.parse(esContent);
+        test(`${localeLabel} locale has identical keys to English`, () => {
+            const enKeys = Object.keys(enMessages).sort();
+            const localeKeys = Object.keys(localeMessagesMap).sort();
 
-        const enKeys = Object.keys(enMessages).sort();
-        const esKeys = Object.keys(esMessages).sort();
+            const missingKeys = enKeys.filter(key => !localeKeys.includes(key));
+            const extraKeys = localeKeys.filter(key => !enKeys.includes(key));
 
-        // Check for missing keys in Spanish
-        const missingInSpanish = enKeys.filter(key => !esKeys.includes(key));
-        expect(missingInSpanish).toEqual([]);
+            expect(missingKeys).toEqual([]);
+            expect(extraKeys).toEqual([]);
+            expect(localeKeys).toEqual(enKeys);
+        });
 
-        // Check for extra keys in Spanish
-        const extraInSpanish = esKeys.filter(key => !enKeys.includes(key));
-        expect(extraInSpanish).toEqual([]);
+        test(`${localeLabel} locale has matching placeholder structure`, () => {
+            Object.keys(enMessages).forEach(key => {
+                const enEntry = enMessages[key];
+                const localeEntry = localeMessagesMap[key];
+                expect(localeEntry).toBeDefined();
 
-        // Verify exact match
-        expect(esKeys).toEqual(enKeys);
-    });
+                if (enEntry.placeholders) {
+                    expect(localeEntry.placeholders).toBeDefined();
+                    const enPlaceholders = Object.keys(enEntry.placeholders).sort();
+                    const localePlaceholders = Object.keys(localeEntry.placeholders).sort();
+                    expect(localePlaceholders).toEqual(enPlaceholders);
 
-    test('Spanish locale has matching placeholder structure', () => {
-        const esMessagesPath = path.join(localesDir, 'es', 'messages.json');
-        const esContent = fs.readFileSync(esMessagesPath, 'utf8');
-        const esMessages = JSON.parse(esContent);
-
-        Object.keys(enMessages).forEach(key => {
-            const enEntry = enMessages[key];
-            const esEntry = esMessages[key];
-
-            // If English has placeholders, Spanish must too
-            if (enEntry.placeholders) {
-                expect(esEntry.placeholders).toBeDefined();
-
-                const enPlaceholders = Object.keys(enEntry.placeholders).sort();
-                const esPlaceholders = Object.keys(esEntry.placeholders).sort();
-
-                expect(esPlaceholders).toEqual(enPlaceholders);
-
-                // Verify placeholder content structure matches
-                enPlaceholders.forEach(placeholder => {
-                    expect(esEntry.placeholders[placeholder]).toHaveProperty('content');
-                    expect(esEntry.placeholders[placeholder].content).toBe(
-                        enEntry.placeholders[placeholder].content
-                    );
-                });
-            }
-
-            // Spanish must not have placeholders if English doesn't
-            if (!enEntry.placeholders) {
-                expect(esEntry.placeholders).toBeUndefined();
-            }
+                    enPlaceholders.forEach(placeholder => {
+                        expect(localeEntry.placeholders[placeholder]).toHaveProperty('content');
+                        expect(localeEntry.placeholders[placeholder].content)
+                            .toBe(enEntry.placeholders[placeholder].content);
+                    });
+                } else {
+                    expect(localeEntry.placeholders).toBeUndefined();
+                }
+            });
         });
     });
 
-    test('Badge text messages are constrained to ≤4 characters', () => {
+    test('Badge text messages are constrained to ≤4 characters across locales', () => {
         const badgeKeys = ['badgeHours', 'badgeMinutes'];
 
         badgeKeys.forEach(key => {
-            expect(enMessages[key]).toBeDefined();
+            localeCodes.forEach(locale => {
+                const entry = localeMessages[locale][key];
+                expect(entry).toBeDefined();
 
-            // Badge messages use named placeholders like $h$, $m$, $s$
-            // When rendered with 2-digit values, result should be HH:MM or MM:SS (5 chars including colon)
-            const message = enMessages[key].message;
-
-            // Verify format contains placeholder markers
-            expect(message).toMatch(/\$/);
-
-            // Simulate actual rendering: replace placeholders with 2-digit values
-            let result = message;
-            const placeholders = enMessages[key].placeholders;
-            if (placeholders) {
-                Object.keys(placeholders).forEach(placeholderKey => {
-                    const placeholder = placeholders[placeholderKey];
-                    const pattern = new RegExp(`\\$${placeholderKey}\\$`, 'g');
-                    result = result.replace(pattern, '00');
-                });
-            }
-
-            // Final badge text should be ≤5 chars (HH:MM format)
-            expect(result.length).toBeLessThanOrEqual(5);
-            expect(result).toMatch(/^\d{2}:\d{2}$/);
+                let result = entry.message;
+                const placeholders = entry.placeholders;
+                if (placeholders) {
+                    Object.keys(placeholders).forEach(placeholderKey => {
+                        const pattern = new RegExp(`\\$${placeholderKey}\\$`, 'g');
+                        result = result.replace(pattern, '00');
+                    });
+                }
+                expect(result.length).toBeLessThanOrEqual(5);
+                expect(result).toMatch(/^\d{2}:\d{2}$/);
+            });
         });
     });
 
@@ -135,14 +112,10 @@ describe('Locale Parity Validation', () => {
             expect(enMessages[oneKey]).toBeDefined();
             expect(enMessages[otherKey]).toBeDefined();
 
-            // Check that messages contain placeholder references (named or numbered)
             const oneMsg = enMessages[oneKey].message;
             const otherMsg = enMessages[otherKey].message;
-
-            expect(oneMsg).toMatch(/\$\w+\$/); // Named placeholder like $count$
+            expect(oneMsg).toMatch(/\$\w+\$/);
             expect(otherMsg).toMatch(/\$\w+\$/);
-
-            // Verify both have placeholders defined
             expect(enMessages[oneKey].placeholders).toBeDefined();
             expect(enMessages[otherKey].placeholders).toBeDefined();
         });
@@ -150,7 +123,6 @@ describe('Locale Parity Validation', () => {
 
     test('All message keys use camelCase naming convention', () => {
         Object.keys(enMessages).forEach(key => {
-            // Check for camelCase or explicit plural pattern (word_one, word_other)
             const isValid = /^[a-z][a-zA-Z0-9]*(_one|_other)?$/.test(key);
             expect(isValid).toBe(true);
         });
@@ -160,15 +132,10 @@ describe('Locale Parity Validation', () => {
         Object.keys(enMessages).forEach(key => {
             const entry = enMessages[key];
             if (entry.placeholders) {
-                const message = entry.message;
                 const placeholderKeys = Object.keys(entry.placeholders);
-
-                placeholderKeys.forEach((placeholderKey, index) => {
+                placeholderKeys.forEach((placeholderKey) => {
                     const placeholder = entry.placeholders[placeholderKey];
-                    // Verify placeholder content references correct $N
                     expect(placeholder.content).toMatch(/^\$\d+$/);
-
-                    // Extract the number
                     const num = parseInt(placeholder.content.substring(1));
                     expect(num).toBeGreaterThan(0);
                     expect(num).toBeLessThanOrEqual(placeholderKeys.length);
@@ -236,4 +203,3 @@ describe('Localization Documentation', () => {
         }
     });
 });
-

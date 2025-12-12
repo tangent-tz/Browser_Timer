@@ -1,104 +1,104 @@
 {
   "extensionName": {
-    "message": "Temporizador Automático de Pestañas",
+    "message": "タブ自動タイマー",
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Cierra pestañas automáticamente después de una cuenta regresiva.",
+    "message": "カウントダウン後にタブを自動的に閉じます。",
     "description": "Description of the extension"
   },
   "extensionTitle": {
-    "message": "Temporizador Automático de Pestañas",
+    "message": "タブ自動タイマー",
     "description": "Title displayed in popup header"
   },
   "tabTimer": {
-    "message": "Temporizador",
+    "message": "タイマー",
     "description": "Timer tab label"
   },
   "tabSettings": {
-    "message": "Ajustes",
+    "message": "設定",
     "description": "Settings tab label"
   },
   "hoursLabel": {
-    "message": "Horas",
+    "message": "時間",
     "description": "Hours input label"
   },
   "minutesLabel": {
-    "message": "Minutos",
+    "message": "分",
     "description": "Minutes input label"
   },
   "secondsLabel": {
-    "message": "Segundos",
+    "message": "秒",
     "description": "Seconds input label"
   },
   "startTimerButton": {
-    "message": "Iniciar temporizador",
+    "message": "タイマーを開始",
     "description": "Start timer button text"
   },
   "enableNotifications": {
-    "message": "Habilitar notificaciones",
+    "message": "通知を有効にする",
     "description": "Notifications toggle label"
   },
   "statusLabel": {
-    "message": "Estado:",
+    "message": "ステータス:",
     "description": "Status label in timer card"
   },
   "statusRunning": {
-    "message": "Activo",
+    "message": "稼働中",
     "description": "Timer status when running"
   },
   "statusPaused": {
-    "message": "Pausado",
+    "message": "一時停止中",
     "description": "Timer status when paused"
   },
   "remainingLabel": {
-    "message": "Restante:",
+    "message": "残り時間:",
     "description": "Remaining time label"
   },
   "pauseButton": {
-    "message": "Pausar",
+    "message": "一時停止",
     "description": "Pause button text"
   },
   "resumeButton": {
-    "message": "Reanudar",
+    "message": "再開",
     "description": "Resume button text"
   },
   "resetButton": {
-    "message": "Reiniciar",
+    "message": "リセット",
     "description": "Reset button text"
   },
   "cancelButton": {
-    "message": "Cancelar",
+    "message": "キャンセル",
     "description": "Cancel button text"
   },
   "notificationTitle": {
-    "message": "Temporizador Finalizado",
+    "message": "タイマーが完了しました",
     "description": "Notification title when timer completes"
   },
   "notificationMessage": {
-    "message": "El temporizador en \"$tabTitle$\" ha finalizado.",
+    "message": "\"$tabTitle$\" のタイマーが完了しました。",
     "description": "Notification message when timer completes",
     "placeholders": {
       "tabTitle": {
         "content": "$1",
-        "example": "YouTube - Título del Video"
+        "example": "YouTube - 動画タイトル"
       }
     }
   },
   "timerAltIcon": {
-    "message": "Icono de Temporizador",
+    "message": "タイマーアイコン",
     "description": "Alt text for timer icon"
   },
   "settingsAltIcon": {
-    "message": "Icono de Ajustes",
+    "message": "設定アイコン",
     "description": "Alt text for settings icon"
   },
   "tabAltIcon": {
-    "message": "Icono de Pestaña",
+    "message": "タブアイコン",
     "description": "Alt text for tab favicon"
   },
   "timersCount_one": {
-    "message": "$count$ temporizador activo",
+    "message": "タイマーが $count$ 件稼働中",
     "description": "Singular form for timer count",
     "placeholders": {
       "count": {
@@ -108,7 +108,7 @@
     }
   },
   "timersCount_other": {
-    "message": "$count$ temporizadores activos",
+    "message": "タイマーが $count$ 件稼働中",
     "description": "Plural form for timer count",
     "placeholders": {
       "count": {
