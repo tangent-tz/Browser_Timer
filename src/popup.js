@@ -42,12 +42,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const notificationsToggle = document.getElementById("notificationsToggle");
 
     // Initialize notifications toggle state:
-    chrome.storage.sync.get("notificationsEnabled", (data) => {
-        notificationsToggle.checked = data.notificationsEnabled !== false;
-    });
-    notificationsToggle.addEventListener("change", () => {
-        chrome.storage.sync.set({ notificationsEnabled: notificationsToggle.checked });
-    });
+    if (notificationsToggle) {
+        chrome.storage.sync.get("notificationsEnabled", (data) => {
+            if (!data) return;
+            const toggle = document.getElementById("notificationsToggle");
+            if (toggle) {
+                toggle.checked = data.notificationsEnabled !== false;
+            }
+        });
+        notificationsToggle.addEventListener("change", () => {
+            const toggle = document.getElementById("notificationsToggle");
+            if (toggle) {
+                chrome.storage.sync.set({ notificationsEnabled: toggle.checked });
+            }
+        });
+    }
 
     tabTimer.addEventListener("click", () => {
         tabTimer.classList.add("active");
@@ -75,6 +84,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const m = parseInt(minutesInput.value, 10) || 0;
         const s = parseInt(secondsInput.value, 10) || 0;
         const totalSeconds = h * 3600 + m * 60 + s;
+        startTimerForDuration(totalSeconds);
+    });
+
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const presetSeconds = parseInt(btn.getAttribute('data-preset'), 10);
+            startTimerForDuration(presetSeconds);
+        });
+    });
+
+
+    function startTimerForDuration(totalSeconds) {
         if (totalSeconds <= 0) {
             console.warn("Please enter a valid time greater than 0.");
             return;
@@ -102,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log("Timer started:", response);
             });
         });
-    });
+    }
 
 
     function formatTime(seconds) {
