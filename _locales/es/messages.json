@@ -44,7 +44,7 @@
     "description": "Status label in timer card"
   },
   "statusRunning": {
-    "message": "Activo",
+    "message": "En ejecución",
     "description": "Timer status when running"
   },
   "statusPaused": {
