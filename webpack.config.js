@@ -4,6 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'production',
+    devtool: false, // Disable eval-based source maps for CSP compliance
     entry: {
         background: path.join(__dirname, 'src', 'background.js'),
         popup: path.join(__dirname, 'src', 'popup.js'),
@@ -56,7 +57,8 @@ module.exports = {
     plugins: [
         new CopyPlugin({
             patterns: [
-                { from: 'public', to: '' }
+                { from: 'public', to: '' },
+                { from: '_locales', to: '_locales' }
             ],
         }),
     ],

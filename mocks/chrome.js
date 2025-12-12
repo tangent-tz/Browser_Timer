@@ -55,7 +55,59 @@ function createRuntimeMock() {
         },
         onStartup: {
             addListener: jest.fn()
-        }
+        },
+        lastError: undefined
+    };
+}
+
+function createI18nMock() {
+    // English locale messages for testing
+    const messages = {
+        extensionName: "Auto Tab Timer",
+        extensionDescription: "Automatically closes tabs after a countdown.",
+        extensionTitle: "Auto Tab Timer",
+        tabTimer: "Timer",
+        tabSettings: "Settings",
+        hoursLabel: "Hours",
+        minutesLabel: "Minutes",
+        secondsLabel: "Seconds",
+        startTimerButton: "Start Timer",
+        enableNotifications: "Enable Notifications",
+        statusLabel: "Status:",
+        statusRunning: "Running",
+        statusPaused: "Paused",
+        remainingLabel: "Remaining:",
+        pauseButton: "Pause",
+        resumeButton: "Resume",
+        resetButton: "Reset",
+        cancelButton: "Cancel",
+        notificationTitle: "Timer Finished",
+        notificationMessage: "Timer on \"$1\" completed.",
+        timerAltIcon: "Timer Icon",
+        settingsAltIcon: "Settings Icon",
+        tabAltIcon: "Tab Icon",
+        timersCount_one: "$1 timer active",
+        timersCount_other: "$1 timers active",
+        badgeHours: "$1:$2",
+        badgeMinutes: "$1:$2"
+    };
+
+    return {
+        getMessage: jest.fn((key, substitutions) => {
+            let message = messages[key] || "";
+            if (substitutions) {
+                substitutions.forEach((sub, index) => {
+                    message = message.replace(`$${index + 1}`, sub);
+                });
+            }
+            return message;
+        })
+    };
+}
+
+function createActionMock() {
+    return {
+        setBadgeText: jest.fn()
     };
 }
 
@@ -68,7 +120,9 @@ function createChromeMock() {
         alarms: createAlarmsMock(),
         notifications: createNotificationsMock(),
         tabs: createTabsMock(),
-        runtime: createRuntimeMock()
+        runtime: createRuntimeMock(),
+        i18n: createI18nMock(),
+        action: createActionMock()
     };
 }
 

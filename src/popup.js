@@ -1,4 +1,39 @@
+// Localize all elements with data-i18n attributes before first paint
+function localizeStaticContent() {
+    // Localize text content
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const message = chrome.i18n.getMessage(key);
+        if (message) {
+            element.textContent = message;
+        }
+    });
+
+    // Localize alt attributes
+    document.querySelectorAll('[data-i18n-alt]').forEach(element => {
+        const key = element.getAttribute('data-i18n-alt');
+        const message = chrome.i18n.getMessage(key);
+        if (message) {
+            element.alt = message;
+        }
+    });
+}
+
+// Helper to get localized message with substitutions
+function getLocalizedMessage(key, substitutions) {
+    return chrome.i18n.getMessage(key, substitutions);
+}
+
+// Helper for explicit plural selection
+function getPluralMessage(baseKey, count) {
+    const pluralKey = count === 1 ? `${baseKey}_one` : `${baseKey}_other`;
+    return chrome.i18n.getMessage(pluralKey, [count.toString()]);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    // Apply all static localizations immediately
+    localizeStaticContent();
+
     // Tab switching logic:
     const tabTimer = document.getElementById("tabTimer");
     const tabSettings = document.getElementById("tabSettings");
@@ -102,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const icon = document.createElement("img");
         // Use the stored tab favicon; if missing, default to your timer icon.
         icon.src = timer.tabFavicon || "icons/timer.svg";
-        icon.alt = "Tab Icon";
+        icon.alt = getLocalizedMessage("tabAltIcon");
         icon.className = "timer-thumbnail";
         const titleSpan = document.createElement("span");
         titleSpan.className = "timer-title";
@@ -116,10 +151,12 @@ document.addEventListener("DOMContentLoaded", () => {
         statusRow.className = "timer-status-row";
         const statusLabel = document.createElement("span");
         statusLabel.className = "status-label";
-        statusLabel.textContent = "Status:";
+        statusLabel.textContent = getLocalizedMessage("statusLabel");
         const statusText = document.createElement("span");
         statusText.className = "status-text";
-        statusText.textContent = timer.paused ? "Paused" : "Running";
+        statusText.textContent = timer.paused
+            ? getLocalizedMessage("statusPaused")
+            : getLocalizedMessage("statusRunning");
         statusRow.appendChild(statusLabel);
         statusRow.appendChild(statusText);
         card.appendChild(statusRow);
@@ -138,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
         remainingRow.className = "timer-remaining-row";
         const remainingLabel = document.createElement("span");
         remainingLabel.className = "remaining-label";
-        remainingLabel.textContent = "Remaining:";
+        remainingLabel.textContent = getLocalizedMessage("remainingLabel");
         const remainingValue = document.createElement("span");
         remainingValue.className = "remaining-value";
         remainingValue.textContent = formatTime(remaining);
@@ -153,19 +190,19 @@ document.addEventListener("DOMContentLoaded", () => {
         pauseResumeBtn.setAttribute("data-timerid", timer.timerId);
         if (timer.paused) {
             pauseResumeBtn.className = "resume-btn";
-            pauseResumeBtn.textContent = "Resume";
+            pauseResumeBtn.textContent = getLocalizedMessage("resumeButton");
         } else {
             pauseResumeBtn.className = "pause-btn";
-            pauseResumeBtn.textContent = "Pause";
+            pauseResumeBtn.textContent = getLocalizedMessage("pauseButton");
 
         }
         const resetBtn = document.createElement("button");
         resetBtn.className = "reset-btn";
-        resetBtn.textContent = "Reset";
+        resetBtn.textContent = getLocalizedMessage("resetButton");
         resetBtn.setAttribute("data-timerid", timer.timerId);
         const cancelBtn = document.createElement("button");
         cancelBtn.className = "cancel-btn";
-        cancelBtn.textContent = "Cancel";
+        cancelBtn.textContent = getLocalizedMessage("cancelButton");
         cancelBtn.setAttribute("data-timerid", timer.timerId);
 
         controls.appendChild(pauseResumeBtn);

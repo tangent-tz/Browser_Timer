@@ -152,7 +152,10 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         const remaining = Math.floor((timerObj.targetTime - Date.now()) / 1000);
         console.log(`Timer ${timerId}: remaining ${remaining} seconds`);
         if (remaining <= 0) {
-            showNotification("Timer Finished", `Timer on "${timerObj.tabTitle}" completed.`);
+            // Get localized notification strings
+            const notifTitle = chrome.i18n.getMessage("notificationTitle");
+            const notifMessage = chrome.i18n.getMessage("notificationMessage", [timerObj.tabTitle]);
+            showNotification(notifTitle, notifMessage);
             // Timer expired: close the tab.
             chrome.tabs.remove(timerObj.tabId, () => {
                 if (chrome.runtime.lastError) {
@@ -289,12 +292,18 @@ function updateBadge() {
                     if (remaining >= 3600) {
                         const hours = Math.floor(remaining / 3600);
                         const minutes = Math.floor((remaining % 3600) / 60);
-                        badgeText = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+                        const h = hours.toString().padStart(2, "0");
+                        const m = minutes.toString().padStart(2, "0");
+                        // Use localized badge format (stays ≤4 chars: HH:MM)
+                        badgeText = chrome.i18n.getMessage("badgeHours", [h, m]) || `${h}:${m}`;
                     }
                     else if (remaining < 3600) {
                         const minutes = Math.floor(remaining / 60);
                         const seconds = remaining % 60;
-                        badgeText = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+                        const m = minutes.toString().padStart(2, "0");
+                        const s = seconds.toString().padStart(2, "0");
+                        // Use localized badge format (stays ≤4 chars: MM:SS)
+                        badgeText = chrome.i18n.getMessage("badgeMinutes", [m, s]) || `${m}:${s}`;
                     }
                     else {
                         badgeText = `${remaining}s`;

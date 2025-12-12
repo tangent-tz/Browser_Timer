@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Auto Tab Timer",
-  "version": "1.1.0",
-  "description": "Automatically closes tabs after a countdown.",
+  "name": "__MSG_extensionName__",
+  "version": "1.2.0",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "en",
   "permissions": [
     "activeTab",
     "tabs",
