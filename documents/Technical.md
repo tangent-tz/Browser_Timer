@@ -49,6 +49,80 @@ Communication between these layers occurs via Chrome’s messaging system.
 - **Role:**
     - Bundles and transpiles JavaScript modules for production.
     - Copies static assets (including manifest and HTML files) into the final build directory.
+
+### 3.5 Internationalization (i18n)
+- **Files:** `_locales/en/messages.json`, `_locales/es/messages.json`, `_locales/ja/messages.json`, `_locales/pt_BR/messages.json`
+- **Role:**
+    - Provides localized strings for all user-facing text
+    - Supports Chrome's built-in i18n system
+    - Enables automatic language detection based on browser settings
+
+#### Localization Architecture
+
+The extension uses Chrome's native i18n API (`chrome.i18n.getMessage`) for all user-facing text:
+
+**Supported Locales:**
+- `en` (English) - Source of truth
+- `es` (Spanish)
+- `ja` (Japanese)
+- `pt_BR` (Portuguese - Brazil)
+
+**Key Features:**
+1. **Static Content Localization**: All HTML elements use `data-i18n` attributes that are processed on `DOMContentLoaded`
+2. **Dynamic Content Localization**: JavaScript uses `chrome.i18n.getMessage()` for runtime-generated UI elements
+3. **Placeholder Substitution**: Messages support named placeholders (e.g., `$tabTitle$`, `$count$`)
+4. **Explicit Pluralization**: Plural forms use explicit `_one`/`_other` suffixes (e.g., `timersCount_one`, `timersCount_other`)
+
+**Badge Text Constraints:**
+- Badge text is constrained to ≤5 characters (format: `HH:MM` or `MM:SS`)
+- Both English and Spanish badge formats maintain this constraint
+- Visual check: Longest Spanish badge text is `23:59` (5 chars)
+
+**Developer Logs:**
+- Console/debug logs remain in English for consistency across development environments
+- Only user-facing UI, notifications, and badge text are localized
+
+#### Adding New Locales
+
+To add a new language:
+
+1. **Create locale directory**: `_locales/{language_code}/`
+2. **Copy source of truth**: Copy `_locales/en/messages.json` to the new directory
+3. **Translate messages**: Translate all `message` values while preserving:
+   - All keys (must match English exactly)
+   - Placeholder structures
+   - Placeholder content references (e.g., `$1`, `$2`)
+4. **Handle pluralization**: 
+   - Many languages have more than 2 plural forms
+   - Use explicit key suffixes based on CLDR plural rules
+   - Example for languages with 3 forms: `key_zero`, `key_one`, `key_other`
+5. **Validate parity**: Run `npm test` to ensure locale parity tests pass
+6. **Test in browser**: Set browser language to test locale and verify all UI elements
+
+#### Locale Parity Validation
+
+The project includes automated tests (`tests/localeParity.test.js`) that enforce:
+- All locale files (currently en/es/ja/pt_BR) have identical keys
+- Placeholder structures match between locales
+- Badge text adheres to length constraints
+- Pluralization patterns follow explicit key naming
+- Placeholder substitutions are correctly numbered
+
+**CI/CD Integration:**
+Tests will fail if:
+- Any key is missing in a locale file
+- Placeholder definitions don't match
+- Badge text exceeds length constraints
+
+#### Future Locale Considerations
+
+Different languages have different plural rules:
+- **English/Spanish**: 2 forms (one, other)
+- **Polish**: 3 forms (one, few, many)
+- **Arabic**: 6 forms (zero, one, two, few, many, other)
+
+When adding languages with complex plural rules, follow the explicit-key pattern documented here and extend the `getPluralMessage()` helper in `popup.js` to select the appropriate key based on count and locale rules.
+
 ---
 
 ## 4. Data Flow and Component Interaction
@@ -113,5 +187,3 @@ Communication between these layers occurs via Chrome’s messaging system.
     AA -- Yes --> AB[User adjusts notification and other preferences]
     AA -- No --> AC[Settings remain unchanged]
     AB --> AD[New settings are saved]
-
----
