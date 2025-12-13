@@ -1,14 +1,14 @@
 {
   "extensionName": {
-    "message": "タブ自動タイマー",
+    "message": "Auto Tab Timer – タイマーでタブを自動的に閉じる",
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "カウントダウン後にタブを自動的に閉じます。",
+    "message": "カウントダウンタイマーでタブを自動的に閉じます。",
     "description": "Description of the extension"
   },
   "extensionTitle": {
-    "message": "タブ自動タイマー",
+    "message": "Auto Tab Timer",
     "description": "Title displayed in popup header"
   },
   "tabTimer": {
@@ -44,7 +44,7 @@
     "description": "Status label in timer card"
   },
   "statusRunning": {
-    "message": "稼働中",
+    "message": "実行中",
     "description": "Timer status when running"
   },
   "statusPaused": {
@@ -146,4 +146,3 @@
     }
   }
 }
-
