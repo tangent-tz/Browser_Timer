@@ -1,10 +1,10 @@
 {
   "extensionName": {
-    "message": "Auto Tab Timer – Feche abas automaticamente com um temporizador",
+    "message": "Auto Tab Timer – Temporizador de abas com fechamento automático",
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Feche abas automaticamente usando um temporizador de contagem regressiva.",
+    "message": "Feche automaticamente qualquer aba após um tempo definido usando um temporizador de contagem regressiva simples.",
     "description": "Description of the extension"
   },
   "extensionTitle": {

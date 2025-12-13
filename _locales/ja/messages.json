@@ -1,10 +1,10 @@
 {
   "extensionName": {
-    "message": "Auto Tab Timer – タイマーでタブを自動的に閉じる",
+    "message": "Auto Tab Timer – タブ用カウントダウンタイマー＆自動タブクローズ",
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "カウントダウンタイマーでタブを自動的に閉じます。",
+    "message": "シンプルなカウントダウンタイマーを使って、任意のタブを設定した時間後に自動で閉じます。",
     "description": "Description of the extension"
   },
   "extensionTitle": {

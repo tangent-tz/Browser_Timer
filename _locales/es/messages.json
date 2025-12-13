@@ -1,10 +1,10 @@
 {
   "extensionName": {
-    "message": "Auto Tab Timer – Cierra pestañas automáticamente con un temporizador",
+    "message": "Auto Tab Timer – Temporizador de pestañas con cierre automático",
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Cierra pestañas automáticamente usando un temporizador de cuenta regresiva.",
+    "message": "Cierra automáticamente cualquier pestaña después de un tiempo definido usando un temporizador de cuenta regresiva.",
     "description": "Description of the extension"
   },
   "extensionTitle": {

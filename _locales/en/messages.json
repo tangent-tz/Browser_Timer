@@ -1,10 +1,10 @@
 {
   "extensionName": {
-    "message": "Auto Tab Timer – Auto Close Tabs with a Timer",
+    "message": "Auto Tab Timer – Tab Countdown Timer & Auto Close Tabs",
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Automatically close tabs using a countdown timer.",
+    "message": "Automatically close any tab after a set time using a simple tab countdown timer.",
     "description": "Description of the extension"
   },
   "extensionTitle": {
