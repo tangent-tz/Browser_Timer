@@ -39,10 +39,6 @@
     "message": "通知を有効にする",
     "description": "Notifications toggle label"
   },
-  "closeTabOnFinish": {
-    "message": "タイマー終了時にタブを閉じる",
-    "description": "Timer completion action toggle label"
-  },
   "statusLabel": {
     "message": "状態",
     "description": "Status label in timer card"

@@ -73,7 +73,6 @@ function createI18nMock() {
         secondsLabel: "Seconds",
         startTimerButton: "Start Timer",
         enableNotifications: "Enable Notifications",
-        closeTabOnFinish: "Close Tab On Timer Finish",
         statusLabel: "Status:",
         statusRunning: "Running",
         statusPaused: "Paused",

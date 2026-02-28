@@ -39,10 +39,6 @@
     "message": "Enable Notifications",
     "description": "Notifications toggle label"
   },
-  "closeTabOnFinish": {
-    "message": "Close Tab On Timer Finish",
-    "description": "Timer completion action toggle label"
-  },
   "statusLabel": {
     "message": "Status:",
     "description": "Status label in timer card"

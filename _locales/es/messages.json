@@ -39,10 +39,6 @@
     "message": "Habilitar notificaciones",
     "description": "Notifications toggle label"
   },
-  "closeTabOnFinish": {
-    "message": "Cerrar pestaña al terminar",
-    "description": "Timer completion action toggle label"
-  },
   "statusLabel": {
     "message": "Estado:",
     "description": "Status label in timer card"

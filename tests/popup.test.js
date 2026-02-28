@@ -34,12 +34,6 @@ describe('Popup - Start Timer functionality', () => {
               Enable Notifications
             </label>
           </div>
-          <div class="settings-item">
-            <label>
-              <input type="checkbox" id="closeTabToggle" checked>
-              Close Tab On Timer Finish
-            </label>
-          </div>
         </div>
       </div>
     `;
@@ -69,20 +63,6 @@ describe('Popup - Start Timer functionality', () => {
         expect(sendMessageSpy).toHaveBeenCalledWith(
             { action: 'startTimer', duration: expectedDuration, tabFavicon: "icons/timer.svg", tabTitle: "Test Tab", tabId: 123 },
             expect.any(Function)
-        );
-    });
-
-    test('should switch to notify-only mode when close tab toggle is disabled', () => {
-        const notificationsToggle = document.getElementById('notificationsToggle');
-        const closeTabToggle = document.getElementById('closeTabToggle');
-
-        closeTabToggle.checked = false;
-        closeTabToggle.dispatchEvent(new Event('change'));
-
-        expect(notificationsToggle.checked).toBe(true);
-        expect(notificationsToggle.disabled).toBe(true);
-        expect(chrome.storage.sync.set).toHaveBeenCalledWith(
-            { closeTabOnExpire: false, notificationsEnabled: true }
         );
     });
 });
@@ -128,12 +108,6 @@ describe("Popup Timer List Rendering", () => {
                 <label>
                   <input type="checkbox" id="notificationsToggle" checked>
                   Enable Notifications
-                </label>
-              </div>
-              <div class="settings-item">
-                <label>
-                  <input type="checkbox" id="closeTabToggle" checked>
-                  Close Tab On Timer Finish
                 </label>
               </div>
             </div>

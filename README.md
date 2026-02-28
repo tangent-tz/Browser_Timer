@@ -6,7 +6,7 @@ Perfect for falling asleep while watching youtube videos ([T90 Official](https:/
 
 ## Features
 
-- **Configurable Completion Action:** Set a timer to either close the tab on completion or keep it open and notify you.
+- **Automatic Tab Closure:** Set a timer for the active tab, and it will automatically close when the countdown reaches zero.
 - **Timer Management:** Easily pause, resume, reset, or cancel timers via the popup interface.
 - **Notifications:** Optionally receive a notification when a timer completes.
 - **User-Friendly Interface:** A simple, tabbed UI for managing timers and settings.
@@ -47,7 +47,6 @@ You can also download the latest compiled version (ZIP file) from the release ta
 2. **Managing Settings:**
    - Switch to the **Settings** tab in the popup.
    - Toggle the **Enable Notifications** option to control if you wish to receive notifications when a timer finishes.
-   - Toggle **Close Tab On Timer Finish** to choose between auto-closing tabs or notify-only behavior.
 
 ## Localization
 
