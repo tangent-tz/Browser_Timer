@@ -1,6 +1,7 @@
 const { createChromeMock } = require('../mocks/chrome');
 global.chrome = createChromeMock();
 const { startTimer } = require('../src/background.js'); // Update the path if necessary
+const alarmListener = chrome.alarms.onAlarm.addListener.mock.calls[0][0];
 
 describe('startTimer', () => {
     let originalDateNow;
@@ -230,5 +231,73 @@ describe('cancelTimer', () => {
 
             done();
         });
+    });
+});
+
+describe('alarm completion behavior', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    test('should notify and keep tab open in notify-only mode', () => {
+        const timerId = 'notifyOnlyTimer';
+        const key = 'timer_' + timerId;
+
+        chrome.storage.local.get.mockImplementation((getKey, callback) => {
+            callback({
+                [getKey]: {
+                    timerId,
+                    tabId: 123,
+                    tabTitle: 'Test Tab',
+                    targetTime: Date.now() - 1000,
+                    paused: false
+                }
+            });
+        });
+        chrome.storage.sync.get.mockImplementation((getKeys, callback) => {
+            callback({
+                notificationsEnabled: false,
+                closeTabOnExpire: false
+            });
+        });
+
+        alarmListener({ name: timerId });
+
+        expect(chrome.notifications.create).toHaveBeenCalledWith(
+            expect.objectContaining({
+                title: 'Timer Finished'
+            })
+        );
+        expect(chrome.tabs.remove).not.toHaveBeenCalled();
+        expect(chrome.storage.local.remove).toHaveBeenCalledWith(key, expect.any(Function));
+    });
+
+    test('should close tab without notification when close mode is enabled and notifications are disabled', () => {
+        const timerId = 'closeModeTimer';
+        const key = 'timer_' + timerId;
+
+        chrome.storage.local.get.mockImplementation((getKey, callback) => {
+            callback({
+                [getKey]: {
+                    timerId,
+                    tabId: 456,
+                    tabTitle: 'Close Tab',
+                    targetTime: Date.now() - 1000,
+                    paused: false
+                }
+            });
+        });
+        chrome.storage.sync.get.mockImplementation((getKeys, callback) => {
+            callback({
+                notificationsEnabled: false,
+                closeTabOnExpire: true
+            });
+        });
+
+        alarmListener({ name: timerId });
+
+        expect(chrome.notifications.create).not.toHaveBeenCalled();
+        expect(chrome.tabs.remove).toHaveBeenCalledWith(456, expect.any(Function));
+        expect(chrome.storage.local.remove).toHaveBeenCalledWith(key, expect.any(Function));
     });
 });

@@ -120,16 +120,12 @@ function cancelTimer(timerId, callback) {
 }
 
 // Show a notification with the given title and message.
-
-function showNotification(title, message) {
-    chrome.storage.sync.get("notificationsEnabled", (data) => {
-        if (data.notificationsEnabled === false) return;
-        chrome.notifications.create({
-            type: "basic",
-            iconUrl: "icons/icon48.png",
-            title: title,
-            message: message
-        });
+function createNotification(title, message) {
+    chrome.notifications.create({
+        type: "basic",
+        iconUrl: "icons/icon48.png",
+        title: title,
+        message: message
     });
 }
 
@@ -152,20 +148,35 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         const remaining = Math.floor((timerObj.targetTime - Date.now()) / 1000);
         console.log(`Timer ${timerId}: remaining ${remaining} seconds`);
         if (remaining <= 0) {
-            // Get localized notification strings
-            const notifTitle = chrome.i18n.getMessage("notificationTitle");
-            const notifMessage = chrome.i18n.getMessage("notificationMessage", [timerObj.tabTitle]);
-            showNotification(notifTitle, notifMessage);
-            // Timer expired: close the tab.
-            chrome.tabs.remove(timerObj.tabId, () => {
-                if (chrome.runtime.lastError) {
-                    console.error(`Error closing tab ${timerObj.tabId}:`, chrome.runtime.lastError.message);
-                } else {
-                    console.log(`Tab ${timerObj.tabId} closed.`);
+            chrome.storage.sync.get(["notificationsEnabled", "closeTabOnExpire"], (settings) => {
+                const notificationsEnabled = settings.notificationsEnabled !== false;
+                const closeTabOnExpire = settings.closeTabOnExpire !== false;
+                const shouldNotify = !closeTabOnExpire || notificationsEnabled;
+
+                if (shouldNotify) {
+                    const notifTitle = chrome.i18n.getMessage("notificationTitle");
+                    const notifMessage = chrome.i18n.getMessage("notificationMessage", [timerObj.tabTitle]);
+                    createNotification(notifTitle, notifMessage);
                 }
-            });
-            chrome.storage.local.remove(key, () => {
-                console.log(`Timer ${timerId} removed after expiration`);
+
+                if (closeTabOnExpire) {
+                    chrome.tabs.remove(timerObj.tabId, () => {
+                        if (chrome.runtime.lastError) {
+                            console.error(`Error closing tab ${timerObj.tabId}:`, chrome.runtime.lastError.message);
+                        } else {
+                            console.log(`Tab ${timerObj.tabId} closed.`);
+                        }
+                        chrome.storage.local.remove(key, () => {
+                            console.log(`Timer ${timerId} removed after expiration`);
+                        });
+                    });
+                    return;
+                }
+
+                console.log(`Timer ${timerId} completed with notify-only mode`);
+                chrome.storage.local.remove(key, () => {
+                    console.log(`Timer ${timerId} removed after expiration`);
+                });
             });
         } else {
             chrome.alarms.create(timerId, { delayInMinutes: remaining / 60 });

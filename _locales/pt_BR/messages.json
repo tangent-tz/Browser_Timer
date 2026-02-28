@@ -39,6 +39,10 @@
     "message": "Ativar notificações",
     "description": "Notifications toggle label"
   },
+  "closeTabOnFinish": {
+    "message": "Fechar aba ao concluir",
+    "description": "Timer completion action toggle label"
+  },
   "statusLabel": {
     "message": "Estado:",
     "description": "Status label in timer card"

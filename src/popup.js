@@ -40,14 +40,53 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerSection = document.getElementById("timerSection");
     const settingsSection = document.getElementById("settingsSection");
     const notificationsToggle = document.getElementById("notificationsToggle");
+    const closeTabToggle = document.getElementById("closeTabToggle");
 
-    // Initialize notifications toggle state:
-    chrome.storage.sync.get("notificationsEnabled", (data) => {
-        notificationsToggle.checked = data.notificationsEnabled !== false;
-    });
-    notificationsToggle.addEventListener("change", () => {
-        chrome.storage.sync.set({ notificationsEnabled: notificationsToggle.checked });
-    });
+    // Initialize and sync settings toggles.
+    if (notificationsToggle && closeTabToggle) {
+        chrome.storage.sync.get(["notificationsEnabled", "closeTabOnExpire"], (data) => {
+            const closeTabOnExpire = data.closeTabOnExpire !== false;
+            const notificationsEnabled = data.notificationsEnabled !== false;
+
+            closeTabToggle.checked = closeTabOnExpire;
+            if (closeTabOnExpire) {
+                notificationsToggle.checked = notificationsEnabled;
+                notificationsToggle.disabled = false;
+            } else {
+                notificationsToggle.checked = true;
+                notificationsToggle.disabled = true;
+                if (data.notificationsEnabled === false) {
+                    chrome.storage.sync.set({ notificationsEnabled: true });
+                }
+            }
+        });
+
+        notificationsToggle.addEventListener("change", () => {
+            chrome.storage.sync.set({ notificationsEnabled: notificationsToggle.checked });
+        });
+
+        closeTabToggle.addEventListener("change", () => {
+            if (closeTabToggle.checked) {
+                notificationsToggle.disabled = false;
+                chrome.storage.sync.set({ closeTabOnExpire: true });
+                return;
+            }
+
+            notificationsToggle.checked = true;
+            notificationsToggle.disabled = true;
+            chrome.storage.sync.set({
+                closeTabOnExpire: false,
+                notificationsEnabled: true
+            });
+        });
+    } else if (notificationsToggle) {
+        chrome.storage.sync.get("notificationsEnabled", (data) => {
+            notificationsToggle.checked = data.notificationsEnabled !== false;
+        });
+        notificationsToggle.addEventListener("change", () => {
+            chrome.storage.sync.set({ notificationsEnabled: notificationsToggle.checked });
+        });
+    }
 
     tabTimer.addEventListener("click", () => {
         tabTimer.classList.add("active");

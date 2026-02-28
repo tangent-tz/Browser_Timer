@@ -173,6 +173,22 @@ button:hover {
     background: var(--button-bg-hover);
 }
 
+.settings-item {
+    text-align: left;
+    margin: 6px 2px;
+}
+
+.settings-item label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+}
+
+.settings-item input[type="checkbox"] {
+    margin: 0;
+}
+
 /* Timer Card */
 .timer-card {
     background-color: var(--container-bg-color);
