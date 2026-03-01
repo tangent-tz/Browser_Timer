@@ -1,261 +1,370 @@
-// Localize all elements with data-i18n attributes before first paint
-function localizeStaticContent() {
-    // Localize text content
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        const message = chrome.i18n.getMessage(key);
-        if (message) {
-            element.textContent = message;
-        }
-    });
+const React = require("react");
+const { createRoot } = require("react-dom/client");
+const { flushSync } = require("react-dom");
 
-    // Localize alt attributes
-    document.querySelectorAll('[data-i18n-alt]').forEach(element => {
-        const key = element.getAttribute('data-i18n-alt');
-        const message = chrome.i18n.getMessage(key);
-        if (message) {
-            element.alt = message;
-        }
-    });
-}
+const { useEffect, useState } = React;
+const h = React.createElement;
 
-// Helper to get localized message with substitutions
 function getLocalizedMessage(key, substitutions) {
-    return chrome.i18n.getMessage(key, substitutions);
+    if (!chrome || !chrome.i18n || typeof chrome.i18n.getMessage !== "function") {
+        return "";
+    }
+    const message = chrome.i18n.getMessage(key, substitutions);
+    return message || "";
 }
 
-// Helper for explicit plural selection
-function getPluralMessage(baseKey, count) {
-    const pluralKey = count === 1 ? `${baseKey}_one` : `${baseKey}_other`;
-    return chrome.i18n.getMessage(pluralKey, [count.toString()]);
+function formatTime(seconds) {
+    const safeSeconds = Math.max(0, Number(seconds) || 0);
+    const hVal = Math.floor(safeSeconds / 3600);
+    const mVal = Math.floor((safeSeconds % 3600) / 60);
+    const sVal = safeSeconds % 60;
+    return `${hVal.toString().padStart(2, "0")}:${mVal.toString().padStart(2, "0")}:${sVal
+        .toString()
+        .padStart(2, "0")}`;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    // Apply all static localizations immediately
-    localizeStaticContent();
+function getRemainingSeconds(timer) {
+    if (timer.paused && timer.remaining !== undefined) {
+        return Math.max(0, timer.remaining);
+    }
+    if (timer.targetTime) {
+        return Math.max(0, Math.floor((timer.targetTime - Date.now()) / 1000));
+    }
+    return Math.max(0, timer.originalDuration || 0);
+}
 
-    // Tab switching logic:
-    const tabTimer = document.getElementById("tabTimer");
-    const tabSettings = document.getElementById("tabSettings");
-    const timerSection = document.getElementById("timerSection");
-    const settingsSection = document.getElementById("settingsSection");
-    const notificationsToggle = document.getElementById("notificationsToggle");
+function getProgressPercentage(timer, remaining) {
+    const original = Math.max(1, timer.originalDuration || 1);
+    const elapsed = original - remaining;
+    return Math.min(100, Math.max(0, (elapsed / original) * 100));
+}
 
-    // Initialize notifications toggle state:
-    chrome.storage.sync.get("notificationsEnabled", (data) => {
-        notificationsToggle.checked = data.notificationsEnabled !== false;
-    });
-    notificationsToggle.addEventListener("change", () => {
-        chrome.storage.sync.set({ notificationsEnabled: notificationsToggle.checked });
-    });
+function TimerCard(props) {
+    const { timer, onControl } = props;
+    const remaining = getRemainingSeconds(timer);
+    const percentage = getProgressPercentage(timer, remaining);
+    const statusText = timer.paused
+        ? getLocalizedMessage("statusPaused")
+        : getLocalizedMessage("statusRunning");
+    const pauseResumeClassName = timer.paused ? "resume-btn" : "pause-btn";
+    const pauseResumeText = timer.paused
+        ? getLocalizedMessage("resumeButton")
+        : getLocalizedMessage("pauseButton");
 
-    tabTimer.addEventListener("click", () => {
-        tabTimer.classList.add("active");
-        tabSettings.classList.remove("active");
-        timerSection.classList.add("active");
-        settingsSection.classList.remove("active");
-    });
-    tabSettings.addEventListener("click", () => {
-        tabSettings.classList.add("active");
-        tabTimer.classList.remove("active");
-        settingsSection.classList.add("active");
-        timerSection.classList.remove("active");
-    });
+    return h(
+        "div",
+        { className: "timer-card" },
+        h(
+            "div",
+            { className: "timer-card-header" },
+            h("img", {
+                src: timer.tabFavicon || "icons/timer.svg",
+                alt: getLocalizedMessage("tabAltIcon"),
+                className: "timer-thumbnail"
+            }),
+            h("span", { className: "timer-title" }, timer.tabTitle)
+        ),
+        h(
+            "div",
+            { className: "timer-status-row" },
+            h("span", { className: "status-label" }, getLocalizedMessage("statusLabel")),
+            h("span", { className: "status-text" }, statusText)
+        ),
+        h(
+            "div",
+            { className: "timer-progress" },
+            h("div", {
+                className: "progress-bar",
+                style: { width: `${percentage}%` }
+            })
+        ),
+        h(
+            "div",
+            { className: "timer-remaining-row" },
+            h("span", { className: "remaining-label" }, getLocalizedMessage("remainingLabel")),
+            h("span", { className: "remaining-value" }, formatTime(remaining))
+        ),
+        h(
+            "div",
+            { className: "timer-controls" },
+            h(
+                "button",
+                {
+                    className: pauseResumeClassName,
+                    "data-timerid": timer.timerId,
+                    onClick: () => {
+                        onControl(timer.paused ? "resumeTimer" : "pauseTimer", timer.timerId);
+                    }
+                },
+                pauseResumeText
+            ),
+            h(
+                "button",
+                {
+                    className: "reset-btn",
+                    "data-timerid": timer.timerId,
+                    onClick: () => {
+                        onControl("resetTimer", timer.timerId);
+                    }
+                },
+                getLocalizedMessage("resetButton")
+            ),
+            h(
+                "button",
+                {
+                    className: "cancel-btn",
+                    "data-timerid": timer.timerId,
+                    onClick: () => {
+                        onControl("cancelTimer", timer.timerId);
+                    }
+                },
+                getLocalizedMessage("cancelButton")
+            )
+        )
+    );
+}
 
-    // Timer elements:
-    const hoursInput = document.getElementById("hoursInput");
-    const minutesInput = document.getElementById("minutesInput");
-    const secondsInput = document.getElementById("secondsInput");
-    const startTimerBtn = document.getElementById("startTimerBtn");
-    const timersList = document.getElementById("timersList");
+function PopupApp() {
+    const [activeTab, setActiveTab] = useState("timer");
+    const [timers, setTimers] = useState([]);
+    const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
-    // Start a new timer when button is clicked.
-    startTimerBtn.addEventListener("click", () => {
-        const h = parseInt(hoursInput.value, 10) || 0;
-        const m = parseInt(minutesInput.value, 10) || 0;
-        const s = parseInt(secondsInput.value, 10) || 0;
-        const totalSeconds = h * 3600 + m * 60 + s;
+    const refreshTimers = () => {
+        chrome.runtime.sendMessage({ action: "getTimers" }, (resp) => {
+            if (!resp || !Array.isArray(resp.timers)) {
+                return;
+            }
+            setTimers(resp.timers);
+        });
+    };
+
+    useEffect(() => {
+        chrome.storage.sync.get("notificationsEnabled", (data) => {
+            setNotificationsEnabled(data.notificationsEnabled !== false);
+        });
+    }, []);
+
+    useEffect(() => {
+        refreshTimers();
+        const intervalId = setInterval(() => {
+            refreshTimers();
+        }, 1000);
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
+
+    const startTimer = () => {
+        const hoursInput = document.getElementById("hoursInput");
+        const minutesInput = document.getElementById("minutesInput");
+        const secondsInput = document.getElementById("secondsInput");
+        const hVal = parseInt(hoursInput ? hoursInput.value : "0", 10) || 0;
+        const mVal = parseInt(minutesInput ? minutesInput.value : "0", 10) || 0;
+        const sVal = parseInt(secondsInput ? secondsInput.value : "0", 10) || 0;
+        const totalSeconds = hVal * 3600 + mVal * 60 + sVal;
+
         if (totalSeconds <= 0) {
             console.warn("Please enter a valid time greater than 0.");
             return;
         }
+
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (!tabs[0]) {
                 console.warn("No active tab found");
                 return;
             }
             const tab = tabs[0];
-            const tabId = tab.id;
             const tabUrl = tab.url;
-            const tabTitle = tab.title || `Tab ${tabId}`;
-            const tabFavicon = tab.favIconUrl || "icons/timer.svg";
             if (tabUrl === "chrome://newtab/" || tabUrl === "edge://newtab/") {
                 return;
             }
-            chrome.runtime.sendMessage({
-                action: "startTimer",
-                duration: totalSeconds,
-                tabFavicon,
-                tabTitle,
-                tabId
-            }, (response) => {
-                console.log("Timer started:", response);
-            });
+
+            chrome.runtime.sendMessage(
+                {
+                    action: "startTimer",
+                    duration: totalSeconds,
+                    tabFavicon: tab.favIconUrl || "icons/timer.svg",
+                    tabTitle: tab.title || `Tab ${tab.id}`,
+                    tabId: tab.id
+                },
+                () => {
+                    refreshTimers();
+                }
+            );
         });
+    };
+
+    const onControl = (action, timerId) => {
+        chrome.runtime.sendMessage({ action, timerId }, () => {
+            refreshTimers();
+        });
+    };
+
+    const onNotificationsChange = (event) => {
+        const enabled = event.target.checked;
+        setNotificationsEnabled(enabled);
+        chrome.storage.sync.set({ notificationsEnabled: enabled });
+    };
+
+    return h(
+        "div",
+        { className: "container" },
+        h("h1", null, getLocalizedMessage("extensionTitle")),
+        h(
+            "div",
+            { className: "tabs" },
+            h(
+                "button",
+                {
+                    id: "tabTimer",
+                    className: `tab${activeTab === "timer" ? " active" : ""}`,
+                    onClick: () => {
+                        setActiveTab("timer");
+                    }
+                },
+                h("img", {
+                    src: "icons/timer.svg",
+                    alt: getLocalizedMessage("timerAltIcon"),
+                    className: "tab-icon"
+                }),
+                h("span", null, getLocalizedMessage("tabTimer"))
+            ),
+            h(
+                "button",
+                {
+                    id: "tabSettings",
+                    className: `tab${activeTab === "settings" ? " active" : ""}`,
+                    onClick: () => {
+                        setActiveTab("settings");
+                    }
+                },
+                h("img", {
+                    src: "icons/settings.svg",
+                    alt: getLocalizedMessage("settingsAltIcon"),
+                    className: "tab-icon"
+                }),
+                h("span", null, getLocalizedMessage("tabSettings"))
+            )
+        ),
+        h(
+            "div",
+            {
+                id: "timerSection",
+                className: `tab-content${activeTab === "timer" ? " active" : ""}`
+            },
+            h(
+                "div",
+                { className: "input-group" },
+                h(
+                    "div",
+                    { className: "input-field" },
+                    h("label", { htmlFor: "hoursInput" }, getLocalizedMessage("hoursLabel")),
+                    h("input", {
+                        type: "number",
+                        id: "hoursInput",
+                        defaultValue: "0",
+                        min: "0"
+                    })
+                ),
+                h(
+                    "div",
+                    { className: "input-field" },
+                    h("label", { htmlFor: "minutesInput" }, getLocalizedMessage("minutesLabel")),
+                    h("input", {
+                        type: "number",
+                        id: "minutesInput",
+                        defaultValue: "0",
+                        min: "0"
+                    })
+                ),
+                h(
+                    "div",
+                    { className: "input-field" },
+                    h("label", { htmlFor: "secondsInput" }, getLocalizedMessage("secondsLabel")),
+                    h("input", {
+                        type: "number",
+                        id: "secondsInput",
+                        defaultValue: "0",
+                        min: "0"
+                    })
+                )
+            ),
+            h(
+                "button",
+                {
+                    id: "startTimerBtn",
+                    onClick: startTimer
+                },
+                getLocalizedMessage("startTimerButton")
+            ),
+            h(
+                "div",
+                { id: "timersList" },
+                timers.map((timer) =>
+                    h(TimerCard, {
+                        key: timer.timerId,
+                        timer,
+                        onControl
+                    })
+                )
+            )
+        ),
+        h(
+            "div",
+            {
+                id: "settingsSection",
+                className: `tab-content${activeTab === "settings" ? " active" : ""}`
+            },
+            h(
+                "div",
+                { className: "settings-item" },
+                h(
+                    "label",
+                    null,
+                    h("input", {
+                        type: "checkbox",
+                        id: "notificationsToggle",
+                        checked: notificationsEnabled,
+                        onChange: onNotificationsChange
+                    }),
+                    h("span", null, getLocalizedMessage("enableNotifications"))
+                )
+            )
+        )
+    );
+}
+
+let popupRoot = null;
+let popupRootContainer = null;
+
+function mountPopup() {
+    const rootContainer = document.getElementById("root");
+    if (!rootContainer) {
+        return;
+    }
+
+    if (popupRoot && popupRootContainer !== rootContainer) {
+        popupRoot.unmount();
+        popupRoot = null;
+        popupRootContainer = null;
+    }
+
+    if (!popupRoot) {
+        popupRoot = createRoot(rootContainer);
+        popupRootContainer = rootContainer;
+    }
+
+    flushSync(() => {
+        popupRoot.render(h(PopupApp));
     });
+}
 
+document.addEventListener("DOMContentLoaded", mountPopup);
+if (document.readyState !== "loading") {
+    mountPopup();
+}
 
-    function formatTime(seconds) {
-        const h = Math.floor(seconds / 3600);
-        const m = Math.floor((seconds % 3600) / 60);
-        const s = seconds % 60;
-        return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
-    }
-
-    function createTimerCard(timer) {
-        // Determine the remaining time.
-        let remaining;
-        if (timer.paused && timer.remaining !== undefined) {
-            remaining = timer.remaining;
-        } else if (timer.targetTime) {
-            remaining = Math.max(0, Math.floor((timer.targetTime - Date.now()) / 1000));
-        } else {
-            remaining = timer.originalDuration;
-        }
-
-        // Calculate progress as a percentage.
-        const elapsed = timer.originalDuration - remaining;
-        const percentage = (elapsed / timer.originalDuration) * 100;
-
-        // Create the card container.
-        const card = document.createElement("div");
-        card.className = "timer-card";
-
-        // 1) Header: Icon, tab title.
-        const header = document.createElement("div");
-        header.className = "timer-card-header";
-        const icon = document.createElement("img");
-        // Use the stored tab favicon; if missing, default to your timer icon.
-        icon.src = timer.tabFavicon || "icons/timer.svg";
-        icon.alt = getLocalizedMessage("tabAltIcon");
-        icon.className = "timer-thumbnail";
-        const titleSpan = document.createElement("span");
-        titleSpan.className = "timer-title";
-        titleSpan.textContent = timer.tabTitle;
-        header.appendChild(icon);
-        header.appendChild(titleSpan);
-        card.appendChild(header);
-
-        // 2) Status row: Label and Running/Paused text
-        const statusRow = document.createElement("div");
-        statusRow.className = "timer-status-row";
-        const statusLabel = document.createElement("span");
-        statusLabel.className = "status-label";
-        statusLabel.textContent = getLocalizedMessage("statusLabel");
-        const statusText = document.createElement("span");
-        statusText.className = "status-text";
-        statusText.textContent = timer.paused
-            ? getLocalizedMessage("statusPaused")
-            : getLocalizedMessage("statusRunning");
-        statusRow.appendChild(statusLabel);
-        statusRow.appendChild(statusText);
-        card.appendChild(statusRow);
-
-        // 3) Progress bar.
-        const progressContainer = document.createElement("div");
-        progressContainer.className = "timer-progress";
-        const progressBar = document.createElement("div");
-        progressBar.className = "progress-bar";
-        progressBar.style.width = percentage + "%";
-        progressContainer.appendChild(progressBar);
-        card.appendChild(progressContainer);
-
-        // 4) Remaining time row.
-        const remainingRow = document.createElement("div");
-        remainingRow.className = "timer-remaining-row";
-        const remainingLabel = document.createElement("span");
-        remainingLabel.className = "remaining-label";
-        remainingLabel.textContent = getLocalizedMessage("remainingLabel");
-        const remainingValue = document.createElement("span");
-        remainingValue.className = "remaining-value";
-        remainingValue.textContent = formatTime(remaining);
-        remainingRow.appendChild(remainingLabel);
-        remainingRow.appendChild(remainingValue);
-        card.appendChild(remainingRow);
-
-        // 5) Control buttons: Pause/Resume, Reset, Cancel.
-        const controls = document.createElement("div");
-        controls.className = "timer-controls";
-        const pauseResumeBtn = document.createElement("button");
-        pauseResumeBtn.setAttribute("data-timerid", timer.timerId);
-        if (timer.paused) {
-            pauseResumeBtn.className = "resume-btn";
-            pauseResumeBtn.textContent = getLocalizedMessage("resumeButton");
-        } else {
-            pauseResumeBtn.className = "pause-btn";
-            pauseResumeBtn.textContent = getLocalizedMessage("pauseButton");
-
-        }
-        const resetBtn = document.createElement("button");
-        resetBtn.className = "reset-btn";
-        resetBtn.textContent = getLocalizedMessage("resetButton");
-        resetBtn.setAttribute("data-timerid", timer.timerId);
-        const cancelBtn = document.createElement("button");
-        cancelBtn.className = "cancel-btn";
-        cancelBtn.textContent = getLocalizedMessage("cancelButton");
-        cancelBtn.setAttribute("data-timerid", timer.timerId);
-
-        controls.appendChild(pauseResumeBtn);
-        controls.appendChild(resetBtn);
-        controls.appendChild(cancelBtn);
-        card.appendChild(controls);
-
-        return card;
-    }
-    // Update the timers list UI every second.
-    function updateTimersList() {
-        chrome.runtime.sendMessage({ action: "getTimers" }, (resp) => {
-            if (!resp || !resp.timers) return;
-            timersList.innerHTML = "";
-            resp.timers.forEach(timer => {
-                const timerCard = createTimerCard(timer);
-                timersList.appendChild(timerCard);
-            });
-
-            // Reassign event listeners for control buttons.
-            document.querySelectorAll(".pause-btn").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const timerId = btn.getAttribute("data-timerid");
-                    chrome.runtime.sendMessage({ action: "pauseTimer", timerId }, (resp) => {
-                        console.log(resp.status);
-                    });
-                });
-            });
-            document.querySelectorAll(".resume-btn").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const timerId = btn.getAttribute("data-timerid");
-                    chrome.runtime.sendMessage({ action: "resumeTimer", timerId }, (resp) => {
-                        console.log(resp.status);
-                    });
-                });
-            });
-            document.querySelectorAll(".reset-btn").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const timerId = btn.getAttribute("data-timerid");
-                    chrome.runtime.sendMessage({ action: "resetTimer", timerId }, (resp) => {
-                        console.log(resp.status);
-                    });
-                });
-            });
-            document.querySelectorAll(".cancel-btn").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const timerId = btn.getAttribute("data-timerid");
-                    chrome.runtime.sendMessage({ action: "cancelTimer", timerId }, (resp) => {
-                        console.log(resp.status);
-                    });
-                });
-            });
-        });
-    }
-    setInterval(updateTimersList, 1000);
-});
+module.exports = {
+    formatTime,
+    mountPopup
+};

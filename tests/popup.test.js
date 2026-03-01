@@ -2,41 +2,7 @@ const { createChromeMock } = require('../mocks/chrome');
 global.chrome = createChromeMock();
 describe('Popup - Start Timer functionality', () => {
     beforeEach(() => {
-        document.body.innerHTML = `
-      <div class="container">
-        <h1>Auto Tab Timer</h1>
-        <div class="tabs">
-          <button id="tabTimer" class="tab active">Timer</button>
-          <button id="tabSettings" class="tab">Settings</button>
-        </div>
-        <div id="timerSection" class="tab-content active">
-          <div class="input-group">
-            <div class="input-field">
-              <label for="hoursInput">Hours</label>
-              <input type="number" id="hoursInput" value="0" min="0">
-            </div>
-            <div class="input-field">
-              <label for="minutesInput">Minutes</label>
-              <input type="number" id="minutesInput" value="0" min="0">
-            </div>
-            <div class="input-field">
-              <label for="secondsInput">Seconds</label>
-              <input type="number" id="secondsInput" value="0" min="0">
-            </div>
-          </div>
-          <button id="startTimerBtn">Start Timer</button>
-          <div id="timersList"></div>
-        </div>
-        <div id="settingsSection" class="tab-content">
-          <div class="settings-item">
-            <label>
-              <input type="checkbox" id="notificationsToggle" checked>
-              Enable Notifications
-            </label>
-          </div>
-        </div>
-      </div>
-    `;
+        document.body.innerHTML = '<div id="root"></div>';
 
         jest.clearAllMocks();
         require('../src/popup.js');
@@ -53,6 +19,9 @@ describe('Popup - Start Timer functionality', () => {
         hoursInput.value = '1';
         minutesInput.value = '2';
         secondsInput.value = '3';
+        hoursInput.dispatchEvent(new Event('input', { bubbles: true }));
+        minutesInput.dispatchEvent(new Event('input', { bubbles: true }));
+        secondsInput.dispatchEvent(new Event('input', { bubbles: true }));
 
         const expectedDuration = 3723;
 
@@ -78,41 +47,7 @@ describe("Popup Timer List Rendering", () => {
         Date.now = jest.fn(() => fixedTime);
 
         // Set up the popup HTML structure.
-        document.body.innerHTML = `
-          <div class="container">
-            <h1>Auto Tab Timer</h1>
-            <div class="tabs">
-              <button id="tabTimer" class="tab active">Timer</button>
-              <button id="tabSettings" class="tab">Settings</button>
-            </div>
-            <div id="timerSection" class="tab-content active">
-              <div class="input-group">
-                <div class="input-field">
-                  <label for="hoursInput">Hours</label>
-                  <input type="number" id="hoursInput" value="0" min="0">
-                </div>
-                <div class="input-field">
-                  <label for="minutesInput">Minutes</label>
-                  <input type="number" id="minutesInput" value="0" min="0">
-                </div>
-                <div class="input-field">
-                  <label for="secondsInput">Seconds</label>
-                  <input type="number" id="secondsInput" value="0" min="0">
-                </div>
-              </div>
-              <button id="startTimerBtn">Start Timer</button>
-              <div id="timersList"></div>
-            </div>
-            <div id="settingsSection" class="tab-content">
-              <div class="settings-item">
-                <label>
-                  <input type="checkbox" id="notificationsToggle" checked>
-                  Enable Notifications
-                </label>
-              </div>
-            </div>
-          </div>
-        `;
+        document.body.innerHTML = '<div id="root"></div>';
         jest.clearAllMocks();
         require('../src/popup.js');
         document.dispatchEvent(new Event("DOMContentLoaded"));
