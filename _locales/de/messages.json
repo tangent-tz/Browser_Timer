@@ -1,0 +1,164 @@
+{
+  "extensionName": {
+    "message": "Auto Tab Timer – Tabs automatisch mit Countdown schließen",
+    "description": "Name of the extension"
+  },
+  "extensionDescription": {
+    "message": "Schließt Tabs nach einer festgelegten Zeit automatisch mit einem einfachen Countdown.",
+    "description": "Description of the extension"
+  },
+  "extensionTitle": {
+    "message": "Auto Tab Timer",
+    "description": "Title displayed in popup header"
+  },
+  "tabTimer": {
+    "message": "Timer",
+    "description": "Timer tab label"
+  },
+  "tabSettings": {
+    "message": "Einstellungen",
+    "description": "Settings tab label"
+  },
+  "hoursLabel": {
+    "message": "Stunden",
+    "description": "Hours input label"
+  },
+  "minutesLabel": {
+    "message": "Minuten",
+    "description": "Minutes input label"
+  },
+  "secondsLabel": {
+    "message": "Sekunden",
+    "description": "Seconds input label"
+  },
+  "startTimerButton": {
+    "message": "Timer starten",
+    "description": "Start timer button text"
+  },
+  "completionActionLabel": {
+    "message": "Standardaktion nach Abschluss",
+    "description": "Label for the default completion action setting in Settings"
+  },
+  "actionCloseTab": {
+    "message": "Tab schließen",
+    "description": "Completion action option to close the tab"
+  },
+  "actionNotifyOnly": {
+    "message": "Nur benachrichtigen",
+    "description": "Completion action option to send notification only"
+  },
+  "timerActionLabel": {
+    "message": "Aktion",
+    "description": "Label for timer card completion action selector"
+  },
+  "enableNotifications": {
+    "message": "Bei Abschluss benachrichtigen",
+    "description": "Toggle: show a notification when action completes"
+  },
+  "statusLabel": {
+    "message": "Status:",
+    "description": "Status label in timer card"
+  },
+  "statusRunning": {
+    "message": "Läuft",
+    "description": "Timer status when running"
+  },
+  "statusPaused": {
+    "message": "Pausiert",
+    "description": "Timer status when paused"
+  },
+  "remainingLabel": {
+    "message": "Verbleibend:",
+    "description": "Remaining time label"
+  },
+  "pauseButton": {
+    "message": "Pausieren",
+    "description": "Pause button text"
+  },
+  "resumeButton": {
+    "message": "Fortsetzen",
+    "description": "Resume button text"
+  },
+  "resetButton": {
+    "message": "Zurücksetzen",
+    "description": "Reset button text"
+  },
+  "cancelButton": {
+    "message": "Abbrechen",
+    "description": "Cancel button text"
+  },
+  "notificationTitle": {
+    "message": "Timer beendet",
+    "description": "Notification title when timer completes"
+  },
+  "notificationMessage": {
+    "message": "Der Timer für \"$tabTitle$\" ist abgelaufen.",
+    "description": "Notification message when timer completes",
+    "placeholders": {
+      "tabTitle": {
+        "content": "$1",
+        "example": "YouTube - Video Title"
+      }
+    }
+  },
+  "timerAltIcon": {
+    "message": "Timer-Symbol",
+    "description": "Alt text for timer icon"
+  },
+  "settingsAltIcon": {
+    "message": "Einstellungs-Symbol",
+    "description": "Alt text for settings icon"
+  },
+  "tabAltIcon": {
+    "message": "Tab-Symbol",
+    "description": "Alt text for tab favicon"
+  },
+  "timersCount_one": {
+    "message": "$count$ aktiver Timer",
+    "description": "Singular form for timer count",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "timersCount_other": {
+    "message": "$count$ aktive Timer",
+    "description": "Plural form for timer count",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "badgeHours": {
+    "message": "$h$:$m$",
+    "description": "Badge text format for hours and minutes (max 4 chars)",
+    "placeholders": {
+      "h": {
+        "content": "$1",
+        "example": "01"
+      },
+      "m": {
+        "content": "$2",
+        "example": "30"
+      }
+    }
+  },
+  "badgeMinutes": {
+    "message": "$m$:$s$",
+    "description": "Badge text format for minutes and seconds (max 4 chars)",
+    "placeholders": {
+      "m": {
+        "content": "$1",
+        "example": "05"
+      },
+      "s": {
+        "content": "$2",
+        "example": "30"
+      }
+    }
+  }
+}
