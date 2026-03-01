@@ -35,6 +35,22 @@
     "message": "Start Timer",
     "description": "Start timer button text"
   },
+  "completionActionLabel": {
+    "message": "On completion",
+    "description": "Label for selecting completion action in start form"
+  },
+  "actionCloseTab": {
+    "message": "Close tab",
+    "description": "Completion action option to close the tab"
+  },
+  "actionNotifyOnly": {
+    "message": "Notify only",
+    "description": "Completion action option to send notification only"
+  },
+  "timerActionLabel": {
+    "message": "Action",
+    "description": "Label for timer card completion action selector"
+  },
   "enableNotifications": {
     "message": "Enable Notifications",
     "description": "Notifications toggle label"

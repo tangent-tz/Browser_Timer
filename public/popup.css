@@ -129,7 +129,7 @@ h1 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     width: 100%;
 }
 
@@ -155,6 +155,35 @@ h1 {
     background-color: var(--input-bg);
     color: var(--text-color);
     text-indent: 9px;
+}
+
+.start-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.start-action-row label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.completion-action-select,
+.timer-action-select {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 0.78rem;
+    line-height: 1.2;
+    padding: 3px 6px;
+}
+
+.completion-action-select {
+    width: 144px;
 }
 
 /* Button Styles */
@@ -273,6 +302,24 @@ button:hover {
     display: flex;
     align-items: center;
     margin-bottom: 3px;
+}
+
+.timer-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 5px;
+}
+
+.timer-action-row label {
+    font-size: 0.76rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.timer-action-select {
+    width: 112px;
 }
 
 .remaining-label {

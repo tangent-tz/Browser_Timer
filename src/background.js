@@ -2,9 +2,41 @@ function getTimerKey(timerId) {
     return "timer_" + timerId;
 }
 
-function startTimer(timerId, tabId, tabTitle, duration, tabFavicon) {
+const COMPLETION_ACTION_CLOSE_TAB = "closeTab";
+const COMPLETION_ACTION_NOTIFY_ONLY = "notifyOnly";
+
+function normalizeCompletionAction(action) {
+    if (action === COMPLETION_ACTION_NOTIFY_ONLY) {
+        return COMPLETION_ACTION_NOTIFY_ONLY;
+    }
+    return COMPLETION_ACTION_CLOSE_TAB;
+}
+
+function ensureNotificationsEnabled(callback) {
+    chrome.storage.sync.get("notificationsEnabled", (data) => {
+        if (data.notificationsEnabled === false) {
+            chrome.storage.sync.set({ notificationsEnabled: true }, () => {
+                if (callback) callback();
+            });
+            return;
+        }
+        if (callback) callback();
+    });
+}
+
+function createNotification(title, message) {
+    chrome.notifications.create({
+        type: "basic",
+        iconUrl: "icons/icon48.png",
+        title: title,
+        message: message
+    });
+}
+
+function startTimer(timerId, tabId, tabTitle, duration, tabFavicon, completionAction) {
     const startTime = Date.now();
     const targetTime = startTime + duration * 1000;
+    const normalizedAction = normalizeCompletionAction(completionAction);
     const timerObj = {
         timerId,
         tabId,
@@ -13,8 +45,14 @@ function startTimer(timerId, tabId, tabTitle, duration, tabFavicon) {
         originalDuration: duration,
         startTime,
         targetTime,
-        paused: false
+        paused: false,
+        completionAction: normalizedAction
     };
+
+    if (normalizedAction === COMPLETION_ACTION_NOTIFY_ONLY) {
+        ensureNotificationsEnabled();
+    }
+
     const key = getTimerKey(timerId);
     chrome.storage.local.set({ [key]: timerObj }, () => {
         console.log("Timer started and saved:", timerObj);
@@ -119,17 +157,44 @@ function cancelTimer(timerId, callback) {
     });
 }
 
+function setTimerCompletionAction(timerId, completionAction, callback) {
+    const key = getTimerKey(timerId);
+    chrome.storage.local.get(key, (result) => {
+        const timerObj = result[key];
+        if (!timerObj) {
+            if (callback) callback("Timer not found");
+            return;
+        }
+
+        const nextAction = normalizeCompletionAction(completionAction);
+        timerObj.completionAction = nextAction;
+
+        const persistAction = () => {
+            chrome.storage.local.set({ [key]: timerObj }, () => {
+                if (callback) callback(null, timerObj);
+            });
+        };
+
+        if (nextAction === COMPLETION_ACTION_NOTIFY_ONLY) {
+            ensureNotificationsEnabled(persistAction);
+            return;
+        }
+        persistAction();
+    });
+}
+
 // Show a notification with the given title and message.
 
 function showNotification(title, message) {
     chrome.storage.sync.get("notificationsEnabled", (data) => {
         if (data.notificationsEnabled === false) return;
-        chrome.notifications.create({
-            type: "basic",
-            iconUrl: "icons/icon48.png",
-            title: title,
-            message: message
-        });
+        createNotification(title, message);
+    });
+}
+
+function showNotificationEnsuringEnabled(title, message) {
+    ensureNotificationsEnabled(() => {
+        createNotification(title, message);
     });
 }
 
@@ -152,18 +217,25 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         const remaining = Math.floor((timerObj.targetTime - Date.now()) / 1000);
         console.log(`Timer ${timerId}: remaining ${remaining} seconds`);
         if (remaining <= 0) {
+            const completionAction = normalizeCompletionAction(timerObj.completionAction);
             // Get localized notification strings
             const notifTitle = chrome.i18n.getMessage("notificationTitle");
             const notifMessage = chrome.i18n.getMessage("notificationMessage", [timerObj.tabTitle]);
-            showNotification(notifTitle, notifMessage);
-            // Timer expired: close the tab.
-            chrome.tabs.remove(timerObj.tabId, () => {
-                if (chrome.runtime.lastError) {
-                    console.error(`Error closing tab ${timerObj.tabId}:`, chrome.runtime.lastError.message);
-                } else {
-                    console.log(`Tab ${timerObj.tabId} closed.`);
-                }
-            });
+
+            if (completionAction === COMPLETION_ACTION_NOTIFY_ONLY) {
+                showNotificationEnsuringEnabled(notifTitle, notifMessage);
+            } else {
+                showNotification(notifTitle, notifMessage);
+                // Timer expired: close the tab.
+                chrome.tabs.remove(timerObj.tabId, () => {
+                    if (chrome.runtime.lastError) {
+                        console.error(`Error closing tab ${timerObj.tabId}:`, chrome.runtime.lastError.message);
+                    } else {
+                        console.log(`Tab ${timerObj.tabId} closed.`);
+                    }
+                });
+            }
+
             chrome.storage.local.remove(key, () => {
                 console.log(`Timer ${timerId} removed after expiration`);
             });
@@ -207,7 +279,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 } else {
                     // No active timer found for this tab: start a new one.
                     const timerId = Date.now().toString();
-                    startTimer(timerId, tabId, tabTitle, request.duration, tabFavicon);
+                    startTimer(
+                        timerId,
+                        tabId,
+                        tabTitle,
+                        request.duration,
+                        tabFavicon,
+                        request.completionAction
+                    );
                     sendResponse({ status: "Timer started", timerId });
                 }
             });
@@ -231,6 +310,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else if (request.action === "cancelTimer") {
         cancelTimer(request.timerId, () => {
             sendResponse({ status: `Timer ${request.timerId} canceled` });
+        });
+        return true;
+    } else if (request.action === "setTimerCompletionAction") {
+        setTimerCompletionAction(request.timerId, request.completionAction, (error, timerObj) => {
+            if (error) {
+                sendResponse({ status: error });
+                return;
+            }
+            sendResponse({
+                status: `Timer ${request.timerId} action set`,
+                timer: timerObj
+            });
         });
         return true;
     } else if (request.action === "getTimers") {
@@ -340,6 +431,9 @@ function updateTimer(timerId, newDuration, callback) {
         timerObj.startTime = newStartTime;
         timerObj.targetTime = newTargetTime;
         timerObj.paused = false;
+        if (!timerObj.completionAction) {
+            timerObj.completionAction = COMPLETION_ACTION_CLOSE_TAB;
+        }
         if (timerObj.remaining) {
             delete timerObj.remaining;
         }
@@ -395,5 +489,6 @@ module.exports = {
     resumeTimer,
     resetTimer,
     cancelTimer,
+    setTimerCompletionAction,
     updateBadge
 };

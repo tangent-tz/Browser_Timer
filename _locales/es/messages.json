@@ -35,6 +35,22 @@
     "message": "Iniciar temporizador",
     "description": "Start timer button text"
   },
+  "completionActionLabel": {
+    "message": "Al finalizar",
+    "description": "Label for selecting completion action in start form"
+  },
+  "actionCloseTab": {
+    "message": "Cerrar pestaña",
+    "description": "Completion action option to close the tab"
+  },
+  "actionNotifyOnly": {
+    "message": "Solo notificar",
+    "description": "Completion action option to send notification only"
+  },
+  "timerActionLabel": {
+    "message": "Acción",
+    "description": "Label for timer card completion action selector"
+  },
   "enableNotifications": {
     "message": "Habilitar notificaciones",
     "description": "Notifications toggle label"

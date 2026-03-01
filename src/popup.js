@@ -5,6 +5,9 @@ const { flushSync } = require("react-dom");
 const { useEffect, useState } = React;
 const h = React.createElement;
 
+const COMPLETION_ACTION_CLOSE_TAB = "closeTab";
+const COMPLETION_ACTION_NOTIFY_ONLY = "notifyOnly";
+
 function getLocalizedMessage(key, substitutions) {
     if (!chrome || !chrome.i18n || typeof chrome.i18n.getMessage !== "function") {
         return "";
@@ -40,9 +43,10 @@ function getProgressPercentage(timer, remaining) {
 }
 
 function TimerCard(props) {
-    const { timer, onControl } = props;
+    const { timer, onControl, onActionChange } = props;
     const remaining = getRemainingSeconds(timer);
     const percentage = getProgressPercentage(timer, remaining);
+    const completionAction = timer.completionAction || COMPLETION_ACTION_CLOSE_TAB;
     const statusText = timer.paused
         ? getLocalizedMessage("statusPaused")
         : getLocalizedMessage("statusRunning");
@@ -83,6 +87,25 @@ function TimerCard(props) {
             { className: "timer-remaining-row" },
             h("span", { className: "remaining-label" }, getLocalizedMessage("remainingLabel")),
             h("span", { className: "remaining-value" }, formatTime(remaining))
+        ),
+        h(
+            "div",
+            { className: "timer-action-row" },
+            h("label", { htmlFor: `timerActionSelect-${timer.timerId}` }, getLocalizedMessage("timerActionLabel")),
+            h(
+                "select",
+                {
+                    id: `timerActionSelect-${timer.timerId}`,
+                    className: "timer-action-select",
+                    value: completionAction,
+                    "data-timerid": timer.timerId,
+                    onChange: (event) => {
+                        onActionChange(timer.timerId, event.target.value);
+                    }
+                },
+                h("option", { value: COMPLETION_ACTION_CLOSE_TAB }, getLocalizedMessage("actionCloseTab")),
+                h("option", { value: COMPLETION_ACTION_NOTIFY_ONLY }, getLocalizedMessage("actionNotifyOnly"))
+            )
         ),
         h(
             "div",
@@ -128,6 +151,7 @@ function PopupApp() {
     const [activeTab, setActiveTab] = useState("timer");
     const [timers, setTimers] = useState([]);
     const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+    const [startCompletionAction, setStartCompletionAction] = useState(COMPLETION_ACTION_CLOSE_TAB);
 
     const refreshTimers = () => {
         chrome.runtime.sendMessage({ action: "getTimers" }, (resp) => {
@@ -185,7 +209,8 @@ function PopupApp() {
                     duration: totalSeconds,
                     tabFavicon: tab.favIconUrl || "icons/timer.svg",
                     tabTitle: tab.title || `Tab ${tab.id}`,
-                    tabId: tab.id
+                    tabId: tab.id,
+                    completionAction: startCompletionAction
                 },
                 () => {
                     refreshTimers();
@@ -198,6 +223,19 @@ function PopupApp() {
         chrome.runtime.sendMessage({ action, timerId }, () => {
             refreshTimers();
         });
+    };
+
+    const onTimerActionChange = (timerId, completionAction) => {
+        chrome.runtime.sendMessage(
+            {
+                action: "setTimerCompletionAction",
+                timerId,
+                completionAction
+            },
+            () => {
+                refreshTimers();
+            }
+        );
     };
 
     const onNotificationsChange = (event) => {
@@ -290,6 +328,24 @@ function PopupApp() {
                 )
             ),
             h(
+                "div",
+                { className: "start-action-row" },
+                h("label", { htmlFor: "completionActionSelect" }, getLocalizedMessage("completionActionLabel")),
+                h(
+                    "select",
+                    {
+                        id: "completionActionSelect",
+                        className: "completion-action-select",
+                        value: startCompletionAction,
+                        onChange: (event) => {
+                            setStartCompletionAction(event.target.value);
+                        }
+                    },
+                    h("option", { value: COMPLETION_ACTION_CLOSE_TAB }, getLocalizedMessage("actionCloseTab")),
+                    h("option", { value: COMPLETION_ACTION_NOTIFY_ONLY }, getLocalizedMessage("actionNotifyOnly"))
+                )
+            ),
+            h(
                 "button",
                 {
                     id: "startTimerBtn",
@@ -304,7 +360,8 @@ function PopupApp() {
                     h(TimerCard, {
                         key: timer.timerId,
                         timer,
-                        onControl
+                        onControl,
+                        onActionChange: onTimerActionChange
                     })
                 )
             )
