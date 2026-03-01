@@ -66,7 +66,21 @@ function TimerCard(props) {
                 alt: getLocalizedMessage("tabAltIcon"),
                 className: "timer-thumbnail"
             }),
-            h("span", { className: "timer-title" }, timer.tabTitle)
+            h("span", { className: "timer-title" }, timer.tabTitle),
+            h(
+                "select",
+                {
+                    id: `timerActionSelect-${timer.timerId}`,
+                    className: "timer-action-select",
+                    value: completionAction,
+                    "data-timerid": timer.timerId,
+                    onChange: (event) => {
+                        onActionChange(timer.timerId, event.target.value);
+                    }
+                },
+                h("option", { value: COMPLETION_ACTION_CLOSE_TAB }, getLocalizedMessage("actionCloseTab")),
+                h("option", { value: COMPLETION_ACTION_NOTIFY_ONLY }, getLocalizedMessage("actionNotifyOnly"))
+            )
         ),
         h(
             "div",
@@ -87,25 +101,6 @@ function TimerCard(props) {
             { className: "timer-remaining-row" },
             h("span", { className: "remaining-label" }, getLocalizedMessage("remainingLabel")),
             h("span", { className: "remaining-value" }, formatTime(remaining))
-        ),
-        h(
-            "div",
-            { className: "timer-action-row" },
-            h("label", { htmlFor: `timerActionSelect-${timer.timerId}` }, getLocalizedMessage("timerActionLabel")),
-            h(
-                "select",
-                {
-                    id: `timerActionSelect-${timer.timerId}`,
-                    className: "timer-action-select",
-                    value: completionAction,
-                    "data-timerid": timer.timerId,
-                    onChange: (event) => {
-                        onActionChange(timer.timerId, event.target.value);
-                    }
-                },
-                h("option", { value: COMPLETION_ACTION_CLOSE_TAB }, getLocalizedMessage("actionCloseTab")),
-                h("option", { value: COMPLETION_ACTION_NOTIFY_ONLY }, getLocalizedMessage("actionNotifyOnly"))
-            )
         ),
         h(
             "div",
