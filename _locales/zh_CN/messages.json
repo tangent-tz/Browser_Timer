@@ -1,0 +1,164 @@
+{
+  "extensionName": {
+    "message": "Auto Tab Timer – 标签倒计时与自动关闭",
+    "description": "Name of the extension"
+  },
+  "extensionDescription": {
+    "message": "使用简单的倒计时，在设定时间后自动关闭任意标签页。",
+    "description": "Description of the extension"
+  },
+  "extensionTitle": {
+    "message": "Auto Tab Timer",
+    "description": "Title displayed in popup header"
+  },
+  "tabTimer": {
+    "message": "计时器",
+    "description": "Timer tab label"
+  },
+  "tabSettings": {
+    "message": "设置",
+    "description": "Settings tab label"
+  },
+  "hoursLabel": {
+    "message": "小时",
+    "description": "Hours input label"
+  },
+  "minutesLabel": {
+    "message": "分钟",
+    "description": "Minutes input label"
+  },
+  "secondsLabel": {
+    "message": "秒",
+    "description": "Seconds input label"
+  },
+  "startTimerButton": {
+    "message": "开始计时",
+    "description": "Start timer button text"
+  },
+  "completionActionLabel": {
+    "message": "完成后的默认操作",
+    "description": "Label for the default completion action setting in Settings"
+  },
+  "actionCloseTab": {
+    "message": "关闭标签页",
+    "description": "Completion action option to close the tab"
+  },
+  "actionNotifyOnly": {
+    "message": "仅通知我",
+    "description": "Completion action option to send notification only, ignores notification toggle"
+  },
+  "timerActionLabel": {
+    "message": "操作",
+    "description": "Label for timer card completion action selector"
+  },
+  "enableNotifications": {
+    "message": "操作完成时通知我",
+    "description": "Toggle: show a notification when Close Tab action completes"
+  },
+  "statusLabel": {
+    "message": "状态：",
+    "description": "Status label in timer card"
+  },
+  "statusRunning": {
+    "message": "运行中",
+    "description": "Timer status when running"
+  },
+  "statusPaused": {
+    "message": "已暂停",
+    "description": "Timer status when paused"
+  },
+  "remainingLabel": {
+    "message": "剩余：",
+    "description": "Remaining time label"
+  },
+  "pauseButton": {
+    "message": "暂停",
+    "description": "Pause button text"
+  },
+  "resumeButton": {
+    "message": "继续",
+    "description": "Resume button text"
+  },
+  "resetButton": {
+    "message": "重置",
+    "description": "Reset button text"
+  },
+  "cancelButton": {
+    "message": "取消",
+    "description": "Cancel button text"
+  },
+  "notificationTitle": {
+    "message": "计时完成",
+    "description": "Notification title when timer completes"
+  },
+  "notificationMessage": {
+    "message": "“$tabTitle$” 的计时已完成。",
+    "description": "Notification message when timer completes",
+    "placeholders": {
+      "tabTitle": {
+        "content": "$1",
+        "example": "YouTube - Video Title"
+      }
+    }
+  },
+  "timerAltIcon": {
+    "message": "计时器图标",
+    "description": "Alt text for timer icon"
+  },
+  "settingsAltIcon": {
+    "message": "设置图标",
+    "description": "Alt text for settings icon"
+  },
+  "tabAltIcon": {
+    "message": "标签页图标",
+    "description": "Alt text for tab favicon"
+  },
+  "timersCount_one": {
+    "message": "有 $count$ 个计时器在运行",
+    "description": "Singular form for timer count",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "timersCount_other": {
+    "message": "有 $count$ 个计时器在运行",
+    "description": "Plural form for timer count",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "badgeHours": {
+    "message": "$h$:$m$",
+    "description": "Badge text format for hours and minutes (max 4 chars)",
+    "placeholders": {
+      "h": {
+        "content": "$1",
+        "example": "01"
+      },
+      "m": {
+        "content": "$2",
+        "example": "30"
+      }
+    }
+  },
+  "badgeMinutes": {
+    "message": "$m$:$s$",
+    "description": "Badge text format for minutes and seconds (max 4 chars)",
+    "placeholders": {
+      "m": {
+        "content": "$1",
+        "example": "05"
+      },
+      "s": {
+        "content": "$2",
+        "example": "30"
+      }
+    }
+  }
+}

@@ -56,6 +56,7 @@ Auto Tab Timer is available in multiple languages:
 - **Spanish** (Español)
 - **Japanese** (日本語)
 - **Portuguese (Brazil)** (Português Brasileiro)
+- **Chinese (Simplified)** (简体中文)
 
 The extension automatically detects your browser's language setting and displays the appropriate translation. All UI elements, notifications, and badge text are fully localized.
 
@@ -67,6 +68,7 @@ The extension automatically detects your browser's language setting and displays
 | Spanish  | `es` | ✅ Complete |
 | Japanese | `ja` | ✅ Complete |
 | Portuguese (Brazil) | `pt_BR` | ✅ Complete |
+| Chinese (Simplified) | `zh_CN` | ✅ Complete |
 
 ### Adding New Translations
 
