@@ -1,10 +1,10 @@
 {
   "extensionName": {
-    "message": "Auto Tab Timer – 标签倒计时与自动关闭",
+    "message": "Auto Tab Timer – 标签页倒计时与自动关闭",
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "使用简单的倒计时，在设定时间后自动关闭任意标签页。",
+    "message": "通过简单的倒计时，在设定时间后自动关闭标签页。",
     "description": "Description of the extension"
   },
   "extensionTitle": {
@@ -44,7 +44,7 @@
     "description": "Completion action option to close the tab"
   },
   "actionNotifyOnly": {
-    "message": "仅通知我",
+    "message": "仅发送通知",
     "description": "Completion action option to send notification only, ignores notification toggle"
   },
   "timerActionLabel": {
@@ -52,7 +52,7 @@
     "description": "Label for timer card completion action selector"
   },
   "enableNotifications": {
-    "message": "操作完成时通知我",
+    "message": "操作完成时发送通知",
     "description": "Toggle: show a notification when Close Tab action completes"
   },
   "statusLabel": {
@@ -114,7 +114,7 @@
     "description": "Alt text for tab favicon"
   },
   "timersCount_one": {
-    "message": "有 $count$ 个计时器在运行",
+    "message": "$count$ 个计时器正在运行",
     "description": "Singular form for timer count",
     "placeholders": {
       "count": {
@@ -124,7 +124,7 @@
     }
   },
   "timersCount_other": {
-    "message": "有 $count$ 个计时器在运行",
+    "message": "$count$ 个计时器正在运行",
     "description": "Plural form for timer count",
     "placeholders": {
       "count": {
