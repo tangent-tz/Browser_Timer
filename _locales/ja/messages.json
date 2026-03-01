@@ -36,8 +36,8 @@
     "description": "Start timer button text"
   },
   "completionActionLabel": {
-    "message": "完了時の動作",
-    "description": "Label for selecting completion action in start form"
+    "message": "完了時のデフォルト動作",
+    "description": "Label for the default completion action setting in Settings"
   },
   "actionCloseTab": {
     "message": "タブを閉じる",

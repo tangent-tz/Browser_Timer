@@ -163,8 +163,11 @@ function PopupApp() {
     };
 
     useEffect(() => {
-        chrome.storage.sync.get("notificationsEnabled", (data) => {
+        chrome.storage.sync.get(["notificationsEnabled", "defaultCompletionAction"], (data) => {
             setNotificationsEnabled(data.notificationsEnabled !== false);
+            if (data.defaultCompletionAction) {
+                setStartCompletionAction(data.defaultCompletionAction);
+            }
         });
     }, []);
 
@@ -242,6 +245,12 @@ function PopupApp() {
         const enabled = event.target.checked;
         setNotificationsEnabled(enabled);
         chrome.storage.sync.set({ notificationsEnabled: enabled });
+    };
+
+    const onDefaultActionChange = (event) => {
+        const action = event.target.value;
+        setStartCompletionAction(action);
+        chrome.storage.sync.set({ defaultCompletionAction: action });
     };
 
     return h(
@@ -328,24 +337,6 @@ function PopupApp() {
                 )
             ),
             h(
-                "div",
-                { className: "start-action-row" },
-                h("label", { htmlFor: "completionActionSelect" }, getLocalizedMessage("completionActionLabel")),
-                h(
-                    "select",
-                    {
-                        id: "completionActionSelect",
-                        className: "completion-action-select",
-                        value: startCompletionAction,
-                        onChange: (event) => {
-                            setStartCompletionAction(event.target.value);
-                        }
-                    },
-                    h("option", { value: COMPLETION_ACTION_CLOSE_TAB }, getLocalizedMessage("actionCloseTab")),
-                    h("option", { value: COMPLETION_ACTION_NOTIFY_ONLY }, getLocalizedMessage("actionNotifyOnly"))
-                )
-            ),
-            h(
                 "button",
                 {
                     id: "startTimerBtn",
@@ -374,17 +365,34 @@ function PopupApp() {
             },
             h(
                 "div",
-                { className: "settings-item" },
+                { className: "settings-item settings-action-row" },
+                h("span", { className: "settings-toggle-label" }, getLocalizedMessage("enableNotifications")),
                 h(
                     "label",
-                    null,
+                    { className: "toggle-switch" },
                     h("input", {
                         type: "checkbox",
                         id: "notificationsToggle",
                         checked: notificationsEnabled,
                         onChange: onNotificationsChange
                     }),
-                    h("span", null, getLocalizedMessage("enableNotifications"))
+                    h("span", { className: "toggle-slider" })
+                )
+            ),
+            h(
+                "div",
+                { className: "settings-item settings-action-row" },
+                h("label", { htmlFor: "defaultActionSelect" }, getLocalizedMessage("completionActionLabel")),
+                h(
+                    "select",
+                    {
+                        id: "defaultActionSelect",
+                        className: "completion-action-select",
+                        value: startCompletionAction,
+                        onChange: onDefaultActionChange
+                    },
+                    h("option", { value: COMPLETION_ACTION_CLOSE_TAB }, getLocalizedMessage("actionCloseTab")),
+                    h("option", { value: COMPLETION_ACTION_NOTIFY_ONLY }, getLocalizedMessage("actionNotifyOnly"))
                 )
             )
         )

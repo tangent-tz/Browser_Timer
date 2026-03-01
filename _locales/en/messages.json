@@ -36,8 +36,8 @@
     "description": "Start timer button text"
   },
   "completionActionLabel": {
-    "message": "On completion",
-    "description": "Label for selecting completion action in start form"
+    "message": "Default action on completion",
+    "description": "Label for the default completion action setting in Settings"
   },
   "actionCloseTab": {
     "message": "Close tab",

@@ -36,8 +36,8 @@
     "description": "Start timer button text"
   },
   "completionActionLabel": {
-    "message": "Ao concluir",
-    "description": "Label for selecting completion action in start form"
+    "message": "Ação padrão ao concluir",
+    "description": "Label for the default completion action setting in Settings"
   },
   "actionCloseTab": {
     "message": "Fechar aba",

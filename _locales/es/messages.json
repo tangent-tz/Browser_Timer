@@ -36,8 +36,8 @@
     "description": "Start timer button text"
   },
   "completionActionLabel": {
-    "message": "Al finalizar",
-    "description": "Label for selecting completion action in start form"
+    "message": "Acción predeterminada al finalizar",
+    "description": "Label for the default completion action setting in Settings"
   },
   "actionCloseTab": {
     "message": "Cerrar pestaña",

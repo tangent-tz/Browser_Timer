@@ -160,7 +160,7 @@ h1 {
 .start-action-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 8px;
     margin-bottom: 8px;
 }
@@ -355,4 +355,79 @@ button:hover {
 
 .timer-controls button:hover {
     background: var(--button-bg-hover);
+}
+
+/* Settings Items */
+.settings-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 4px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.85rem;
+}
+
+.settings-item:last-child {
+    border-bottom: none;
+}
+
+.settings-action-row {
+    justify-content: space-between;
+}
+
+.settings-action-row label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.settings-toggle-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.toggle-slider {
+    position: absolute;
+    inset: 0;
+    background-color: var(--border-color);
+    border-radius: 20px;
+    transition: background-color 0.25s ease;
+}
+
+.toggle-slider::before {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 3px;
+    top: 3px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.25s ease;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background-color: var(--button-bg);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(16px);
 }
