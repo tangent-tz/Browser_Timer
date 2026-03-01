@@ -44,16 +44,16 @@
     "description": "Completion action option to close the tab"
   },
   "actionNotifyOnly": {
-    "message": "通知のみ",
-    "description": "Completion action option to send notification only"
+    "message": "通知のみ送る",
+    "description": "Completion action option to send notification only, ignores notification toggle"
   },
   "timerActionLabel": {
     "message": "動作",
     "description": "Label for timer card completion action selector"
   },
   "enableNotifications": {
-    "message": "通知を有効にする",
-    "description": "Notifications toggle label"
+    "message": "アクション完了時に通知",
+    "description": "Toggle: show a notification when Close Tab action completes"
   },
   "statusLabel": {
     "message": "状態",

@@ -49,9 +49,7 @@ function startTimer(timerId, tabId, tabTitle, duration, tabFavicon, completionAc
         completionAction: normalizedAction
     };
 
-    if (normalizedAction === COMPLETION_ACTION_NOTIFY_ONLY) {
-        ensureNotificationsEnabled();
-    }
+    // notifyOnly timers always fire a notification — no need to modify the toggle
 
     const key = getTimerKey(timerId);
     chrome.storage.local.set({ [key]: timerObj }, () => {
@@ -223,8 +221,10 @@ chrome.alarms.onAlarm.addListener((alarm) => {
             const notifMessage = chrome.i18n.getMessage("notificationMessage", [timerObj.tabTitle]);
 
             if (completionAction === COMPLETION_ACTION_NOTIFY_ONLY) {
-                showNotificationEnsuringEnabled(notifTitle, notifMessage);
+                // Always notify regardless of the toggle — this action IS the notification
+                createNotification(notifTitle, notifMessage);
             } else {
+                // Close tab: notify only if the toggle is on
                 showNotification(notifTitle, notifMessage);
                 // Timer expired: close the tab.
                 chrome.tabs.remove(timerObj.tabId, () => {

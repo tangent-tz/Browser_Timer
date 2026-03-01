@@ -394,6 +394,11 @@ function PopupApp() {
                     h("option", { value: COMPLETION_ACTION_CLOSE_TAB }, getLocalizedMessage("actionCloseTab")),
                     h("option", { value: COMPLETION_ACTION_NOTIFY_ONLY }, getLocalizedMessage("actionNotifyOnly"))
                 )
+            ),
+            startCompletionAction === COMPLETION_ACTION_NOTIFY_ONLY && h(
+                "div",
+                { className: "settings-info-box" },
+                h("span", null, "\"Notify me only\" always sends a notification when the timer ends. It ignores the toggle above and leaves the tab open.")
             )
         )
     );

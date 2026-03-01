@@ -387,6 +387,34 @@ button:hover {
     opacity: 0.9;
 }
 
+/* Notify-only hint */
+.notify-hint {
+    font-size: 0.72rem;
+    color: var(--button-bg);
+    opacity: 0.85;
+    margin: -2px 0 4px 0;
+    text-align: right;
+}
+
+.settings-notify-hint {
+    text-align: center;
+    margin: 2px 0 0 0;
+}
+
+/* Settings info box */
+.settings-info-box {
+    margin-top: 8px;
+    padding: 7px 10px;
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    opacity: 0.8;
+    text-align: left;
+}
+
 /* Toggle Switch */
 .toggle-switch {
     position: relative;

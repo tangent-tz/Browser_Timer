@@ -44,16 +44,16 @@
     "description": "Completion action option to close the tab"
   },
   "actionNotifyOnly": {
-    "message": "Notify only",
-    "description": "Completion action option to send notification only"
+    "message": "Notify me only",
+    "description": "Completion action option to send notification only, ignores notification toggle"
   },
   "timerActionLabel": {
     "message": "Action",
     "description": "Label for timer card completion action selector"
   },
   "enableNotifications": {
-    "message": "Enable Notifications",
-    "description": "Notifications toggle label"
+    "message": "Notify on action completion",
+    "description": "Toggle: show a notification when Close Tab action completes"
   },
   "statusLabel": {
     "message": "Status:",
