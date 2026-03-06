@@ -107,7 +107,7 @@ function createI18nMock() {
         whatsNew130Item2: "New one-time update page for users upgrading into 1.3.0.",
         whatsNew130Item3: "Developer extension recommendations are now available in onboarding.",
         whatsNew130Item4: "New install onboarding and one-time 1.3.0 update page are now live.",
-        whatsNew130Item5: "Hours/minutes/seconds inputs now support mouse-wheel adjustment while hovered.",
+        whatsNew130Item5: "Hours/minutes/seconds inputs now support mouse-wheel adjustment after the field is focused.",
         updateGuideHeading: "How to Use What's New",
         updateGuideIntro: "Use this quick guide to apply the 1.3.0 improvements in your daily workflow.",
         updateGuideStep1: "Enter your timer duration as usual, then start the timer.",

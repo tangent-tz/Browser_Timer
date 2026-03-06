@@ -206,7 +206,7 @@
     "description": "Fourth 1.3.0 highlight"
   },
   "whatsNew130Item5": {
-    "message": "Hours/minutes/seconds inputs now support mouse-wheel adjustment while hovered.",
+    "message": "Hours/minutes/seconds inputs now support mouse-wheel adjustment after the field is focused.",
     "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {

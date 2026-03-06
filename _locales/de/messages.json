@@ -206,7 +206,7 @@
     "description": "Fourth 1.3.0 highlight"
   },
   "whatsNew130Item5": {
-    "message": "Stunden/Minuten/Sekunden koennen jetzt per Mausrad angepasst werden, waehrend der Cursor ueber dem Feld ist.",
+    "message": "Stunden/Minuten/Sekunden koennen jetzt per Mausrad angepasst werden, nachdem das Feld fokussiert wurde.",
     "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {

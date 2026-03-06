@@ -206,7 +206,7 @@
     "description": "Fourth 1.3.0 highlight"
   },
   "whatsNew130Item5": {
-    "message": "Les champs heures/minutes/secondes prennent maintenant en charge l'ajustement avec la molette de la souris au survol.",
+    "message": "Les champs heures/minutes/secondes prennent maintenant en charge l'ajustement avec la molette apres clic dans le champ.",
     "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {

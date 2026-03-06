@@ -206,7 +206,7 @@
     "description": "Fourth 1.3.0 highlight"
   },
   "whatsNew130Item5": {
-    "message": "時間・分・秒の入力欄で、ホバー中にマウスホイールによる増減が使えるようになりました。",
+    "message": "時間・分・秒の入力欄で、フィールドをクリック後にマウスホイールで増減できるようになりました。",
     "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {

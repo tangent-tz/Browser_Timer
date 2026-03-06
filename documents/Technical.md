@@ -92,7 +92,7 @@ The extension uses Chrome's native i18n API (`chrome.i18n.getMessage`) for all u
 
 **Timer Input Rules:**
 - Timer start input is parsed as whole-number hours/minutes/seconds from popup UI.
-- Hours/minutes/seconds inputs support mouse-wheel increment/decrement while hovered.
+- Hours/minutes/seconds inputs support mouse-wheel increment/decrement after the field is focused.
 - UI input values are not hard-capped to `59` minutes/seconds or `999` hours.
 - A total duration of `00:00:00` is rejected with an inline localized validation message.
 

@@ -206,7 +206,7 @@
     "description": "Fourth 1.3.0 highlight"
   },
   "whatsNew130Item5": {
-    "message": "Los campos de horas/minutos/segundos ahora admiten ajuste con rueda del mouse al pasar por encima.",
+    "message": "Los campos de horas/minutos/segundos ahora admiten ajuste con rueda del mouse tras hacer clic en el campo.",
     "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {
