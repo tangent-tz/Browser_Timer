@@ -258,59 +258,59 @@
     "description": "Placeholder description for third promoted extension"
   },
   "installGuideHeading": {
-    "message": "Quick Start for First-Time Installers",
+    "message": "Démarrage rapide pour une première installation",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideIntro": {
-    "message": "Follow these steps to set up your first timer and understand key controls.",
+    "message": "Suivez ces étapes pour configurer votre premier minuteur et comprendre les commandes principales.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep1": {
-    "message": "Pin Auto Tab Timer to your toolbar so it is always one click away.",
+    "message": "Épinglez Auto Tab Timer à votre barre d’outils pour l’avoir toujours à portée de clic.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep2": {
-    "message": "Open the tab you want to manage, then open the extension popup.",
+    "message": "Ouvrez l’onglet que vous voulez gérer, puis ouvrez la fenêtre contextuelle de l’extension.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep3": {
-    "message": "Enter hours, minutes, and seconds, then click Start Timer.",
+    "message": "Saisissez les heures, les minutes et les secondes, puis cliquez sur Démarrer le minuteur.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep4": {
-    "message": "Choose completion action: Close tab or Notify me only.",
+    "message": "Choisissez l’action à la fin : Fermer l’onglet ou Me notifier uniquement.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep5": {
-    "message": "Use Pause, Resume, Reset, or Cancel from the active timer card as needed.",
+    "message": "Utilisez Mettre en pause, Reprendre, Réinitialiser ou Annuler depuis la carte du minuteur actif selon vos besoins.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep6": {
-    "message": "Open Settings to choose your default completion action and notification behavior.",
+    "message": "Ouvrez les Paramètres pour choisir l’action de fin par défaut et le comportement des notifications.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTipsHeading": {
-    "message": "Practical Tips",
+    "message": "Conseils pratiques",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip1": {
-    "message": "00:00:00 is invalid. The extension shows an inline error and prevents start.",
+    "message": "00:00:00 est invalide. L’extension affiche une erreur en ligne et empêche le démarrage.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip2": {
-    "message": "Minutes and seconds are normalized to 0..59, and hours are normalized to 0..999.",
+    "message": "Les minutes et les secondes sont normalisées entre 0 et 59, et les heures entre 0 et 999.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip3": {
-    "message": "Notify me only always sends a notification and keeps the tab open.",
+    "message": "Me notifier uniquement envoie toujours une notification et laisse l’onglet ouvert.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip4": {
-    "message": "Close tab action can send notifications based on your notification toggle.",
+    "message": "L’action Fermer l’onglet peut envoyer des notifications selon votre interrupteur de notification.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuidePrivacy": {
-    "message": "No account is required. Settings and timer state are stored in your browser extension storage.",
+    "message": "Aucun compte n’est requis. Les paramètres et l’état du minuteur sont stockés dans l’espace de stockage de l’extension du navigateur.",
     "description": "First-install onboarding quick-start content"
   }
 }

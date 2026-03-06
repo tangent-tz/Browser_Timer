@@ -258,59 +258,59 @@
     "description": "Placeholder description for third promoted extension"
   },
   "installGuideHeading": {
-    "message": "Quick Start for First-Time Installers",
+    "message": "首次安装快速上手",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideIntro": {
-    "message": "Follow these steps to set up your first timer and understand key controls.",
+    "message": "按照以下步骤设置你的第一个计时器，并了解主要控制方式。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep1": {
-    "message": "Pin Auto Tab Timer to your toolbar so it is always one click away.",
+    "message": "将 Auto Tab Timer 固定到工具栏，这样始终只需点击一次即可打开。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep2": {
-    "message": "Open the tab you want to manage, then open the extension popup.",
+    "message": "打开你想管理的标签页，然后打开扩展弹窗。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep3": {
-    "message": "Enter hours, minutes, and seconds, then click Start Timer.",
+    "message": "输入小时、分钟和秒，然后点击开始计时。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep4": {
-    "message": "Choose completion action: Close tab or Notify me only.",
+    "message": "选择完成后的动作：关闭标签页，或仅通知我。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep5": {
-    "message": "Use Pause, Resume, Reset, or Cancel from the active timer card as needed.",
+    "message": "需要时可在活动计时器卡片中使用暂停、继续、重置或取消。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep6": {
-    "message": "Open Settings to choose your default completion action and notification behavior.",
+    "message": "打开设置，选择默认完成动作和通知行为。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTipsHeading": {
-    "message": "Practical Tips",
+    "message": "实用提示",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip1": {
-    "message": "00:00:00 is invalid. The extension shows an inline error and prevents start.",
+    "message": "00:00:00 无效。扩展会显示内联错误并阻止启动。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip2": {
-    "message": "Minutes and seconds are normalized to 0..59, and hours are normalized to 0..999.",
+    "message": "分钟和秒会规范到 0..59，小时会规范到 0..999。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip3": {
-    "message": "Notify me only always sends a notification and keeps the tab open.",
+    "message": "仅通知我 会始终发送通知，并保持标签页打开。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip4": {
-    "message": "Close tab action can send notifications based on your notification toggle.",
+    "message": "关闭标签页 动作会根据你的通知开关设置决定是否发送通知。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuidePrivacy": {
-    "message": "No account is required. Settings and timer state are stored in your browser extension storage.",
+    "message": "无需账号。设置和计时器状态会保存在浏览器扩展存储中。",
     "description": "First-install onboarding quick-start content"
   }
 }

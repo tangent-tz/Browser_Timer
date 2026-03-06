@@ -258,59 +258,59 @@
     "description": "Placeholder description for third promoted extension"
   },
   "installGuideHeading": {
-    "message": "Quick Start for First-Time Installers",
+    "message": "Inicio rápido para quienes lo instalan por primera vez",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideIntro": {
-    "message": "Follow these steps to set up your first timer and understand key controls.",
+    "message": "Sigue estos pasos para configurar tu primer temporizador y entender los controles principales.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep1": {
-    "message": "Pin Auto Tab Timer to your toolbar so it is always one click away.",
+    "message": "Fija Auto Tab Timer en la barra de herramientas para tenerlo siempre a un clic.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep2": {
-    "message": "Open the tab you want to manage, then open the extension popup.",
+    "message": "Abre la pestaña que quieres gestionar y luego abre la ventana emergente de la extensión.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep3": {
-    "message": "Enter hours, minutes, and seconds, then click Start Timer.",
+    "message": "Introduce horas, minutos y segundos, y luego haz clic en Iniciar temporizador.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep4": {
-    "message": "Choose completion action: Close tab or Notify me only.",
+    "message": "Elige la acción al finalizar: Cerrar pestaña o Solo notificarme.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep5": {
-    "message": "Use Pause, Resume, Reset, or Cancel from the active timer card as needed.",
+    "message": "Usa Pausar, Reanudar, Reiniciar o Cancelar desde la tarjeta del temporizador activo cuando lo necesites.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep6": {
-    "message": "Open Settings to choose your default completion action and notification behavior.",
+    "message": "Abre Ajustes para elegir la acción predeterminada al finalizar y el comportamiento de las notificaciones.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTipsHeading": {
-    "message": "Practical Tips",
+    "message": "Consejos prácticos",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip1": {
-    "message": "00:00:00 is invalid. The extension shows an inline error and prevents start.",
+    "message": "00:00:00 no es válido. La extensión muestra un error en línea y evita el inicio.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip2": {
-    "message": "Minutes and seconds are normalized to 0..59, and hours are normalized to 0..999.",
+    "message": "Los minutos y segundos se normalizan a 0..59, y las horas se normalizan a 0..999.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip3": {
-    "message": "Notify me only always sends a notification and keeps the tab open.",
+    "message": "Solo notificarme siempre envía una notificación y mantiene la pestaña abierta.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip4": {
-    "message": "Close tab action can send notifications based on your notification toggle.",
+    "message": "La acción Cerrar pestaña puede enviar notificaciones según el interruptor de notificaciones.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuidePrivacy": {
-    "message": "No account is required. Settings and timer state are stored in your browser extension storage.",
+    "message": "No se necesita ninguna cuenta. Los ajustes y el estado del temporizador se guardan en el almacenamiento de la extensión del navegador.",
     "description": "First-install onboarding quick-start content"
   }
 }

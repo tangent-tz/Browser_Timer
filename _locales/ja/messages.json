@@ -258,59 +258,59 @@
     "description": "Placeholder description for third promoted extension"
   },
   "installGuideHeading": {
-    "message": "Quick Start for First-Time Installers",
+    "message": "初めて使う方向けクイックスタート",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideIntro": {
-    "message": "Follow these steps to set up your first timer and understand key controls.",
+    "message": "最初のタイマーを設定し、主な操作を理解するために次の手順を確認してください。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep1": {
-    "message": "Pin Auto Tab Timer to your toolbar so it is always one click away.",
+    "message": "Auto Tab Timer をツールバーに固定して、いつでも 1 クリックで開けるようにします。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep2": {
-    "message": "Open the tab you want to manage, then open the extension popup.",
+    "message": "管理したいタブを開き、そのあと拡張機能のポップアップを開きます。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep3": {
-    "message": "Enter hours, minutes, and seconds, then click Start Timer.",
+    "message": "時間、分、秒を入力してから、タイマー開始をクリックします。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep4": {
-    "message": "Choose completion action: Close tab or Notify me only.",
+    "message": "完了時の動作として、タブを閉じるか、通知のみを送るかを選びます。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep5": {
-    "message": "Use Pause, Resume, Reset, or Cancel from the active timer card as needed.",
+    "message": "必要に応じて、アクティブなタイマーカードから一時停止、再開、リセット、キャンセルを使います。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideStep6": {
-    "message": "Open Settings to choose your default completion action and notification behavior.",
+    "message": "設定を開いて、既定の完了時アクションと通知の動作を選びます。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTipsHeading": {
-    "message": "Practical Tips",
+    "message": "実用的なヒント",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip1": {
-    "message": "00:00:00 is invalid. The extension shows an inline error and prevents start.",
+    "message": "00:00:00 は無効です。拡張機能はインラインエラーを表示し、開始を防ぎます。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip2": {
-    "message": "Minutes and seconds are normalized to 0..59, and hours are normalized to 0..999.",
+    "message": "分と秒は 0..59 に、時間は 0..999 に自動補正されます。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip3": {
-    "message": "Notify me only always sends a notification and keeps the tab open.",
+    "message": "通知のみ は常に通知を送り、タブは開いたままにします。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip4": {
-    "message": "Close tab action can send notifications based on your notification toggle.",
+    "message": "タブを閉じる アクションは、通知トグルの設定に応じて通知を送ることがあります。",
     "description": "First-install onboarding quick-start content"
   },
   "installGuidePrivacy": {
-    "message": "No account is required. Settings and timer state are stored in your browser extension storage.",
+    "message": "アカウントは不要です。設定とタイマーの状態は、ブラウザーの拡張機能ストレージに保存されます。",
     "description": "First-install onboarding quick-start content"
   }
 }
