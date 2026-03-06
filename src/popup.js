@@ -439,11 +439,6 @@ function PopupApp() {
                     h("option", { value: COMPLETION_ACTION_NOTIFY_ONLY }, getLocalizedMessage("actionNotifyOnly"))
                 )
             ),
-            startCompletionAction === COMPLETION_ACTION_NOTIFY_ONLY && h(
-                "div",
-                { className: "settings-info-box" },
-                h("span", null, getLocalizedMessage("notifyOnlyHint"))
-            ),
             h(
                 "div",
                 { className: "settings-item settings-link-row" },
@@ -455,6 +450,11 @@ function PopupApp() {
                 { className: "settings-item settings-link-row" },
                 h("span", { className: "settings-toggle-label" }, getLocalizedMessage("settingsViewWhatsNew")),
                 h("button", { className: "settings-open-btn", onClick: () => openOnboardingTab("update") }, "›")
+            ),
+            startCompletionAction === COMPLETION_ACTION_NOTIFY_ONLY && h(
+                "div",
+                { className: "settings-info-box" },
+                h("span", null, getLocalizedMessage("notifyOnlyHint"))
             )
         )
     );
