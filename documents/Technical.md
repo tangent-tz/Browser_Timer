@@ -90,11 +90,8 @@ The extension uses Chrome's native i18n API (`chrome.i18n.getMessage`) for all u
 - Both English and Spanish badge formats maintain this constraint
 - Visual check: Longest Spanish badge text is `23:59` (5 chars)
 
-**Input Normalization Rules:**
-- Timer start input is normalized in popup UI:
-  - `hours`: clamped to `0..999`
-  - `minutes`: clamped to `0..59`
-  - `seconds`: clamped to `0..59`
+**Timer Input Rules:**
+- Timer start input is parsed as whole-number hours/minutes/seconds from popup UI.
 - A total duration of `00:00:00` is rejected with an inline localized validation message.
 
 **Developer Logs:**

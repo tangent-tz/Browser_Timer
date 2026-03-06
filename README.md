@@ -49,7 +49,7 @@ You can also download the latest compiled version (ZIP file) from the release ta
 1. **Starting a Timer:**
    - Click the Auto Tab Timer icon in your browser toolbar to open the popup.
    - In the **Timer** tab, input your desired hours, minutes, and seconds.
-   - Inputs are normalized before start: `hours` is clamped to `0..999`, `minutes/seconds` are clamped to `0..59`.
+   - Use whole-number values for hours, minutes, and seconds.
    - A timer value of `00:00:00` is rejected with an inline validation message.
    - Click **Start Timer** to begin the countdown for the active tab.
    - The active timer will appear in the list, where you can pause, resume, reset, or cancel it.

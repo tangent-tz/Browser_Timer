@@ -190,7 +190,7 @@
     "description": "Section heading for version 1.3.0 highlights"
   },
   "whatsNew130Item1": {
-    "message": "Zeiteingaben begrenzen Stunden jetzt auf 0..999 und Minuten/Sekunden auf 0..59.",
+    "message": "Die Eingabebehandlung wurde fuer einen besser vorhersehbaren Start angepasst.",
     "description": "First 1.3.0 highlight"
   },
   "whatsNew130Item2": {
@@ -298,7 +298,7 @@
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip2": {
-    "message": "Minuten und Sekunden werden auf 0..59 normalisiert, Stunden auf 0..999.",
+    "message": "Verwenden Sie ganze Zahlen fuer Stunden, Minuten und Sekunden beim Start.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip3": {
@@ -322,7 +322,7 @@
     "description": "Update onboarding guide content"
   },
   "updateGuideStep1": {
-    "message": "Geben Sie Zeiten wie gewohnt ein. Stunden werden auf 0..999, Minuten/Sekunden auf 0..59 normalisiert.",
+    "message": "Geben Sie die Timerdauer wie gewohnt ein und starten Sie dann den Timer.",
     "description": "Update onboarding guide content"
   },
   "updateGuideStep2": {

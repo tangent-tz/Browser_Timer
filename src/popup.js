@@ -7,8 +7,6 @@ const h = React.createElement;
 
 const COMPLETION_ACTION_CLOSE_TAB = "closeTab";
 const COMPLETION_ACTION_NOTIFY_ONLY = "notifyOnly";
-const MAX_HOURS = 999;
-const MAX_MINUTES_SECONDS = 59;
 
 function getLocalizedMessage(key, substitutions) {
     if (!chrome || !chrome.i18n || typeof chrome.i18n.getMessage !== "function") {
@@ -44,10 +42,6 @@ function getProgressPercentage(timer, remaining) {
     return Math.min(100, Math.max(0, (elapsed / original) * 100));
 }
 
-function clampNumber(value, min, max) {
-    return Math.min(max, Math.max(min, value));
-}
-
 function parseInputValue(rawValue) {
     const parsed = parseInt(rawValue, 10);
     if (Number.isNaN(parsed)) {
@@ -56,10 +50,10 @@ function parseInputValue(rawValue) {
     return parsed;
 }
 
-function normalizeDurationInputs(hoursRaw, minutesRaw, secondsRaw) {
-    const hours = clampNumber(parseInputValue(hoursRaw), 0, MAX_HOURS);
-    const minutes = clampNumber(parseInputValue(minutesRaw), 0, MAX_MINUTES_SECONDS);
-    const seconds = clampNumber(parseInputValue(secondsRaw), 0, MAX_MINUTES_SECONDS);
+function parseDurationInputs(hoursRaw, minutesRaw, secondsRaw) {
+    const hours = parseInputValue(hoursRaw);
+    const minutes = parseInputValue(minutesRaw);
+    const seconds = parseInputValue(secondsRaw);
     return {
         hours,
         minutes,
@@ -207,23 +201,13 @@ function PopupApp() {
         const hoursInput = document.getElementById("hoursInput");
         const minutesInput = document.getElementById("minutesInput");
         const secondsInput = document.getElementById("secondsInput");
-        const normalized = normalizeDurationInputs(
+        const parsed = parseDurationInputs(
             hoursInput ? hoursInput.value : "0",
             minutesInput ? minutesInput.value : "0",
             secondsInput ? secondsInput.value : "0"
         );
 
-        if (hoursInput) {
-            hoursInput.value = normalized.hours.toString();
-        }
-        if (minutesInput) {
-            minutesInput.value = normalized.minutes.toString();
-        }
-        if (secondsInput) {
-            secondsInput.value = normalized.seconds.toString();
-        }
-
-        if (normalized.totalSeconds <= 0) {
+        if (parsed.totalSeconds <= 0) {
             setInputError(getLocalizedMessage("timerInputError"));
             return;
         }
@@ -242,7 +226,7 @@ function PopupApp() {
             chrome.runtime.sendMessage(
                 {
                     action: "startTimer",
-                    duration: normalized.totalSeconds,
+                    duration: parsed.totalSeconds,
                     tabFavicon: tab.favIconUrl || "icons/timer.svg",
                     tabTitle: tab.title || `Tab ${tab.id}`,
                     tabId: tab.id,
@@ -481,7 +465,7 @@ if (document.readyState !== "loading") {
 }
 
 module.exports = {
-    normalizeDurationInputs,
+    parseDurationInputs,
     formatTime,
     mountPopup
 };

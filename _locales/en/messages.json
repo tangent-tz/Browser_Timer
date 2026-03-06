@@ -190,7 +190,7 @@
     "description": "Section heading for version 1.3.0 highlights"
   },
   "whatsNew130Item1": {
-    "message": "Timer input guardrails now clamp hours to 0..999 and minutes/seconds to 0..59.",
+    "message": "Timer input handling was refined for a more predictable start experience.",
     "description": "First 1.3.0 highlight"
   },
   "whatsNew130Item2": {
@@ -298,7 +298,7 @@
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip2": {
-    "message": "Minutes and seconds are normalized to 0..59, and hours are normalized to 0..999.",
+    "message": "Use whole numbers for hours, minutes, and seconds when starting a timer.",
     "description": "First-install onboarding quick-start content"
   },
   "installGuideTip3": {
@@ -322,7 +322,7 @@
     "description": "Update onboarding guide content"
   },
   "updateGuideStep1": {
-    "message": "Enter timer values as usual. Hours are normalized to 0..999, and minutes/seconds to 0..59.",
+    "message": "Enter your timer duration as usual, then start the timer.",
     "description": "Update onboarding guide content"
   },
   "updateGuideStep2": {

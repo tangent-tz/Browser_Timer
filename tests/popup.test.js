@@ -81,23 +81,23 @@ describe("Popup - Start Timer behavior", () => {
         expect(inputError.textContent).toBe("Enter a time greater than 00:00:00.");
     });
 
-    test("should clamp out-of-range input values before starting timer", () => {
+    test("should keep raw input values and use parsed total seconds without normalization", () => {
         const hoursInput = document.getElementById("hoursInput");
         const minutesInput = document.getElementById("minutesInput");
         const secondsInput = document.getElementById("secondsInput");
         const startTimerBtn = document.getElementById("startTimerBtn");
 
-        hoursInput.value = "-5";
+        hoursInput.value = "0";
         minutesInput.value = "120";
         secondsInput.value = "99";
         startTimerBtn.click();
 
         const startCall = getStartTimerCall();
         expect(startCall).toBeDefined();
-        expect(startCall[0].duration).toBe(3599);
+        expect(startCall[0].duration).toBe(7299);
         expect(hoursInput.value).toBe("0");
-        expect(minutesInput.value).toBe("59");
-        expect(secondsInput.value).toBe("59");
+        expect(minutesInput.value).toBe("120");
+        expect(secondsInput.value).toBe("99");
     });
 
     test("should clear inline error after a valid start", () => {

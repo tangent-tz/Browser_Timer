@@ -3,7 +3,7 @@
 ## Highlights
 
 - Stabilized completion-action behavior and aligned test coverage with runtime behavior.
-- Added timer input guardrails in popup UI with inline localized validation feedback.
+- Updated timer input handling in popup UI with inline localized validation feedback.
 - Completed localization of remaining settings hint text.
 - Added localized onboarding for first install and a one-time “What’s New in 1.3.0” page for users upgrading into `1.3.0`.
 - Added config-driven cross-promotion cards for other extensions by the same developer.
@@ -11,9 +11,8 @@
 
 ## Behavior Changes
 
-1. Timer input normalization before start:
-   - `hours` is clamped to `0..999`.
-   - `minutes` and `seconds` are clamped to `0..59`.
+1. Timer input handling before start:
+   - Duration is parsed from the entered hour/minute/second values.
 2. `00:00:00` is rejected with a localized inline error message.
 3. `Notify me only` behavior is explicit:
    - Always sends a notification when timer completes.
