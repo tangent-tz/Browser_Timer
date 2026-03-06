@@ -112,6 +112,21 @@ describe("Popup - Start Timer behavior", () => {
         startTimerBtn.click();
         expect(document.getElementById("timerInputError")).toBeNull();
     });
+
+    test("should increase and decrease duration inputs with mouse wheel", () => {
+        const minutesInput = document.getElementById("minutesInput");
+
+        minutesInput.value = "60";
+        const wheelUp = new Event("wheel", { bubbles: true, cancelable: true });
+        Object.defineProperty(wheelUp, "deltaY", { value: -120 });
+        minutesInput.dispatchEvent(wheelUp);
+        expect(minutesInput.value).toBe("61");
+
+        const wheelDown = new Event("wheel", { bubbles: true, cancelable: true });
+        Object.defineProperty(wheelDown, "deltaY", { value: 120 });
+        minutesInput.dispatchEvent(wheelDown);
+        expect(minutesInput.value).toBe("60");
+    });
 });
 
 describe("Popup Timer List Rendering", () => {

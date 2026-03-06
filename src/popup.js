@@ -197,6 +197,15 @@ function PopupApp() {
         };
     }, []);
 
+    const onDurationInputWheel = (event) => {
+        event.preventDefault();
+        const input = event.currentTarget;
+        const current = parseInputValue(input.value);
+        const delta = event.deltaY < 0 ? 1 : -1;
+        const next = Math.max(0, current + delta);
+        input.value = next.toString();
+    };
+
     const startTimer = () => {
         const hoursInput = document.getElementById("hoursInput");
         const minutesInput = document.getElementById("minutesInput");
@@ -328,7 +337,7 @@ function PopupApp() {
                         id: "hoursInput",
                         defaultValue: "0",
                         min: "0",
-                        max: "999"
+                        onWheel: onDurationInputWheel
                     })
                 ),
                 h(
@@ -340,7 +349,7 @@ function PopupApp() {
                         id: "minutesInput",
                         defaultValue: "0",
                         min: "0",
-                        max: "59"
+                        onWheel: onDurationInputWheel
                     })
                 ),
                 h(
@@ -352,7 +361,7 @@ function PopupApp() {
                         id: "secondsInput",
                         defaultValue: "0",
                         min: "0",
-                        max: "59"
+                        onWheel: onDurationInputWheel
                     })
                 )
             ),
