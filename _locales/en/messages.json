@@ -241,22 +241,6 @@
     "message": "TODO: Replace with the final title and description before release.",
     "description": "Placeholder description for first promoted extension"
   },
-  "promoExt2Title": {
-    "message": "Placeholder Extension Two",
-    "description": "Placeholder title for second promoted extension"
-  },
-  "promoExt2Description": {
-    "message": "TODO: Replace with the final title and description before release.",
-    "description": "Placeholder description for second promoted extension"
-  },
-  "promoExt3Title": {
-    "message": "Placeholder Extension Three",
-    "description": "Placeholder title for third promoted extension"
-  },
-  "promoExt3Description": {
-    "message": "TODO: Replace with the final title and description before release.",
-    "description": "Placeholder description for third promoted extension"
-  },
   "installGuideHeading": {
     "message": "Quick Start for First-Time Installers",
     "description": "First-install onboarding quick-start content"

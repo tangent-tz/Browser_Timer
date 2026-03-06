@@ -241,22 +241,6 @@
     "message": "TODO：发布前请替换为最终标题和描述。",
     "description": "Placeholder description for first promoted extension"
   },
-  "promoExt2Title": {
-    "message": "占位扩展二",
-    "description": "Placeholder title for second promoted extension"
-  },
-  "promoExt2Description": {
-    "message": "TODO：发布前请替换为最终标题和描述。",
-    "description": "Placeholder description for second promoted extension"
-  },
-  "promoExt3Title": {
-    "message": "占位扩展三",
-    "description": "Placeholder title for third promoted extension"
-  },
-  "promoExt3Description": {
-    "message": "TODO：发布前请替换为最终标题和描述。",
-    "description": "Placeholder description for third promoted extension"
-  },
   "installGuideHeading": {
     "message": "首次安装快速上手",
     "description": "First-install onboarding quick-start content"

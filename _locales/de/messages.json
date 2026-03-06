@@ -241,22 +241,6 @@
     "message": "TODO: Vor der Veröffentlichung durch finalen Titel und Beschreibung ersetzen.",
     "description": "Placeholder description for first promoted extension"
   },
-  "promoExt2Title": {
-    "message": "Platzhalter-Erweiterung Zwei",
-    "description": "Placeholder title for second promoted extension"
-  },
-  "promoExt2Description": {
-    "message": "TODO: Vor der Veröffentlichung durch finalen Titel und Beschreibung ersetzen.",
-    "description": "Placeholder description for second promoted extension"
-  },
-  "promoExt3Title": {
-    "message": "Platzhalter-Erweiterung Drei",
-    "description": "Placeholder title for third promoted extension"
-  },
-  "promoExt3Description": {
-    "message": "TODO: Vor der Veröffentlichung durch finalen Titel und Beschreibung ersetzen.",
-    "description": "Placeholder description for third promoted extension"
-  },
   "installGuideHeading": {
     "message": "Schnellstart für Erstinstallationen",
     "description": "First-install onboarding quick-start content"

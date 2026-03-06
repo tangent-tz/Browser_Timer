@@ -241,22 +241,6 @@
     "message": "TODO: Reemplazar con el título y la descripción finales antes del lanzamiento.",
     "description": "Placeholder description for first promoted extension"
   },
-  "promoExt2Title": {
-    "message": "Extensión de marcador de posición dos",
-    "description": "Placeholder title for second promoted extension"
-  },
-  "promoExt2Description": {
-    "message": "TODO: Reemplazar con el título y la descripción finales antes del lanzamiento.",
-    "description": "Placeholder description for second promoted extension"
-  },
-  "promoExt3Title": {
-    "message": "Extensión de marcador de posición tres",
-    "description": "Placeholder title for third promoted extension"
-  },
-  "promoExt3Description": {
-    "message": "TODO: Reemplazar con el título y la descripción finales antes del lanzamiento.",
-    "description": "Placeholder description for third promoted extension"
-  },
   "installGuideHeading": {
     "message": "Inicio rápido para quienes lo instalan por primera vez",
     "description": "First-install onboarding quick-start content"

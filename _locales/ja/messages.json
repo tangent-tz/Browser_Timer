@@ -241,22 +241,6 @@
     "message": "TODO: リリース前に最終的なタイトルと説明に置き換えてください。",
     "description": "Placeholder description for first promoted extension"
   },
-  "promoExt2Title": {
-    "message": "プレースホルダー拡張機能 2",
-    "description": "Placeholder title for second promoted extension"
-  },
-  "promoExt2Description": {
-    "message": "TODO: リリース前に最終的なタイトルと説明に置き換えてください。",
-    "description": "Placeholder description for second promoted extension"
-  },
-  "promoExt3Title": {
-    "message": "プレースホルダー拡張機能 3",
-    "description": "Placeholder title for third promoted extension"
-  },
-  "promoExt3Description": {
-    "message": "TODO: リリース前に最終的なタイトルと説明に置き換えてください。",
-    "description": "Placeholder description for third promoted extension"
-  },
   "installGuideHeading": {
     "message": "初めて使う方向けクイックスタート",
     "description": "First-install onboarding quick-start content"
