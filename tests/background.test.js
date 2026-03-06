@@ -48,17 +48,18 @@ describe("startTimer", () => {
         expect(chrome.alarms.create).toHaveBeenCalledWith(timerId, { delayInMinutes: duration / 60 });
     });
 
-    test("should auto-enable notifications for notifyOnly timers", () => {
-        chrome.storage.sync.get.mockImplementation((key, callback) => {
-            callback({ notificationsEnabled: false });
-        });
-
+    test("should persist notifyOnly completion action without changing notification toggle", () => {
         startTimer("notifyTimer", 1, "Test Tab", 60, "icons/timer.svg", "notifyOnly");
 
-        expect(chrome.storage.sync.set).toHaveBeenCalledWith(
-            { notificationsEnabled: true },
+        expect(chrome.storage.local.set).toHaveBeenCalledWith(
+            expect.objectContaining({
+                timer_notifyTimer: expect.objectContaining({
+                    completionAction: "notifyOnly"
+                })
+            }),
             expect.any(Function)
         );
+        expect(chrome.storage.sync.set).not.toHaveBeenCalled();
     });
 });
 
@@ -254,7 +255,7 @@ describe("alarm completion behavior", () => {
         expect(chrome.storage.sync.set).not.toHaveBeenCalled();
     });
 
-    test("should not close tab and auto-enable notifications for notifyOnly", () => {
+    test("should not close tab and always notify for notifyOnly", () => {
         const timerId = "alarmNotify";
         const key = "timer_" + timerId;
         const timerObj = {
@@ -276,10 +277,7 @@ describe("alarm completion behavior", () => {
         alarmListener({ name: timerId });
 
         expect(chrome.tabs.remove).not.toHaveBeenCalled();
-        expect(chrome.storage.sync.set).toHaveBeenCalledWith(
-            { notificationsEnabled: true },
-            expect.any(Function)
-        );
+        expect(chrome.storage.sync.set).not.toHaveBeenCalled();
         expect(chrome.notifications.create).toHaveBeenCalled();
         expect(chrome.storage.local.remove).toHaveBeenCalledWith(key, expect.any(Function));
     });

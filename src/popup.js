@@ -7,6 +7,8 @@ const h = React.createElement;
 
 const COMPLETION_ACTION_CLOSE_TAB = "closeTab";
 const COMPLETION_ACTION_NOTIFY_ONLY = "notifyOnly";
+const MAX_HOURS = 999;
+const MAX_MINUTES_SECONDS = 59;
 
 function getLocalizedMessage(key, substitutions) {
     if (!chrome || !chrome.i18n || typeof chrome.i18n.getMessage !== "function") {
@@ -40,6 +42,30 @@ function getProgressPercentage(timer, remaining) {
     const original = Math.max(1, timer.originalDuration || 1);
     const elapsed = original - remaining;
     return Math.min(100, Math.max(0, (elapsed / original) * 100));
+}
+
+function clampNumber(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+}
+
+function parseInputValue(rawValue) {
+    const parsed = parseInt(rawValue, 10);
+    if (Number.isNaN(parsed)) {
+        return 0;
+    }
+    return parsed;
+}
+
+function normalizeDurationInputs(hoursRaw, minutesRaw, secondsRaw) {
+    const hours = clampNumber(parseInputValue(hoursRaw), 0, MAX_HOURS);
+    const minutes = clampNumber(parseInputValue(minutesRaw), 0, MAX_MINUTES_SECONDS);
+    const seconds = clampNumber(parseInputValue(secondsRaw), 0, MAX_MINUTES_SECONDS);
+    return {
+        hours,
+        minutes,
+        seconds,
+        totalSeconds: hours * 3600 + minutes * 60 + seconds
+    };
 }
 
 function TimerCard(props) {
@@ -147,6 +173,7 @@ function PopupApp() {
     const [timers, setTimers] = useState([]);
     const [notificationsEnabled, setNotificationsEnabled] = useState(true);
     const [startCompletionAction, setStartCompletionAction] = useState(COMPLETION_ACTION_CLOSE_TAB);
+    const [inputError, setInputError] = useState("");
 
     const refreshTimers = () => {
         chrome.runtime.sendMessage({ action: "getTimers" }, (resp) => {
@@ -180,19 +207,30 @@ function PopupApp() {
         const hoursInput = document.getElementById("hoursInput");
         const minutesInput = document.getElementById("minutesInput");
         const secondsInput = document.getElementById("secondsInput");
-        const hVal = parseInt(hoursInput ? hoursInput.value : "0", 10) || 0;
-        const mVal = parseInt(minutesInput ? minutesInput.value : "0", 10) || 0;
-        const sVal = parseInt(secondsInput ? secondsInput.value : "0", 10) || 0;
-        const totalSeconds = hVal * 3600 + mVal * 60 + sVal;
+        const normalized = normalizeDurationInputs(
+            hoursInput ? hoursInput.value : "0",
+            minutesInput ? minutesInput.value : "0",
+            secondsInput ? secondsInput.value : "0"
+        );
 
-        if (totalSeconds <= 0) {
-            console.warn("Please enter a valid time greater than 0.");
+        if (hoursInput) {
+            hoursInput.value = normalized.hours.toString();
+        }
+        if (minutesInput) {
+            minutesInput.value = normalized.minutes.toString();
+        }
+        if (secondsInput) {
+            secondsInput.value = normalized.seconds.toString();
+        }
+
+        if (normalized.totalSeconds <= 0) {
+            setInputError(getLocalizedMessage("timerInputError"));
             return;
         }
 
+        setInputError("");
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (!tabs[0]) {
-                console.warn("No active tab found");
                 return;
             }
             const tab = tabs[0];
@@ -204,7 +242,7 @@ function PopupApp() {
             chrome.runtime.sendMessage(
                 {
                     action: "startTimer",
-                    duration: totalSeconds,
+                    duration: normalized.totalSeconds,
                     tabFavicon: tab.favIconUrl || "icons/timer.svg",
                     tabTitle: tab.title || `Tab ${tab.id}`,
                     tabId: tab.id,
@@ -305,7 +343,8 @@ function PopupApp() {
                         type: "number",
                         id: "hoursInput",
                         defaultValue: "0",
-                        min: "0"
+                        min: "0",
+                        max: "999"
                     })
                 ),
                 h(
@@ -316,7 +355,8 @@ function PopupApp() {
                         type: "number",
                         id: "minutesInput",
                         defaultValue: "0",
-                        min: "0"
+                        min: "0",
+                        max: "59"
                     })
                 ),
                 h(
@@ -327,7 +367,8 @@ function PopupApp() {
                         type: "number",
                         id: "secondsInput",
                         defaultValue: "0",
-                        min: "0"
+                        min: "0",
+                        max: "59"
                     })
                 )
             ),
@@ -339,6 +380,16 @@ function PopupApp() {
                 },
                 getLocalizedMessage("startTimerButton")
             ),
+            inputError &&
+                h(
+                    "div",
+                    {
+                        id: "timerInputError",
+                        className: "input-error-message",
+                        role: "alert"
+                    },
+                    inputError
+                ),
             h(
                 "div",
                 { id: "timersList" },
@@ -393,7 +444,7 @@ function PopupApp() {
             startCompletionAction === COMPLETION_ACTION_NOTIFY_ONLY && h(
                 "div",
                 { className: "settings-info-box" },
-                h("span", null, "\"Notify me only\" always sends a notification when the timer ends. It ignores the toggle above and leaves the tab open.")
+                h("span", null, getLocalizedMessage("notifyOnlyHint"))
             )
         )
     );
@@ -430,6 +481,7 @@ if (document.readyState !== "loading") {
 }
 
 module.exports = {
+    normalizeDurationInputs,
     formatTime,
     mountPopup
 };

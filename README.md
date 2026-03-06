@@ -8,7 +8,8 @@ Perfect for falling asleep while watching youtube videos ([T90 Official](https:/
 
 - **Automatic Tab Closure:** Set a timer for the active tab, and it will automatically close when the countdown reaches zero.
 - **Timer Management:** Easily pause, resume, reset, or cancel timers via the popup interface.
-- **Notifications:** Optionally receive a notification when a timer completes.
+- **Completion Actions:** Choose whether a timer closes the tab or only sends a notification.
+- **Notifications:** Optionally receive a notification when a close-tab timer completes.
 - **User-Friendly Interface:** A simple, tabbed UI for managing timers and settings.
 
 ## Download
@@ -41,12 +42,22 @@ You can also download the latest compiled version (ZIP file) from the release ta
 1. **Starting a Timer:**
    - Click the Auto Tab Timer icon in your browser toolbar to open the popup.
    - In the **Timer** tab, input your desired hours, minutes, and seconds.
+   - Inputs are normalized before start: `hours` is clamped to `0..999`, `minutes/seconds` are clamped to `0..59`.
+   - A timer value of `00:00:00` is rejected with an inline validation message.
    - Click **Start Timer** to begin the countdown for the active tab.
    - The active timer will appear in the list, where you can pause, resume, reset, or cancel it.
 
 2. **Managing Settings:**
    - Switch to the **Settings** tab in the popup.
-   - Toggle the **Enable Notifications** option to control if you wish to receive notifications when a timer finishes.
+   - Toggle **Notify on action completion** to control notifications for timers that close tabs.
+   - Choose a default completion action:
+     - **Close tab**
+     - **Notify me only** (always sends a notification and keeps the tab open)
+
+## Canonical Time Format
+
+Timer and badge values intentionally use canonical ASCII-digit formatting (`HH:MM:SS`, `HH:MM`, `MM:SS`).
+Numeric localization for digits/separators is deferred to a future release.
 
 ## Localization
 

@@ -160,5 +160,13 @@
         "example": "30"
       }
     }
+  },
+  "timerInputError": {
+    "message": "Insira um tempo maior que 00:00:00.",
+    "description": "Validation message shown when timer input is zero or invalid"
+  },
+  "notifyOnlyHint": {
+    "message": "\"Apenas me notificar\" sempre envia uma notificação quando o timer termina. Essa opção ignora o botão acima e mantém a aba aberta.",
+    "description": "Hint shown in settings when default action is notify-only"
   }
 }

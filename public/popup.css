@@ -202,6 +202,14 @@ button:hover {
     background: var(--button-bg-hover);
 }
 
+.input-error-message {
+    margin-top: 4px;
+    margin-bottom: 6px;
+    font-size: 0.75rem;
+    color: #d64545;
+    text-align: left;
+}
+
 /* Timer Card */
 .timer-card {
     background-color: var(--container-bg-color);

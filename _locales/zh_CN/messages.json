@@ -160,5 +160,13 @@
         "example": "30"
       }
     }
+  },
+  "timerInputError": {
+    "message": "请输入大于 00:00:00 的时间。",
+    "description": "Validation message shown when timer input is zero or invalid"
+  },
+  "notifyOnlyHint": {
+    "message": "“仅通知我”会在计时结束时始终发送通知。它会忽略上方开关，并保持标签页打开。",
+    "description": "Hint shown in settings when default action is notify-only"
   }
 }

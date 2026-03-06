@@ -160,5 +160,13 @@
         "example": "30"
       }
     }
+  },
+  "timerInputError": {
+    "message": "00:00:00 より大きい時間を入力してください。",
+    "description": "Validation message shown when timer input is zero or invalid"
+  },
+  "notifyOnlyHint": {
+    "message": "「通知のみ」はタイマー終了時に必ず通知を送信します。上の切り替え設定は無視され、タブは開いたままになります。",
+    "description": "Hint shown in settings when default action is notify-only"
   }
 }

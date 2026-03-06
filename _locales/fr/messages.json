@@ -160,5 +160,13 @@
         "example": "30"
       }
     }
+  },
+  "timerInputError": {
+    "message": "Saisissez une durée supérieure à 00:00:00.",
+    "description": "Validation message shown when timer input is zero or invalid"
+  },
+  "notifyOnlyHint": {
+    "message": "\"Me notifier uniquement\" envoie toujours une notification à la fin du minuteur. Cette option ignore l'interrupteur ci-dessus et laisse l'onglet ouvert.",
+    "description": "Hint shown in settings when default action is notify-only"
   }
 }

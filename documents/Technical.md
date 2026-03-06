@@ -51,7 +51,7 @@ Communication between these layers occurs via Chrome’s messaging system.
     - Copies static assets (including manifest and HTML files) into the final build directory.
 
 ### 3.5 Internationalization (i18n)
-- **Files:** `_locales/en/messages.json`, `_locales/es/messages.json`, `_locales/ja/messages.json`, `_locales/pt_BR/messages.json`
+- **Files:** `_locales/en/messages.json`, `_locales/es/messages.json`, `_locales/ja/messages.json`, `_locales/pt_BR/messages.json`, `_locales/zh_CN/messages.json`, `_locales/de/messages.json`, `_locales/fr/messages.json`
 - **Role:**
     - Provides localized strings for all user-facing text
     - Supports Chrome's built-in i18n system
@@ -66,6 +66,9 @@ The extension uses Chrome's native i18n API (`chrome.i18n.getMessage`) for all u
 - `es` (Spanish)
 - `ja` (Japanese)
 - `pt_BR` (Portuguese - Brazil)
+- `zh_CN` (Chinese - Simplified)
+- `de` (German)
+- `fr` (French)
 
 **Key Features:**
 1. **Static Content Localization**: All HTML elements use `data-i18n` attributes that are processed on `DOMContentLoaded`
@@ -77,6 +80,13 @@ The extension uses Chrome's native i18n API (`chrome.i18n.getMessage`) for all u
 - Badge text is constrained to ≤5 characters (format: `HH:MM` or `MM:SS`)
 - Both English and Spanish badge formats maintain this constraint
 - Visual check: Longest Spanish badge text is `23:59` (5 chars)
+
+**Input Normalization Rules:**
+- Timer start input is normalized in popup UI:
+  - `hours`: clamped to `0..999`
+  - `minutes`: clamped to `0..59`
+  - `seconds`: clamped to `0..59`
+- A total duration of `00:00:00` is rejected with an inline localized validation message.
 
 **Developer Logs:**
 - Console/debug logs remain in English for consistency across development environments
@@ -122,6 +132,11 @@ Different languages have different plural rules:
 - **Arabic**: 6 forms (zero, one, two, few, many, other)
 
 When adding languages with complex plural rules, follow the explicit-key pattern documented here and extend the `getPluralMessage()` helper in `popup.js` to select the appropriate key based on count and locale rules.
+
+#### Numeric Localization Decision
+
+Numeric localization for timer/badge digits and separators is intentionally deferred.
+Current behavior keeps canonical ASCII formats (`HH:MM:SS`, `HH:MM`, `MM:SS`) to reduce parsing and rendering risk in the current release line.
 
 ---
 

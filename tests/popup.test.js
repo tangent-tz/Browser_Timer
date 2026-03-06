@@ -1,4 +1,5 @@
 const { createChromeMock } = require("../mocks/chrome");
+
 global.chrome = createChromeMock();
 require("../src/popup.js");
 
@@ -7,7 +8,11 @@ function mountPopup() {
     document.dispatchEvent(new Event("DOMContentLoaded"));
 }
 
-describe("Popup - Start Timer functionality", () => {
+function getStartTimerCall() {
+    return chrome.runtime.sendMessage.mock.calls.find(([msg]) => msg.action === "startTimer");
+}
+
+describe("Popup - Start Timer behavior", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mountPopup();
@@ -22,13 +27,9 @@ describe("Popup - Start Timer functionality", () => {
         hoursInput.value = "1";
         minutesInput.value = "2";
         secondsInput.value = "3";
-        hoursInput.dispatchEvent(new Event("input", { bubbles: true }));
-        minutesInput.dispatchEvent(new Event("input", { bubbles: true }));
-        secondsInput.dispatchEvent(new Event("input", { bubbles: true }));
-
         startTimerBtn.click();
 
-        const startCall = chrome.runtime.sendMessage.mock.calls.find(([msg]) => msg.action === "startTimer");
+        const startCall = getStartTimerCall();
         expect(startCall).toBeDefined();
         expect(startCall[0]).toEqual({
             action: "startTimer",
@@ -40,21 +41,76 @@ describe("Popup - Start Timer functionality", () => {
         });
     });
 
-    test("should send notifyOnly when start action dropdown is changed", () => {
+    test("should persist notifyOnly as default action and use it for startTimer", () => {
+        const tabSettings = document.getElementById("tabSettings");
+        const defaultActionSelect = document.getElementById("defaultActionSelect");
         const hoursInput = document.getElementById("hoursInput");
-        const completionActionSelect = document.getElementById("completionActionSelect");
         const startTimerBtn = document.getElementById("startTimerBtn");
 
-        hoursInput.value = "1";
-        hoursInput.dispatchEvent(new Event("input", { bubbles: true }));
-        completionActionSelect.value = "notifyOnly";
-        completionActionSelect.dispatchEvent(new Event("change", { bubbles: true }));
+        tabSettings.click();
+        defaultActionSelect.value = "notifyOnly";
+        defaultActionSelect.dispatchEvent(new Event("change", { bubbles: true }));
 
+        expect(chrome.storage.sync.set).toHaveBeenCalledWith(
+            { defaultCompletionAction: "notifyOnly" },
+            undefined
+        );
+
+        hoursInput.value = "1";
         startTimerBtn.click();
 
-        const startCall = chrome.runtime.sendMessage.mock.calls.find(([msg]) => msg.action === "startTimer");
+        const startCall = getStartTimerCall();
         expect(startCall).toBeDefined();
         expect(startCall[0].completionAction).toBe("notifyOnly");
+    });
+
+    test("should reject zero duration and show localized inline error", () => {
+        const hoursInput = document.getElementById("hoursInput");
+        const minutesInput = document.getElementById("minutesInput");
+        const secondsInput = document.getElementById("secondsInput");
+        const startTimerBtn = document.getElementById("startTimerBtn");
+
+        hoursInput.value = "0";
+        minutesInput.value = "0";
+        secondsInput.value = "0";
+        startTimerBtn.click();
+
+        expect(getStartTimerCall()).toBeUndefined();
+        const inputError = document.getElementById("timerInputError");
+        expect(inputError).not.toBeNull();
+        expect(inputError.textContent).toBe("Enter a time greater than 00:00:00.");
+    });
+
+    test("should clamp out-of-range input values before starting timer", () => {
+        const hoursInput = document.getElementById("hoursInput");
+        const minutesInput = document.getElementById("minutesInput");
+        const secondsInput = document.getElementById("secondsInput");
+        const startTimerBtn = document.getElementById("startTimerBtn");
+
+        hoursInput.value = "-5";
+        minutesInput.value = "120";
+        secondsInput.value = "99";
+        startTimerBtn.click();
+
+        const startCall = getStartTimerCall();
+        expect(startCall).toBeDefined();
+        expect(startCall[0].duration).toBe(3599);
+        expect(hoursInput.value).toBe("0");
+        expect(minutesInput.value).toBe("59");
+        expect(secondsInput.value).toBe("59");
+    });
+
+    test("should clear inline error after a valid start", () => {
+        const hoursInput = document.getElementById("hoursInput");
+        const startTimerBtn = document.getElementById("startTimerBtn");
+
+        hoursInput.value = "0";
+        startTimerBtn.click();
+        expect(document.getElementById("timerInputError")).not.toBeNull();
+
+        hoursInput.value = "1";
+        startTimerBtn.click();
+        expect(document.getElementById("timerInputError")).toBeNull();
     });
 });
 
@@ -129,4 +185,3 @@ describe("Popup Timer List Rendering", () => {
         }, 1100);
     });
 });
-

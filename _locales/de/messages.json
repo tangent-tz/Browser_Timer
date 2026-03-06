@@ -160,5 +160,13 @@
         "example": "30"
       }
     }
+  },
+  "timerInputError": {
+    "message": "Gib eine Zeit größer als 00:00:00 ein.",
+    "description": "Validation message shown when timer input is zero or invalid"
+  },
+  "notifyOnlyHint": {
+    "message": "\"Nur benachrichtigen\" sendet immer eine Benachrichtigung, wenn der Timer endet. Diese Option ignoriert den Schalter oben und lässt den Tab geöffnet.",
+    "description": "Hint shown in settings when default action is notify-only"
   }
 }

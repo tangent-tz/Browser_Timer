@@ -160,5 +160,13 @@
         "example": "30"
       }
     }
+  },
+  "timerInputError": {
+    "message": "Enter a time greater than 00:00:00.",
+    "description": "Validation message shown when timer input is zero or invalid"
+  },
+  "notifyOnlyHint": {
+    "message": "\"Notify me only\" always sends a notification when the timer ends. It ignores the toggle above and leaves the tab open.",
+    "description": "Hint shown in settings when default action is notify-only"
   }
 }
