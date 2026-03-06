@@ -198,7 +198,7 @@
     "description": "Second 1.3.0 highlight"
   },
   "whatsNew130Item3": {
-    "message": "O comportamento de \"Apenas me notificar\" foi esclarecido e a tela de boas-vindas agora mostra recomendacoes de outras extensoes do desenvolvedor.",
+    "message": "\"Apenas me notificar\" sempre envia uma notificacao e nao fecha a aba, independentemente do botao de notificacao.",
     "description": "Third 1.3.0 highlight"
   },
   "whatsNew130Item4": {

@@ -198,7 +198,7 @@
     "description": "Second 1.3.0 highlight"
   },
   "whatsNew130Item3": {
-    "message": "“仅通知我”的行为说明已更清晰，欢迎页也加入了开发者其他扩展推荐。",
+    "message": "“仅通知我”无论通知开关状态如何，始终发送通知且不关闭标签页。",
     "description": "Third 1.3.0 highlight"
   },
   "whatsNew130Item4": {

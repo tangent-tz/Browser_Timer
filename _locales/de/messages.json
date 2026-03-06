@@ -198,7 +198,7 @@
     "description": "Second 1.3.0 highlight"
   },
   "whatsNew130Item3": {
-    "message": "Das Verhalten von \"Nur benachrichtigen\" wurde praezisiert, und das Onboarding zeigt jetzt weitere Erweiterungen des Entwicklers.",
+    "message": "\"Nur benachrichtigen\" sendet immer eine Benachrichtigung und schliesst den Tab nicht, unabhaengig vom Benachrichtigungs-Schalter.",
     "description": "Third 1.3.0 highlight"
   },
   "whatsNew130Item4": {

@@ -198,7 +198,7 @@
     "description": "Second 1.3.0 highlight"
   },
   "whatsNew130Item3": {
-    "message": "Se aclaro el comportamiento de \"Solo notificarme\" y la bienvenida ahora incluye recomendaciones de otras extensiones del desarrollador.",
+    "message": "\"Solo notificarme\" siempre envia una notificacion y no cierra la pestana, independientemente del interruptor de notificaciones.",
     "description": "Third 1.3.0 highlight"
   },
   "whatsNew130Item4": {
