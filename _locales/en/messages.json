@@ -168,5 +168,85 @@
   "notifyOnlyHint": {
     "message": "\"Notify me only\" always sends a notification when the timer ends. It ignores the toggle above and leaves the tab open.",
     "description": "Hint shown in settings when default action is notify-only"
+  },
+  "onboardingInstallTitle": {
+    "message": "Welcome to Auto Tab Timer",
+    "description": "Heading shown on first install onboarding page"
+  },
+  "onboardingInstallSubtitle": {
+    "message": "Set timers on active tabs, then relax while Auto Tab Timer handles the cleanup.",
+    "description": "Subtitle shown on first install onboarding page"
+  },
+  "onboardingUpdateTitle": {
+    "message": "What's New in 1.3.0",
+    "description": "Heading shown on update page for version 1.3.0"
+  },
+  "onboardingUpdateSubtitle": {
+    "message": "Thanks for updating. Here are the biggest improvements included in version 1.3.0.",
+    "description": "Subtitle shown on update page for version 1.3.0"
+  },
+  "whatsNew130Heading": {
+    "message": "Highlights in 1.3.0",
+    "description": "Section heading for version 1.3.0 highlights"
+  },
+  "whatsNew130Item1": {
+    "message": "New first-install onboarding page with quick-start guidance.",
+    "description": "First 1.3.0 highlight"
+  },
+  "whatsNew130Item2": {
+    "message": "New one-time update page shown when upgrading into 1.3.0.",
+    "description": "Second 1.3.0 highlight"
+  },
+  "whatsNew130Item3": {
+    "message": "Developer extension recommendations are now available from onboarding.",
+    "description": "Third 1.3.0 highlight"
+  },
+  "promoSectionTitle": {
+    "message": "More extensions from this developer",
+    "description": "Heading for promoted extensions section"
+  },
+  "promoSectionSubtitle": {
+    "message": "Discover additional tools from the same developer.",
+    "description": "Subtitle for promoted extensions section"
+  },
+  "promoOpenChromeStore": {
+    "message": "Open in Chrome Web Store",
+    "description": "Link label to open promoted extension in Chrome Web Store"
+  },
+  "promoOpenEdgeStore": {
+    "message": "Open in Edge Add-ons",
+    "description": "Link label to open promoted extension in Edge Add-ons"
+  },
+  "promoDeveloperProfileLink": {
+    "message": "View all extensions",
+    "description": "Fallback link to developer profile"
+  },
+  "promoUnavailableFallback": {
+    "message": "Promotion cards are currently unavailable.",
+    "description": "Fallback text when promoted extensions config cannot be loaded"
+  },
+  "promoExt1Title": {
+    "message": "Placeholder Extension One",
+    "description": "Placeholder title for first promoted extension"
+  },
+  "promoExt1Description": {
+    "message": "TODO: Replace with the final title and description before release.",
+    "description": "Placeholder description for first promoted extension"
+  },
+  "promoExt2Title": {
+    "message": "Placeholder Extension Two",
+    "description": "Placeholder title for second promoted extension"
+  },
+  "promoExt2Description": {
+    "message": "TODO: Replace with the final title and description before release.",
+    "description": "Placeholder description for second promoted extension"
+  },
+  "promoExt3Title": {
+    "message": "Placeholder Extension Three",
+    "description": "Placeholder title for third promoted extension"
+  },
+  "promoExt3Description": {
+    "message": "TODO: Replace with the final title and description before release.",
+    "description": "Placeholder description for third promoted extension"
   }
 }

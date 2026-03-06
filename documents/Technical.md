@@ -43,14 +43,23 @@ Communication between these layers occurs via Chrome’s messaging system.
     - Schedules alarms using Chrome’s alarms API.
     - Manages timer state persistence via `chrome.storage.local`.
     - Triggers notifications and closes tabs when timers expire.
+    - Handles install/update onboarding via `chrome.runtime.onInstalled`.
 
-### 3.4 Build Process
+### 3.4 Onboarding/What’s New Experience
+- **Files:** `onboarding.html`, `onboarding.css`, `onboarding.js`, `promoted-extensions.json`
+- **Role:**
+    - Displays a localized welcome screen on first install.
+    - Displays a localized one-time “What’s New in 1.3.0” page when upgrading into `1.3.0`.
+    - Renders promoted extension cards from a local JSON config.
+    - Falls back to a developer profile link when promo config is unavailable.
+
+### 3.5 Build Process
 - **File:** `webpack.config.js`
 - **Role:**
     - Bundles and transpiles JavaScript modules for production.
     - Copies static assets (including manifest and HTML files) into the final build directory.
 
-### 3.5 Internationalization (i18n)
+### 3.6 Internationalization (i18n)
 - **Files:** `_locales/en/messages.json`, `_locales/es/messages.json`, `_locales/ja/messages.json`, `_locales/pt_BR/messages.json`, `_locales/zh_CN/messages.json`, `_locales/de/messages.json`, `_locales/fr/messages.json`
 - **Role:**
     - Provides localized strings for all user-facing text
@@ -112,7 +121,7 @@ To add a new language:
 #### Locale Parity Validation
 
 The project includes automated tests (`tests/localeParity.test.js`) that enforce:
-- All locale files (currently en/es/ja/pt_BR) have identical keys
+- All locale files (currently en/es/ja/pt_BR/zh_CN/de/fr) have identical keys
 - Placeholder structures match between locales
 - Badge text adheres to length constraints
 - Pluralization patterns follow explicit key naming
@@ -155,6 +164,34 @@ Current behavior keeps canonical ASCII formats (`HH:MM:SS`, `HH:MM`, `MM:SS`) to
 
 4. **State Updates:**
     - The popup periodically requests the current timer states from the background script to update the UI in real time.
+
+5. **Install/Update Onboarding Flow:**
+    - On extension install, `background.js` opens `onboarding.html?mode=install`.
+    - On update, `background.js` checks semantic versions and only opens `onboarding.html?mode=update&from=<previous>&to=1.3.0` when users transition from `<1.3.0` into `1.3.0`.
+    - `onboarding.js` localizes page content via `chrome.i18n.getMessage`, then loads `promoted-extensions.json` and renders promo cards.
+    - If promo data is invalid/unavailable, onboarding renders a localized fallback link to the developer profile.
+
+### Onboarding Query Contract
+
+`onboarding.html` supports:
+- `mode=install|update` (required for behavior selection)
+- `from` (optional previous version, update mode)
+- `to` (optional target version, update mode)
+
+### Promoted Extensions Config Contract
+
+`public/promoted-extensions.json` schema:
+- `schemaVersion` (number)
+- `developerProfile`:
+  - `chromeUrl`
+  - `edgeUrl`
+- `extensions[]`:
+  - `id`
+  - `titleKey`
+  - `descriptionKey`
+  - `chromeUrl` (optional)
+  - `edgeUrl` (optional)
+  - `iconPath` (optional)
 
 ---
 ---

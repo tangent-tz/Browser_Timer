@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "developerProfile": {
+    "chromeUrl": "https://chromewebstore.google.com/search/tangent-tz",
+    "edgeUrl": "https://microsoftedge.microsoft.com/addons/search/tangent-tz"
+  },
+  "extensions": [
+    {
+      "id": "promo-ext-1",
+      "titleKey": "promoExt1Title",
+      "descriptionKey": "promoExt1Description",
+      "chromeUrl": "https://chromewebstore.google.com/search/tangent-tz",
+      "edgeUrl": "https://microsoftedge.microsoft.com/addons/search/tangent-tz",
+      "iconPath": "icons/icon48.png"
+    },
+    {
+      "id": "promo-ext-2",
+      "titleKey": "promoExt2Title",
+      "descriptionKey": "promoExt2Description",
+      "chromeUrl": "https://chromewebstore.google.com/search/tangent-tz",
+      "edgeUrl": "https://microsoftedge.microsoft.com/addons/search/tangent-tz",
+      "iconPath": "icons/icon48.png"
+    },
+    {
+      "id": "promo-ext-3",
+      "titleKey": "promoExt3Title",
+      "descriptionKey": "promoExt3Description",
+      "chromeUrl": "https://chromewebstore.google.com/search/tangent-tz",
+      "edgeUrl": "https://microsoftedge.microsoft.com/addons/search/tangent-tz",
+      "iconPath": "icons/icon48.png"
+    }
+  ]
+}

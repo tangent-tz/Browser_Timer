@@ -168,5 +168,85 @@
   "notifyOnlyHint": {
     "message": "\"Nur benachrichtigen\" sendet immer eine Benachrichtigung, wenn der Timer endet. Diese Option ignoriert den Schalter oben und lässt den Tab geöffnet.",
     "description": "Hint shown in settings when default action is notify-only"
+  },
+  "onboardingInstallTitle": {
+    "message": "Willkommen bei Auto Tab Timer",
+    "description": "Heading shown on first install onboarding page"
+  },
+  "onboardingInstallSubtitle": {
+    "message": "Setze Timer auf aktiven Tabs und lass Auto Tab Timer die Aufräumarbeit übernehmen.",
+    "description": "Subtitle shown on first install onboarding page"
+  },
+  "onboardingUpdateTitle": {
+    "message": "Neu in Version 1.3.0",
+    "description": "Heading shown on update page for version 1.3.0"
+  },
+  "onboardingUpdateSubtitle": {
+    "message": "Danke für das Update. Hier sind die wichtigsten Verbesserungen in Version 1.3.0.",
+    "description": "Subtitle shown on update page for version 1.3.0"
+  },
+  "whatsNew130Heading": {
+    "message": "Highlights in 1.3.0",
+    "description": "Section heading for version 1.3.0 highlights"
+  },
+  "whatsNew130Item1": {
+    "message": "Neue Onboarding-Seite bei der Erstinstallation mit Schnellstart-Hinweisen.",
+    "description": "First 1.3.0 highlight"
+  },
+  "whatsNew130Item2": {
+    "message": "Neue einmalige Update-Seite beim Wechsel auf Version 1.3.0.",
+    "description": "Second 1.3.0 highlight"
+  },
+  "whatsNew130Item3": {
+    "message": "Empfohlene Erweiterungen dieses Entwicklers sind jetzt im Onboarding verfügbar.",
+    "description": "Third 1.3.0 highlight"
+  },
+  "promoSectionTitle": {
+    "message": "Weitere Erweiterungen dieses Entwicklers",
+    "description": "Heading for promoted extensions section"
+  },
+  "promoSectionSubtitle": {
+    "message": "Entdecke zusätzliche Tools vom selben Entwickler.",
+    "description": "Subtitle for promoted extensions section"
+  },
+  "promoOpenChromeStore": {
+    "message": "Im Chrome Web Store öffnen",
+    "description": "Link label to open promoted extension in Chrome Web Store"
+  },
+  "promoOpenEdgeStore": {
+    "message": "In Edge-Add-ons öffnen",
+    "description": "Link label to open promoted extension in Edge Add-ons"
+  },
+  "promoDeveloperProfileLink": {
+    "message": "Alle Erweiterungen anzeigen",
+    "description": "Fallback link to developer profile"
+  },
+  "promoUnavailableFallback": {
+    "message": "Die Empfehlungskarten sind derzeit nicht verfügbar.",
+    "description": "Fallback text when promoted extensions config cannot be loaded"
+  },
+  "promoExt1Title": {
+    "message": "Platzhalter-Erweiterung Eins",
+    "description": "Placeholder title for first promoted extension"
+  },
+  "promoExt1Description": {
+    "message": "TODO: Vor der Veröffentlichung durch finalen Titel und Beschreibung ersetzen.",
+    "description": "Placeholder description for first promoted extension"
+  },
+  "promoExt2Title": {
+    "message": "Platzhalter-Erweiterung Zwei",
+    "description": "Placeholder title for second promoted extension"
+  },
+  "promoExt2Description": {
+    "message": "TODO: Vor der Veröffentlichung durch finalen Titel und Beschreibung ersetzen.",
+    "description": "Placeholder description for second promoted extension"
+  },
+  "promoExt3Title": {
+    "message": "Platzhalter-Erweiterung Drei",
+    "description": "Placeholder title for third promoted extension"
+  },
+  "promoExt3Description": {
+    "message": "TODO: Vor der Veröffentlichung durch finalen Titel und Beschreibung ersetzen.",
+    "description": "Placeholder description for third promoted extension"
   }
 }

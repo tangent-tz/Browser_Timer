@@ -1,0 +1,145 @@
+:root {
+    --bg: #f4f6fb;
+    --panel-bg: #ffffff;
+    --text: #1c2333;
+    --muted: #5e687d;
+    --accent: #2f6fec;
+    --border: #d8deea;
+    --shadow: 0 8px 24px rgba(13, 28, 58, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text);
+    background: radial-gradient(circle at top left, #ffffff 0%, var(--bg) 45%);
+}
+
+.page-shell {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 28px 18px 40px;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+.hero p {
+    margin: 10px 0 0;
+    color: var(--muted);
+    max-width: 760px;
+}
+
+.panel {
+    margin-top: 20px;
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 18px 16px;
+}
+
+.panel h2 {
+    margin: 0 0 8px;
+    font-size: 1.15rem;
+}
+
+.panel p {
+    margin: 0 0 12px;
+    color: var(--muted);
+}
+
+.whats-new-list {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.whats-new-list li {
+    margin-bottom: 7px;
+}
+
+.promo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.promo-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    background: #fbfcff;
+}
+
+.promo-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.promo-card-header img {
+    width: 32px;
+    height: 32px;
+}
+
+.promo-card-title {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.promo-card-description {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.promo-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.promo-links a,
+.promo-fallback a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.promo-links a:hover,
+.promo-fallback a:hover {
+    text-decoration: underline;
+}
+
+.promo-fallback {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #161b25;
+        --panel-bg: #1f2635;
+        --text: #ebefff;
+        --muted: #a7b0c4;
+        --accent: #8ab0ff;
+        --border: #36425d;
+        --shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+    }
+
+    .promo-card {
+        background: #252e43;
+    }
+}

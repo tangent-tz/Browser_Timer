@@ -5,6 +5,7 @@ const background = require("../src/background.js");
 const { startTimer, pauseTimer, resumeTimer, resetTimer, cancelTimer } = background;
 const alarmListener = chrome.alarms.onAlarm.addListener.mock.calls[0][0];
 const runtimeMessageListener = chrome.runtime.onMessage.addListener.mock.calls[0][0];
+const installedListener = chrome.runtime.onInstalled.addListener.mock.calls[0][0];
 
 describe("startTimer", () => {
     let originalDateNow;
@@ -60,6 +61,55 @@ describe("startTimer", () => {
             expect.any(Function)
         );
         expect(chrome.storage.sync.set).not.toHaveBeenCalled();
+    });
+});
+
+describe("onInstalled onboarding behavior", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        chrome.runtime.getManifest.mockReturnValue({ version: "1.3.0" });
+    });
+
+    test("opens onboarding page on fresh install", () => {
+        installedListener({ reason: "install" });
+
+        expect(chrome.tabs.create).toHaveBeenCalledWith(
+            expect.objectContaining({
+                active: true
+            })
+        );
+        const url = chrome.tabs.create.mock.calls[0][0].url;
+        expect(url).toContain("onboarding.html?");
+        expect(url).toContain("mode=install");
+    });
+
+    test("opens what's new page when updating from below 1.3.0 into 1.3.0", () => {
+        installedListener({ reason: "update", previousVersion: "1.2.9" });
+
+        expect(chrome.tabs.create).toHaveBeenCalledWith(
+            expect.objectContaining({
+                active: true
+            })
+        );
+        const url = chrome.tabs.create.mock.calls[0][0].url;
+        expect(url).toContain("mode=update");
+        expect(url).toContain("from=1.2.9");
+        expect(url).toContain("to=1.3.0");
+    });
+
+    test("does not open what's new page for updates within 1.3.x", () => {
+        chrome.runtime.getManifest.mockReturnValue({ version: "1.3.1" });
+
+        installedListener({ reason: "update", previousVersion: "1.3.0" });
+
+        expect(chrome.tabs.create).not.toHaveBeenCalled();
+    });
+
+    test("does not open what's new page when previousVersion is missing or invalid", () => {
+        installedListener({ reason: "update" });
+        installedListener({ reason: "update", previousVersion: "dev-build" });
+
+        expect(chrome.tabs.create).not.toHaveBeenCalled();
     });
 });
 

@@ -34,6 +34,7 @@ function createTabsMock() {
         query: jest.fn((queryInfo, callback) => {
             callback && callback([{ id: 123, title: "Test Tab", favIconUrl: "icons/timer.svg" }]);
         }),
+        create: jest.fn((createProperties, callback) => callback && callback({ id: 456 })),
         remove: jest.fn((tabId, callback) => callback && callback()),
         onRemoved: {
             addListener: jest.fn()
@@ -50,7 +51,12 @@ function createTabsMock() {
 function createRuntimeMock() {
     return {
         sendMessage: jest.fn(),
+        getManifest: jest.fn(() => ({ version: "1.3.0" })),
+        getURL: jest.fn((path) => path),
         onMessage: {
+            addListener: jest.fn()
+        },
+        onInstalled: {
             addListener: jest.fn()
         },
         onStartup: {
@@ -92,6 +98,26 @@ function createI18nMock() {
         tabAltIcon: "Tab Icon",
         timerInputError: "Enter a time greater than 00:00:00.",
         notifyOnlyHint: "\"Notify me only\" always sends a notification when the timer ends. It ignores the toggle above and leaves the tab open.",
+        onboardingInstallTitle: "Welcome to Auto Tab Timer",
+        onboardingInstallSubtitle: "Set timers on active tabs, then relax while Auto Tab Timer handles the cleanup.",
+        onboardingUpdateTitle: "What's New in 1.3.0",
+        onboardingUpdateSubtitle: "Auto Tab Timer now includes a guided update page and developer recommendations.",
+        whatsNew130Heading: "Highlights in 1.3.0",
+        whatsNew130Item1: "New install onboarding page with quick-start guidance.",
+        whatsNew130Item2: "New one-time update page for users upgrading into 1.3.0.",
+        whatsNew130Item3: "Developer extension recommendations are now available in onboarding.",
+        promoSectionTitle: "More extensions from this developer",
+        promoSectionSubtitle: "Discover other tools you may want to install.",
+        promoOpenChromeStore: "Open in Chrome Web Store",
+        promoOpenEdgeStore: "Open in Edge Add-ons",
+        promoDeveloperProfileLink: "View all extensions",
+        promoUnavailableFallback: "Promotion cards are currently unavailable.",
+        promoExt1Title: "Placeholder Extension One",
+        promoExt1Description: "TODO: Replace with final extension title and description before release.",
+        promoExt2Title: "Placeholder Extension Two",
+        promoExt2Description: "TODO: Replace with final extension title and description before release.",
+        promoExt3Title: "Placeholder Extension Three",
+        promoExt3Description: "TODO: Replace with final extension title and description before release.",
         timersCount_one: "$1 timer active",
         timersCount_other: "$1 timers active",
         badgeHours: "$1:$2",

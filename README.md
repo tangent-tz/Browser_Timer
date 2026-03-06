@@ -10,6 +10,7 @@ Perfect for falling asleep while watching youtube videos ([T90 Official](https:/
 - **Timer Management:** Easily pause, resume, reset, or cancel timers via the popup interface.
 - **Completion Actions:** Choose whether a timer closes the tab or only sends a notification.
 - **Notifications:** Optionally receive a notification when a close-tab timer completes.
+- **Onboarding & Update Notes:** New users see a welcome page, and users upgrading into `1.3.0` see a one-time “What’s New” page.
 - **User-Friendly Interface:** A simple, tabbed UI for managing timers and settings.
 
 ## Download
@@ -38,6 +39,12 @@ You can also download the latest compiled version (ZIP file) from the release ta
 3. Click **Load unpacked** and select the folder containing the compiled extension files.
 
 ## Usage
+
+### Onboarding and Updates
+
+- On first install, Auto Tab Timer opens a local onboarding page with quick-start guidance.
+- When updating from a version below `1.3.0` to `1.3.0`, Auto Tab Timer opens a one-time local “What’s New” page.
+- Both pages include a “More extensions from this developer” section powered by a local config file (`public/promoted-extensions.json`).
 
 1. **Starting a Timer:**
    - Click the Auto Tab Timer icon in your browser toolbar to open the popup.

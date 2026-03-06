@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Tab Timer</title>
+    <link rel="stylesheet" href="onboarding.css">
+</head>
+<body>
+<main class="page-shell">
+    <header class="hero">
+        <h1 id="onboardingTitle"></h1>
+        <p id="onboardingSubtitle"></p>
+    </header>
+
+    <section id="whatsNewSection" class="panel" hidden>
+        <h2 id="whatsNewHeading"></h2>
+        <ul id="whatsNewList" class="whats-new-list"></ul>
+    </section>
+
+    <section class="panel">
+        <h2 id="promoSectionTitle"></h2>
+        <p id="promoSectionSubtitle"></p>
+        <div id="promoCards" class="promo-grid"></div>
+        <div id="promoFallback" class="promo-fallback" hidden>
+            <span id="promoUnavailableFallback"></span>
+            <a id="promoDeveloperProfileLink" href="#" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+    </section>
+</main>
+<script src="onboarding.js"></script>
+</body>
+</html>

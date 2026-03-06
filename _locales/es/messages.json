@@ -168,5 +168,85 @@
   "notifyOnlyHint": {
     "message": "\"Solo notificarme\" siempre envía una notificación cuando termina el temporizador. Ignora el interruptor de arriba y deja la pestaña abierta.",
     "description": "Hint shown in settings when default action is notify-only"
+  },
+  "onboardingInstallTitle": {
+    "message": "Bienvenido a Auto Tab Timer",
+    "description": "Heading shown on first install onboarding page"
+  },
+  "onboardingInstallSubtitle": {
+    "message": "Configura temporizadores en pestañas activas y deja que Auto Tab Timer haga la limpieza por ti.",
+    "description": "Subtitle shown on first install onboarding page"
+  },
+  "onboardingUpdateTitle": {
+    "message": "Novedades de la versión 1.3.0",
+    "description": "Heading shown on update page for version 1.3.0"
+  },
+  "onboardingUpdateSubtitle": {
+    "message": "Gracias por actualizar. Aquí tienes las mejoras más importantes de la versión 1.3.0.",
+    "description": "Subtitle shown on update page for version 1.3.0"
+  },
+  "whatsNew130Heading": {
+    "message": "Lo destacado en 1.3.0",
+    "description": "Section heading for version 1.3.0 highlights"
+  },
+  "whatsNew130Item1": {
+    "message": "Nueva página de bienvenida en la primera instalación con guía de inicio rápido.",
+    "description": "First 1.3.0 highlight"
+  },
+  "whatsNew130Item2": {
+    "message": "Nueva página de actualización que se muestra una sola vez al pasar a la versión 1.3.0.",
+    "description": "Second 1.3.0 highlight"
+  },
+  "whatsNew130Item3": {
+    "message": "Ahora puedes descubrir otras extensiones del desarrollador desde la página de bienvenida.",
+    "description": "Third 1.3.0 highlight"
+  },
+  "promoSectionTitle": {
+    "message": "Más extensiones de este desarrollador",
+    "description": "Heading for promoted extensions section"
+  },
+  "promoSectionSubtitle": {
+    "message": "Descubre herramientas adicionales del mismo desarrollador.",
+    "description": "Subtitle for promoted extensions section"
+  },
+  "promoOpenChromeStore": {
+    "message": "Abrir en Chrome Web Store",
+    "description": "Link label to open promoted extension in Chrome Web Store"
+  },
+  "promoOpenEdgeStore": {
+    "message": "Abrir en complementos de Edge",
+    "description": "Link label to open promoted extension in Edge Add-ons"
+  },
+  "promoDeveloperProfileLink": {
+    "message": "Ver todas las extensiones",
+    "description": "Fallback link to developer profile"
+  },
+  "promoUnavailableFallback": {
+    "message": "Las tarjetas promocionales no están disponibles por ahora.",
+    "description": "Fallback text when promoted extensions config cannot be loaded"
+  },
+  "promoExt1Title": {
+    "message": "Extensión de marcador de posición uno",
+    "description": "Placeholder title for first promoted extension"
+  },
+  "promoExt1Description": {
+    "message": "TODO: Reemplazar con el título y la descripción finales antes del lanzamiento.",
+    "description": "Placeholder description for first promoted extension"
+  },
+  "promoExt2Title": {
+    "message": "Extensión de marcador de posición dos",
+    "description": "Placeholder title for second promoted extension"
+  },
+  "promoExt2Description": {
+    "message": "TODO: Reemplazar con el título y la descripción finales antes del lanzamiento.",
+    "description": "Placeholder description for second promoted extension"
+  },
+  "promoExt3Title": {
+    "message": "Extensión de marcador de posición tres",
+    "description": "Placeholder title for third promoted extension"
+  },
+  "promoExt3Description": {
+    "message": "TODO: Reemplazar con el título y la descripción finales antes del lanzamiento.",
+    "description": "Placeholder description for third promoted extension"
   }
 }

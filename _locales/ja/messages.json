@@ -168,5 +168,85 @@
   "notifyOnlyHint": {
     "message": "「通知のみ」はタイマー終了時に必ず通知を送信します。上の切り替え設定は無視され、タブは開いたままになります。",
     "description": "Hint shown in settings when default action is notify-only"
+  },
+  "onboardingInstallTitle": {
+    "message": "Auto Tab Timer へようこそ",
+    "description": "Heading shown on first install onboarding page"
+  },
+  "onboardingInstallSubtitle": {
+    "message": "アクティブなタブにタイマーを設定すれば、あとは Auto Tab Timer が整理を行います。",
+    "description": "Subtitle shown on first install onboarding page"
+  },
+  "onboardingUpdateTitle": {
+    "message": "1.3.0 の新機能",
+    "description": "Heading shown on update page for version 1.3.0"
+  },
+  "onboardingUpdateSubtitle": {
+    "message": "アップデートありがとうございます。バージョン 1.3.0 の主な改善点をご紹介します。",
+    "description": "Subtitle shown on update page for version 1.3.0"
+  },
+  "whatsNew130Heading": {
+    "message": "1.3.0 のハイライト",
+    "description": "Section heading for version 1.3.0 highlights"
+  },
+  "whatsNew130Item1": {
+    "message": "初回インストール時にクイックスタート付きの新しいオンボーディングページを追加。",
+    "description": "First 1.3.0 highlight"
+  },
+  "whatsNew130Item2": {
+    "message": "1.3.0 へ更新した際に一度だけ表示される更新ページを追加。",
+    "description": "Second 1.3.0 highlight"
+  },
+  "whatsNew130Item3": {
+    "message": "オンボーディングから開発者の他の拡張機能を確認できるようになりました。",
+    "description": "Third 1.3.0 highlight"
+  },
+  "promoSectionTitle": {
+    "message": "この開発者の他の拡張機能",
+    "description": "Heading for promoted extensions section"
+  },
+  "promoSectionSubtitle": {
+    "message": "同じ開発者の追加ツールをチェックしてください。",
+    "description": "Subtitle for promoted extensions section"
+  },
+  "promoOpenChromeStore": {
+    "message": "Chrome ウェブストアで開く",
+    "description": "Link label to open promoted extension in Chrome Web Store"
+  },
+  "promoOpenEdgeStore": {
+    "message": "Edge アドオンで開く",
+    "description": "Link label to open promoted extension in Edge Add-ons"
+  },
+  "promoDeveloperProfileLink": {
+    "message": "すべての拡張機能を見る",
+    "description": "Fallback link to developer profile"
+  },
+  "promoUnavailableFallback": {
+    "message": "現在、おすすめカードを表示できません。",
+    "description": "Fallback text when promoted extensions config cannot be loaded"
+  },
+  "promoExt1Title": {
+    "message": "プレースホルダー拡張機能 1",
+    "description": "Placeholder title for first promoted extension"
+  },
+  "promoExt1Description": {
+    "message": "TODO: リリース前に最終的なタイトルと説明に置き換えてください。",
+    "description": "Placeholder description for first promoted extension"
+  },
+  "promoExt2Title": {
+    "message": "プレースホルダー拡張機能 2",
+    "description": "Placeholder title for second promoted extension"
+  },
+  "promoExt2Description": {
+    "message": "TODO: リリース前に最終的なタイトルと説明に置き換えてください。",
+    "description": "Placeholder description for second promoted extension"
+  },
+  "promoExt3Title": {
+    "message": "プレースホルダー拡張機能 3",
+    "description": "Placeholder title for third promoted extension"
+  },
+  "promoExt3Description": {
+    "message": "TODO: リリース前に最終的なタイトルと説明に置き換えてください。",
+    "description": "Placeholder description for third promoted extension"
   }
 }

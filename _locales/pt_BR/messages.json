@@ -168,5 +168,85 @@
   "notifyOnlyHint": {
     "message": "\"Apenas me notificar\" sempre envia uma notificação quando o timer termina. Essa opção ignora o botão acima e mantém a aba aberta.",
     "description": "Hint shown in settings when default action is notify-only"
+  },
+  "onboardingInstallTitle": {
+    "message": "Bem-vindo ao Auto Tab Timer",
+    "description": "Heading shown on first install onboarding page"
+  },
+  "onboardingInstallSubtitle": {
+    "message": "Defina timers nas abas ativas e deixe o Auto Tab Timer cuidar do restante.",
+    "description": "Subtitle shown on first install onboarding page"
+  },
+  "onboardingUpdateTitle": {
+    "message": "Novidades da versão 1.3.0",
+    "description": "Heading shown on update page for version 1.3.0"
+  },
+  "onboardingUpdateSubtitle": {
+    "message": "Obrigado por atualizar. Estas são as principais melhorias incluídas na versão 1.3.0.",
+    "description": "Subtitle shown on update page for version 1.3.0"
+  },
+  "whatsNew130Heading": {
+    "message": "Destaques da versão 1.3.0",
+    "description": "Section heading for version 1.3.0 highlights"
+  },
+  "whatsNew130Item1": {
+    "message": "Nova página de boas-vindas na primeira instalação com guia rápido.",
+    "description": "First 1.3.0 highlight"
+  },
+  "whatsNew130Item2": {
+    "message": "Nova página de atualização exibida uma única vez ao migrar para a versão 1.3.0.",
+    "description": "Second 1.3.0 highlight"
+  },
+  "whatsNew130Item3": {
+    "message": "Recomendações de outras extensões do desenvolvedor agora aparecem na página de boas-vindas.",
+    "description": "Third 1.3.0 highlight"
+  },
+  "promoSectionTitle": {
+    "message": "Mais extensões deste desenvolvedor",
+    "description": "Heading for promoted extensions section"
+  },
+  "promoSectionSubtitle": {
+    "message": "Descubra ferramentas adicionais do mesmo desenvolvedor.",
+    "description": "Subtitle for promoted extensions section"
+  },
+  "promoOpenChromeStore": {
+    "message": "Abrir na Chrome Web Store",
+    "description": "Link label to open promoted extension in Chrome Web Store"
+  },
+  "promoOpenEdgeStore": {
+    "message": "Abrir nos Complementos do Edge",
+    "description": "Link label to open promoted extension in Edge Add-ons"
+  },
+  "promoDeveloperProfileLink": {
+    "message": "Ver todas as extensões",
+    "description": "Fallback link to developer profile"
+  },
+  "promoUnavailableFallback": {
+    "message": "Os cards de promoção estão indisponíveis no momento.",
+    "description": "Fallback text when promoted extensions config cannot be loaded"
+  },
+  "promoExt1Title": {
+    "message": "Extensão de placeholder um",
+    "description": "Placeholder title for first promoted extension"
+  },
+  "promoExt1Description": {
+    "message": "TODO: Substituir pelo título e descrição finais antes da publicação.",
+    "description": "Placeholder description for first promoted extension"
+  },
+  "promoExt2Title": {
+    "message": "Extensão de placeholder dois",
+    "description": "Placeholder title for second promoted extension"
+  },
+  "promoExt2Description": {
+    "message": "TODO: Substituir pelo título e descrição finais antes da publicação.",
+    "description": "Placeholder description for second promoted extension"
+  },
+  "promoExt3Title": {
+    "message": "Extensão de placeholder três",
+    "description": "Placeholder title for third promoted extension"
+  },
+  "promoExt3Description": {
+    "message": "TODO: Substituir pelo título e descrição finais antes da publicação.",
+    "description": "Placeholder description for third promoted extension"
   }
 }

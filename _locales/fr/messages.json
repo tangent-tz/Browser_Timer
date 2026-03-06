@@ -168,5 +168,85 @@
   "notifyOnlyHint": {
     "message": "\"Me notifier uniquement\" envoie toujours une notification à la fin du minuteur. Cette option ignore l'interrupteur ci-dessus et laisse l'onglet ouvert.",
     "description": "Hint shown in settings when default action is notify-only"
+  },
+  "onboardingInstallTitle": {
+    "message": "Bienvenue sur Auto Tab Timer",
+    "description": "Heading shown on first install onboarding page"
+  },
+  "onboardingInstallSubtitle": {
+    "message": "Définissez des minuteurs sur les onglets actifs, puis laissez Auto Tab Timer gérer la fermeture.",
+    "description": "Subtitle shown on first install onboarding page"
+  },
+  "onboardingUpdateTitle": {
+    "message": "Nouveautés de la version 1.3.0",
+    "description": "Heading shown on update page for version 1.3.0"
+  },
+  "onboardingUpdateSubtitle": {
+    "message": "Merci pour la mise à jour. Voici les améliorations principales incluses dans la version 1.3.0.",
+    "description": "Subtitle shown on update page for version 1.3.0"
+  },
+  "whatsNew130Heading": {
+    "message": "Points clés de la version 1.3.0",
+    "description": "Section heading for version 1.3.0 highlights"
+  },
+  "whatsNew130Item1": {
+    "message": "Nouvelle page d'accueil à la première installation avec guide de démarrage rapide.",
+    "description": "First 1.3.0 highlight"
+  },
+  "whatsNew130Item2": {
+    "message": "Nouvelle page de mise à jour affichée une seule fois lors du passage à la version 1.3.0.",
+    "description": "Second 1.3.0 highlight"
+  },
+  "whatsNew130Item3": {
+    "message": "Des recommandations d'autres extensions du développeur sont désormais disponibles dans l'accueil.",
+    "description": "Third 1.3.0 highlight"
+  },
+  "promoSectionTitle": {
+    "message": "Autres extensions de ce développeur",
+    "description": "Heading for promoted extensions section"
+  },
+  "promoSectionSubtitle": {
+    "message": "Découvrez d'autres outils proposés par le même développeur.",
+    "description": "Subtitle for promoted extensions section"
+  },
+  "promoOpenChromeStore": {
+    "message": "Ouvrir dans le Chrome Web Store",
+    "description": "Link label to open promoted extension in Chrome Web Store"
+  },
+  "promoOpenEdgeStore": {
+    "message": "Ouvrir dans les modules Edge",
+    "description": "Link label to open promoted extension in Edge Add-ons"
+  },
+  "promoDeveloperProfileLink": {
+    "message": "Voir toutes les extensions",
+    "description": "Fallback link to developer profile"
+  },
+  "promoUnavailableFallback": {
+    "message": "Les cartes de recommandation sont indisponibles pour le moment.",
+    "description": "Fallback text when promoted extensions config cannot be loaded"
+  },
+  "promoExt1Title": {
+    "message": "Extension fictive un",
+    "description": "Placeholder title for first promoted extension"
+  },
+  "promoExt1Description": {
+    "message": "TODO : Remplacer par le titre et la description définitifs avant publication.",
+    "description": "Placeholder description for first promoted extension"
+  },
+  "promoExt2Title": {
+    "message": "Extension fictive deux",
+    "description": "Placeholder title for second promoted extension"
+  },
+  "promoExt2Description": {
+    "message": "TODO : Remplacer par le titre et la description définitifs avant publication.",
+    "description": "Placeholder description for second promoted extension"
+  },
+  "promoExt3Title": {
+    "message": "Extension fictive trois",
+    "description": "Placeholder title for third promoted extension"
+  },
+  "promoExt3Description": {
+    "message": "TODO : Remplacer par le titre et la description définitifs avant publication.",
+    "description": "Placeholder description for third promoted extension"
   }
 }

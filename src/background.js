@@ -4,6 +4,62 @@ function getTimerKey(timerId) {
 
 const COMPLETION_ACTION_CLOSE_TAB = "closeTab";
 const COMPLETION_ACTION_NOTIFY_ONLY = "notifyOnly";
+const WHATS_NEW_VERSION = "1.3.0";
+const ONBOARDING_PAGE_PATH = "onboarding.html";
+
+function parseSemver(version) {
+    if (typeof version !== "string") {
+        return null;
+    }
+    const match = version.trim().match(/^(\d+)\.(\d+)\.(\d+)(?:\.\d+)?$/);
+    if (!match) {
+        return null;
+    }
+    return {
+        major: Number(match[1]),
+        minor: Number(match[2]),
+        patch: Number(match[3])
+    };
+}
+
+function isVersionLessThan(versionA, versionB) {
+    const a = parseSemver(versionA);
+    const b = parseSemver(versionB);
+    if (!a || !b) {
+        return false;
+    }
+    if (a.major !== b.major) {
+        return a.major < b.major;
+    }
+    if (a.minor !== b.minor) {
+        return a.minor < b.minor;
+    }
+    return a.patch < b.patch;
+}
+
+function openOnboardingPage(mode, previousVersion, currentVersion) {
+    const params = new URLSearchParams();
+    const normalizedMode = mode === "update" ? "update" : "install";
+    params.set("mode", normalizedMode);
+
+    if (normalizedMode === "update") {
+        if (previousVersion) {
+            params.set("from", previousVersion);
+        }
+        if (currentVersion) {
+            params.set("to", currentVersion);
+        }
+    }
+
+    const onboardingBaseUrl = chrome.runtime && typeof chrome.runtime.getURL === "function"
+        ? chrome.runtime.getURL(ONBOARDING_PAGE_PATH)
+        : ONBOARDING_PAGE_PATH;
+
+    chrome.tabs.create({
+        url: `${onboardingBaseUrl}?${params.toString()}`,
+        active: true
+    });
+}
 
 function normalizeCompletionAction(action) {
     if (action === COMPLETION_ACTION_NOTIFY_ONLY) {
@@ -195,6 +251,32 @@ function showNotificationEnsuringEnabled(title, message) {
         createNotification(title, message);
     });
 }
+
+chrome.runtime.onInstalled.addListener((details) => {
+    if (!details || !details.reason) {
+        return;
+    }
+
+    if (details.reason === "install") {
+        openOnboardingPage("install");
+        return;
+    }
+
+    if (details.reason !== "update") {
+        return;
+    }
+
+    const currentVersion = chrome.runtime.getManifest().version;
+    const previousVersion = details.previousVersion;
+
+    if (
+        currentVersion === WHATS_NEW_VERSION
+        && parseSemver(previousVersion)
+        && isVersionLessThan(previousVersion, WHATS_NEW_VERSION)
+    ) {
+        openOnboardingPage("update", previousVersion, currentVersion);
+    }
+});
 
 
 // When an alarm fires, check the timer state and either expire or reschedule.
@@ -484,6 +566,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 // Export functions for testing.
 module.exports = {
+    parseSemver,
+    isVersionLessThan,
     startTimer,
     pauseTimer,
     resumeTimer,
