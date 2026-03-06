@@ -364,5 +364,13 @@
   "updateGuideTip4": {
     "message": "使用 ?locale=xx 测试时，语言覆盖仅作用于 onboarding 页面。",
     "description": "Update onboarding guide content"
+  },
+  "settingsViewGettingStarted": {
+    "message": "快速入门",
+    "description": "Settings page link to the first-time install onboarding page"
+  },
+  "settingsViewWhatsNew": {
+    "message": "1.3.0 新功能",
+    "description": "Settings page link to the What's New update page"
   }
 }

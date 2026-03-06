@@ -62,6 +62,11 @@ function parseDurationInputs(hoursRaw, minutesRaw, secondsRaw) {
     };
 }
 
+function openOnboardingTab(mode) {
+    const url = chrome.runtime.getURL(`onboarding.html?mode=${mode}`);
+    chrome.tabs.create({ url, active: true });
+}
+
 function TimerCard(props) {
     const { timer, onControl, onActionChange } = props;
     const remaining = getRemainingSeconds(timer);
@@ -438,6 +443,18 @@ function PopupApp() {
                 "div",
                 { className: "settings-info-box" },
                 h("span", null, getLocalizedMessage("notifyOnlyHint"))
+            ),
+            h(
+                "div",
+                { className: "settings-item settings-link-row" },
+                h("span", { className: "settings-toggle-label" }, getLocalizedMessage("settingsViewGettingStarted")),
+                h("button", { className: "settings-open-btn", onClick: () => openOnboardingTab("install") }, "›")
+            ),
+            h(
+                "div",
+                { className: "settings-item settings-link-row" },
+                h("span", { className: "settings-toggle-label" }, getLocalizedMessage("settingsViewWhatsNew")),
+                h("button", { className: "settings-open-btn", onClick: () => openOnboardingTab("update") }, "›")
             )
         )
     );

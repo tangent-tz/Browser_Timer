@@ -364,5 +364,13 @@
   "updateGuideTip4": {
     "message": "Si vous testez avec ?locale=xx, l'override ne s'applique qu'aux pages onboarding.",
     "description": "Update onboarding guide content"
+  },
+  "settingsViewGettingStarted": {
+    "message": "Premiers pas",
+    "description": "Settings page link to the first-time install onboarding page"
+  },
+  "settingsViewWhatsNew": {
+    "message": "Nouveautes dans la 1.3.0",
+    "description": "Settings page link to the What's New update page"
   }
 }
