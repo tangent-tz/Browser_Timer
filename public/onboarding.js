@@ -53,7 +53,13 @@ function renderIntro(mode) {
         titleNode.textContent = getLocalizedMessage("onboardingUpdateTitle");
         subtitleNode.textContent = getLocalizedMessage("onboardingUpdateSubtitle");
         whatsNewHeading.textContent = getLocalizedMessage("whatsNew130Heading");
-        const items = ["whatsNew130Item1", "whatsNew130Item2", "whatsNew130Item3"];
+        const items = [
+            "whatsNew130Item1",
+            "whatsNew130Item2",
+            "whatsNew130Item3",
+            "whatsNew130Item4",
+            "whatsNew130Item5"
+        ];
         items.forEach((key) => {
             const itemText = getLocalizedMessage(key);
             if (!itemText) {

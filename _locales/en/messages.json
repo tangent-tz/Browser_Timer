@@ -182,7 +182,7 @@
     "description": "Heading shown on update page for version 1.3.0"
   },
   "onboardingUpdateSubtitle": {
-    "message": "Thanks for updating. Here are the biggest improvements included in version 1.3.0.",
+    "message": "Version 1.3.0 includes timer input guardrails, clearer completion-action behavior, and new onboarding/update pages.",
     "description": "Subtitle shown on update page for version 1.3.0"
   },
   "whatsNew130Heading": {
@@ -190,16 +190,24 @@
     "description": "Section heading for version 1.3.0 highlights"
   },
   "whatsNew130Item1": {
-    "message": "New first-install onboarding page with quick-start guidance.",
+    "message": "Timer input guardrails now clamp hours to 0..999 and minutes/seconds to 0..59.",
     "description": "First 1.3.0 highlight"
   },
   "whatsNew130Item2": {
-    "message": "New one-time update page shown when upgrading into 1.3.0.",
+    "message": "Starting a timer with 00:00:00 now shows a localized inline validation error.",
     "description": "Second 1.3.0 highlight"
   },
   "whatsNew130Item3": {
-    "message": "Developer extension recommendations are now available from onboarding.",
+    "message": "\"Notify me only\" behavior is clarified, and onboarding now includes developer extension recommendations.",
     "description": "Third 1.3.0 highlight"
+  },
+  "whatsNew130Item4": {
+    "message": "New install onboarding and one-time 1.3.0 update page are now live.",
+    "description": "Fourth 1.3.0 highlight"
+  },
+  "whatsNew130Item5": {
+    "message": "No new permissions are required, and existing workflows continue as before.",
+    "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {
     "message": "More extensions from this developer",

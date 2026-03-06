@@ -182,7 +182,7 @@
     "description": "Heading shown on update page for version 1.3.0"
   },
   "onboardingUpdateSubtitle": {
-    "message": "Merci pour la mise à jour. Voici les améliorations principales incluses dans la version 1.3.0.",
+    "message": "La version 1.3.0 inclut des garde-fous de saisie du temps, un comportement de fin plus clair et de nouvelles pages d'accueil/mise a jour.",
     "description": "Subtitle shown on update page for version 1.3.0"
   },
   "whatsNew130Heading": {
@@ -190,16 +190,24 @@
     "description": "Section heading for version 1.3.0 highlights"
   },
   "whatsNew130Item1": {
-    "message": "Nouvelle page d'accueil à la première installation avec guide de démarrage rapide.",
+    "message": "La saisie du temps limite maintenant les heures a 0..999 et les minutes/secondes a 0..59.",
     "description": "First 1.3.0 highlight"
   },
   "whatsNew130Item2": {
-    "message": "Nouvelle page de mise à jour affichée une seule fois lors du passage à la version 1.3.0.",
+    "message": "Un demarrage avec 00:00:00 affiche maintenant une erreur de validation localisee en ligne.",
     "description": "Second 1.3.0 highlight"
   },
   "whatsNew130Item3": {
-    "message": "Des recommandations d'autres extensions du développeur sont désormais disponibles dans l'accueil.",
+    "message": "Le comportement de \"Me notifier uniquement\" est clarifie et l'accueil inclut maintenant des recommandations d'autres extensions du developpeur.",
     "description": "Third 1.3.0 highlight"
+  },
+  "whatsNew130Item4": {
+    "message": "La page d'accueil a l'installation et la page de mise a jour unique pour 1.3.0 sont desormais disponibles.",
+    "description": "Fourth 1.3.0 highlight"
+  },
+  "whatsNew130Item5": {
+    "message": "Aucune nouvelle permission n'est requise et les flux existants restent inchanges.",
+    "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {
     "message": "Autres extensions de ce développeur",

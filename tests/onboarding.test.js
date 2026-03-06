@@ -108,7 +108,7 @@ describe("Onboarding page rendering", () => {
 
         expect(document.getElementById("onboardingTitle").textContent).toBe("What's New in 1.3.0");
         expect(document.getElementById("whatsNewSection").hidden).toBe(false);
-        expect(document.querySelectorAll("#whatsNewList li").length).toBe(3);
+        expect(document.querySelectorAll("#whatsNewList li").length).toBe(5);
     });
 
     test("shows localized fallback when promo config loading fails", async () => {

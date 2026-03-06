@@ -106,6 +106,8 @@ function createI18nMock() {
         whatsNew130Item1: "New install onboarding page with quick-start guidance.",
         whatsNew130Item2: "New one-time update page for users upgrading into 1.3.0.",
         whatsNew130Item3: "Developer extension recommendations are now available in onboarding.",
+        whatsNew130Item4: "New install onboarding and one-time 1.3.0 update page are now live.",
+        whatsNew130Item5: "No new permissions are required, and existing workflows continue as before.",
         promoSectionTitle: "More extensions from this developer",
         promoSectionSubtitle: "Discover other tools you may want to install.",
         promoOpenChromeStore: "Open in Chrome Web Store",

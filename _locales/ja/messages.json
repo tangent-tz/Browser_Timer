@@ -182,7 +182,7 @@
     "description": "Heading shown on update page for version 1.3.0"
   },
   "onboardingUpdateSubtitle": {
-    "message": "アップデートありがとうございます。バージョン 1.3.0 の主な改善点をご紹介します。",
+    "message": "1.3.0 では時間入力のガード、完了アクションの挙動明確化、そして新しいオンボーディング/更新ページを追加しました。",
     "description": "Subtitle shown on update page for version 1.3.0"
   },
   "whatsNew130Heading": {
@@ -190,16 +190,24 @@
     "description": "Section heading for version 1.3.0 highlights"
   },
   "whatsNew130Item1": {
-    "message": "初回インストール時にクイックスタート付きの新しいオンボーディングページを追加。",
+    "message": "時間入力は、時間を 0..999、分と秒を 0..59 に自動補正します。",
     "description": "First 1.3.0 highlight"
   },
   "whatsNew130Item2": {
-    "message": "1.3.0 へ更新した際に一度だけ表示される更新ページを追加。",
+    "message": "00:00:00 で開始しようとすると、ローカライズされたインライン検証エラーを表示します。",
     "description": "Second 1.3.0 highlight"
   },
   "whatsNew130Item3": {
-    "message": "オンボーディングから開発者の他の拡張機能を確認できるようになりました。",
+    "message": "「通知のみ」の挙動を明確化し、オンボーディングで開発者の他の拡張機能を紹介します。",
     "description": "Third 1.3.0 highlight"
+  },
+  "whatsNew130Item4": {
+    "message": "初回インストール向けオンボーディングと、1.3.0 向けの一度きり更新ページを追加しました。",
+    "description": "Fourth 1.3.0 highlight"
+  },
+  "whatsNew130Item5": {
+    "message": "新しい権限追加はなく、既存の使い方はこれまで通り利用できます。",
+    "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {
     "message": "この開発者の他の拡張機能",

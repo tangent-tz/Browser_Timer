@@ -182,7 +182,7 @@
     "description": "Heading shown on update page for version 1.3.0"
   },
   "onboardingUpdateSubtitle": {
-    "message": "Gracias por actualizar. Aquí tienes las mejoras más importantes de la versión 1.3.0.",
+    "message": "La version 1.3.0 incluye validaciones de tiempo, comportamiento mas claro de acciones al finalizar y nuevas paginas de bienvenida/actualizacion.",
     "description": "Subtitle shown on update page for version 1.3.0"
   },
   "whatsNew130Heading": {
@@ -190,16 +190,24 @@
     "description": "Section heading for version 1.3.0 highlights"
   },
   "whatsNew130Item1": {
-    "message": "Nueva página de bienvenida en la primera instalación con guía de inicio rápido.",
+    "message": "Las entradas de tiempo ahora limitan horas a 0..999 y minutos/segundos a 0..59.",
     "description": "First 1.3.0 highlight"
   },
   "whatsNew130Item2": {
-    "message": "Nueva página de actualización que se muestra una sola vez al pasar a la versión 1.3.0.",
+    "message": "Iniciar con 00:00:00 ahora muestra un error de validacion localizado en linea.",
     "description": "Second 1.3.0 highlight"
   },
   "whatsNew130Item3": {
-    "message": "Ahora puedes descubrir otras extensiones del desarrollador desde la página de bienvenida.",
+    "message": "Se aclaro el comportamiento de \"Solo notificarme\" y la bienvenida ahora incluye recomendaciones de otras extensiones del desarrollador.",
     "description": "Third 1.3.0 highlight"
+  },
+  "whatsNew130Item4": {
+    "message": "Ya estan disponibles la bienvenida de instalacion y la pagina unica de actualizacion para 1.3.0.",
+    "description": "Fourth 1.3.0 highlight"
+  },
+  "whatsNew130Item5": {
+    "message": "No se requieren permisos nuevos y los flujos existentes siguen funcionando como antes.",
+    "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {
     "message": "Más extensiones de este desarrollador",

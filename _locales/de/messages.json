@@ -182,7 +182,7 @@
     "description": "Heading shown on update page for version 1.3.0"
   },
   "onboardingUpdateSubtitle": {
-    "message": "Danke für das Update. Hier sind die wichtigsten Verbesserungen in Version 1.3.0.",
+    "message": "Version 1.3.0 enthaelt Eingabeschranken fuer Zeiten, klareres Abschlussverhalten und neue Onboarding/Update-Seiten.",
     "description": "Subtitle shown on update page for version 1.3.0"
   },
   "whatsNew130Heading": {
@@ -190,16 +190,24 @@
     "description": "Section heading for version 1.3.0 highlights"
   },
   "whatsNew130Item1": {
-    "message": "Neue Onboarding-Seite bei der Erstinstallation mit Schnellstart-Hinweisen.",
+    "message": "Zeiteingaben begrenzen Stunden jetzt auf 0..999 und Minuten/Sekunden auf 0..59.",
     "description": "First 1.3.0 highlight"
   },
   "whatsNew130Item2": {
-    "message": "Neue einmalige Update-Seite beim Wechsel auf Version 1.3.0.",
+    "message": "Beim Start mit 00:00:00 wird jetzt ein lokalisierter Inline-Validierungsfehler angezeigt.",
     "description": "Second 1.3.0 highlight"
   },
   "whatsNew130Item3": {
-    "message": "Empfohlene Erweiterungen dieses Entwicklers sind jetzt im Onboarding verfügbar.",
+    "message": "Das Verhalten von \"Nur benachrichtigen\" wurde praezisiert, und das Onboarding zeigt jetzt weitere Erweiterungen des Entwicklers.",
     "description": "Third 1.3.0 highlight"
+  },
+  "whatsNew130Item4": {
+    "message": "Das Installations-Onboarding und die einmalige Update-Seite fuer 1.3.0 sind jetzt verfuegbar.",
+    "description": "Fourth 1.3.0 highlight"
+  },
+  "whatsNew130Item5": {
+    "message": "Es sind keine neuen Berechtigungen erforderlich, und bestehende Ablaufe bleiben unveraendert.",
+    "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {
     "message": "Weitere Erweiterungen dieses Entwicklers",

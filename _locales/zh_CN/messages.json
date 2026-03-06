@@ -182,7 +182,7 @@
     "description": "Heading shown on update page for version 1.3.0"
   },
   "onboardingUpdateSubtitle": {
-    "message": "感谢更新。以下是 1.3.0 版本中最重要的改进。",
+    "message": "1.3.0 版本新增了时间输入保护、更清晰的完成动作说明，以及新的欢迎/更新页面。",
     "description": "Subtitle shown on update page for version 1.3.0"
   },
   "whatsNew130Heading": {
@@ -190,16 +190,24 @@
     "description": "Section heading for version 1.3.0 highlights"
   },
   "whatsNew130Item1": {
-    "message": "新增首次安装欢迎页面，提供快速上手说明。",
+    "message": "时间输入现在会将小时限制为 0..999，并将分钟/秒限制为 0..59。",
     "description": "First 1.3.0 highlight"
   },
   "whatsNew130Item2": {
-    "message": "新增升级到 1.3.0 时仅展示一次的更新说明页面。",
+    "message": "当使用 00:00:00 启动时，现在会显示本地化的内联校验错误。",
     "description": "Second 1.3.0 highlight"
   },
   "whatsNew130Item3": {
-    "message": "现在可在欢迎页查看该开发者的其他扩展推荐。",
+    "message": "“仅通知我”的行为说明已更清晰，欢迎页也加入了开发者其他扩展推荐。",
     "description": "Third 1.3.0 highlight"
+  },
+  "whatsNew130Item4": {
+    "message": "现已提供首次安装欢迎页，以及仅在升级到 1.3.0 时显示一次的更新页。",
+    "description": "Fourth 1.3.0 highlight"
+  },
+  "whatsNew130Item5": {
+    "message": "无需新增权限，现有使用流程保持不变。",
+    "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {
     "message": "该开发者的更多扩展",
