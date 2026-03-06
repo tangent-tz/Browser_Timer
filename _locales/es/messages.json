@@ -182,7 +182,7 @@
     "description": "Heading shown on update page for version 1.3.0"
   },
   "onboardingUpdateSubtitle": {
-    "message": "La version 1.3.0 incluye validaciones de tiempo, comportamiento mas claro de acciones al finalizar y nuevas paginas de bienvenida/actualizacion.",
+    "message": "La version 1.3.0 mejora el manejo de entrada del temporizador, aclara las acciones al finalizar y agrega nuevas paginas de bienvenida/actualizacion.",
     "description": "Subtitle shown on update page for version 1.3.0"
   },
   "whatsNew130Heading": {
@@ -206,7 +206,7 @@
     "description": "Fourth 1.3.0 highlight"
   },
   "whatsNew130Item5": {
-    "message": "No se requieren permisos nuevos y los flujos existentes siguen funcionando como antes.",
+    "message": "Los campos de horas/minutos/segundos ahora admiten ajuste con rueda del mouse al pasar por encima.",
     "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {

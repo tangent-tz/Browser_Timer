@@ -13,6 +13,8 @@
 
 1. Timer input handling before start:
    - Duration is parsed from the entered hour/minute/second values.
+   - Popup inputs support mouse-wheel increment/decrement while hovered.
+   - Input fields are not capped to `59` minutes/seconds or `999` hours.
 2. `00:00:00` is rejected with a localized inline error message.
 3. `Notify me only` behavior is explicit:
    - Always sends a notification when timer completes.

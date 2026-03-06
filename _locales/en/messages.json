@@ -182,7 +182,7 @@
     "description": "Heading shown on update page for version 1.3.0"
   },
   "onboardingUpdateSubtitle": {
-    "message": "Version 1.3.0 includes timer input guardrails, clearer completion-action behavior, and new onboarding/update pages.",
+    "message": "Version 1.3.0 improves timer input handling, clarifies completion actions, and adds new onboarding/update pages.",
     "description": "Subtitle shown on update page for version 1.3.0"
   },
   "whatsNew130Heading": {
@@ -206,7 +206,7 @@
     "description": "Fourth 1.3.0 highlight"
   },
   "whatsNew130Item5": {
-    "message": "No new permissions are required, and existing workflows continue as before.",
+    "message": "Hours/minutes/seconds inputs now support mouse-wheel adjustment while hovered.",
     "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {

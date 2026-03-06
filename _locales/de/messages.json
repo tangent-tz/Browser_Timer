@@ -182,7 +182,7 @@
     "description": "Heading shown on update page for version 1.3.0"
   },
   "onboardingUpdateSubtitle": {
-    "message": "Version 1.3.0 enthaelt Eingabeschranken fuer Zeiten, klareres Abschlussverhalten und neue Onboarding/Update-Seiten.",
+    "message": "Version 1.3.0 verbessert die Zeiteingabe, klaert Abschlussaktionen und fuegt neue Onboarding/Update-Seiten hinzu.",
     "description": "Subtitle shown on update page for version 1.3.0"
   },
   "whatsNew130Heading": {
@@ -206,7 +206,7 @@
     "description": "Fourth 1.3.0 highlight"
   },
   "whatsNew130Item5": {
-    "message": "Es sind keine neuen Berechtigungen erforderlich, und bestehende Ablaufe bleiben unveraendert.",
+    "message": "Stunden/Minuten/Sekunden koennen jetzt per Mausrad angepasst werden, waehrend der Cursor ueber dem Feld ist.",
     "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {

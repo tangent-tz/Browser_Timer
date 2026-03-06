@@ -50,6 +50,8 @@ You can also download the latest compiled version (ZIP file) from the release ta
    - Click the Auto Tab Timer icon in your browser toolbar to open the popup.
    - In the **Timer** tab, input your desired hours, minutes, and seconds.
    - Use whole-number values for hours, minutes, and seconds.
+   - You can adjust values with input steppers or the mouse wheel while hovering each input.
+   - Inputs are no longer capped at `59` for minutes/seconds or `999` for hours.
    - A timer value of `00:00:00` is rejected with an inline validation message.
    - Click **Start Timer** to begin the countdown for the active tab.
    - The active timer will appear in the list, where you can pause, resume, reset, or cancel it.

@@ -182,7 +182,7 @@
     "description": "Heading shown on update page for version 1.3.0"
   },
   "onboardingUpdateSubtitle": {
-    "message": "La version 1.3.0 inclut des garde-fous de saisie du temps, un comportement de fin plus clair et de nouvelles pages d'accueil/mise a jour.",
+    "message": "La version 1.3.0 ameliore la saisie du minuteur, clarifie les actions de fin et ajoute de nouvelles pages d'accueil/mise a jour.",
     "description": "Subtitle shown on update page for version 1.3.0"
   },
   "whatsNew130Heading": {
@@ -206,7 +206,7 @@
     "description": "Fourth 1.3.0 highlight"
   },
   "whatsNew130Item5": {
-    "message": "Aucune nouvelle permission n'est requise et les flux existants restent inchanges.",
+    "message": "Les champs heures/minutes/secondes prennent maintenant en charge l'ajustement avec la molette de la souris au survol.",
     "description": "Fifth 1.3.0 highlight"
   },
   "promoSectionTitle": {
