@@ -256,5 +256,61 @@
   "promoExt3Description": {
     "message": "TODO: Substituir pelo título e descrição finais antes da publicação.",
     "description": "Placeholder description for third promoted extension"
+  },
+  "installGuideHeading": {
+    "message": "Quick Start for First-Time Installers",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideIntro": {
+    "message": "Follow these steps to set up your first timer and understand key controls.",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideStep1": {
+    "message": "Pin Auto Tab Timer to your toolbar so it is always one click away.",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideStep2": {
+    "message": "Open the tab you want to manage, then open the extension popup.",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideStep3": {
+    "message": "Enter hours, minutes, and seconds, then click Start Timer.",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideStep4": {
+    "message": "Choose completion action: Close tab or Notify me only.",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideStep5": {
+    "message": "Use Pause, Resume, Reset, or Cancel from the active timer card as needed.",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideStep6": {
+    "message": "Open Settings to choose your default completion action and notification behavior.",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideTipsHeading": {
+    "message": "Practical Tips",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideTip1": {
+    "message": "00:00:00 is invalid. The extension shows an inline error and prevents start.",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideTip2": {
+    "message": "Minutes and seconds are normalized to 0..59, and hours are normalized to 0..999.",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideTip3": {
+    "message": "Notify me only always sends a notification and keeps the tab open.",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuideTip4": {
+    "message": "Close tab action can send notifications based on your notification toggle.",
+    "description": "First-install onboarding quick-start content"
+  },
+  "installGuidePrivacy": {
+    "message": "No account is required. Settings and timer state are stored in your browser extension storage.",
+    "description": "First-install onboarding quick-start content"
   }
 }

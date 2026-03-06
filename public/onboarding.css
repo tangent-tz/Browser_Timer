@@ -59,6 +59,34 @@ body {
     color: #444444;
 }
 
+/* ── install guide ──────────────────────── */
+
+.guide-list,
+.guide-tips {
+    margin: 0;
+    padding-left: 20px;
+    color: #1a1a1a;
+}
+
+.guide-list li,
+.guide-tips li {
+    margin-bottom: 6px;
+}
+
+.guide-subheading {
+    margin: 12px 0 8px;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #505050;
+}
+
+.guide-note {
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: #555555;
+}
+
 /* ── what's new list ────────────────────── */
 
 .whats-new-list {
@@ -161,6 +189,16 @@ body {
     }
 
     .panel p {
+        color: #888888;
+    }
+
+    .guide-list,
+    .guide-tips {
+        color: #d4d4d4;
+    }
+
+    .guide-subheading,
+    .guide-note {
         color: #888888;
     }
 

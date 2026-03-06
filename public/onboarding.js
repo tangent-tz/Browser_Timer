@@ -78,6 +78,69 @@ function renderIntro(mode) {
     whatsNewSection.hidden = true;
 }
 
+function renderInstallGuide(mode) {
+    const section = document.getElementById("installGuideSection");
+    const heading = document.getElementById("installGuideHeading");
+    const intro = document.getElementById("installGuideIntro");
+    const stepsList = document.getElementById("installGuideSteps");
+    const tipsHeading = document.getElementById("installGuideTipsHeading");
+    const tipsList = document.getElementById("installGuideTips");
+    const privacy = document.getElementById("installGuidePrivacy");
+
+    if (!section || !heading || !intro || !stepsList || !tipsHeading || !tipsList || !privacy) {
+        return;
+    }
+
+    stepsList.innerHTML = "";
+    tipsList.innerHTML = "";
+
+    if (mode === "update") {
+        section.hidden = true;
+        return;
+    }
+
+    heading.textContent = getLocalizedMessage("installGuideHeading");
+    intro.textContent = getLocalizedMessage("installGuideIntro");
+
+    const stepKeys = [
+        "installGuideStep1",
+        "installGuideStep2",
+        "installGuideStep3",
+        "installGuideStep4",
+        "installGuideStep5",
+        "installGuideStep6"
+    ];
+    stepKeys.forEach((key) => {
+        const text = getLocalizedMessage(key);
+        if (!text) {
+            return;
+        }
+        const li = document.createElement("li");
+        li.textContent = text;
+        stepsList.appendChild(li);
+    });
+
+    tipsHeading.textContent = getLocalizedMessage("installGuideTipsHeading");
+    const tipKeys = [
+        "installGuideTip1",
+        "installGuideTip2",
+        "installGuideTip3",
+        "installGuideTip4"
+    ];
+    tipKeys.forEach((key) => {
+        const text = getLocalizedMessage(key);
+        if (!text) {
+            return;
+        }
+        const li = document.createElement("li");
+        li.textContent = text;
+        tipsList.appendChild(li);
+    });
+
+    privacy.textContent = getLocalizedMessage("installGuidePrivacy");
+    section.hidden = false;
+}
+
 function renderPromoFallback(config) {
     const fallback = document.getElementById("promoFallback");
     const fallbackText = document.getElementById("promoUnavailableFallback");
@@ -176,9 +239,11 @@ async function loadPromoConfig(fetchImpl) {
 async function initOnboardingPage(options) {
     const runtimeOptions = options || {};
     const search = runtimeOptions.search || (typeof window !== "undefined" ? window.location.search : "");
+    const mode = getModeFromSearch(search);
     const fetchImpl = runtimeOptions.fetchImpl || (typeof fetch === "function" ? fetch.bind(window) : null);
 
-    renderIntro(getModeFromSearch(search));
+    renderIntro(mode);
+    renderInstallGuide(mode);
 
     if (!fetchImpl) {
         renderPromoFallback(null);

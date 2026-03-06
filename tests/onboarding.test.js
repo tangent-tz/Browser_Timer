@@ -14,6 +14,14 @@ function mountOnboardingDom() {
                 <h2 id="whatsNewHeading"></h2>
                 <ul id="whatsNewList"></ul>
             </section>
+            <section id="installGuideSection" hidden>
+                <h2 id="installGuideHeading"></h2>
+                <p id="installGuideIntro"></p>
+                <ol id="installGuideSteps"></ol>
+                <h3 id="installGuideTipsHeading"></h3>
+                <ul id="installGuideTips"></ul>
+                <p id="installGuidePrivacy"></p>
+            </section>
             <section>
                 <h2 id="promoSectionTitle"></h2>
                 <p id="promoSectionSubtitle"></p>
@@ -87,6 +95,9 @@ describe("Onboarding page rendering", () => {
 
         expect(document.getElementById("onboardingTitle").textContent).toBe("Welcome to Auto Tab Timer");
         expect(document.getElementById("whatsNewSection").hidden).toBe(true);
+        expect(document.getElementById("installGuideSection").hidden).toBe(false);
+        expect(document.querySelectorAll("#installGuideSteps li").length).toBe(6);
+        expect(document.querySelectorAll("#installGuideTips li").length).toBe(4);
         expect(document.querySelectorAll(".promo-card").length).toBe(1);
         expect(document.getElementById("promoFallback").hidden).toBe(true);
     });
@@ -108,6 +119,7 @@ describe("Onboarding page rendering", () => {
 
         expect(document.getElementById("onboardingTitle").textContent).toBe("What's New in 1.3.0");
         expect(document.getElementById("whatsNewSection").hidden).toBe(false);
+        expect(document.getElementById("installGuideSection").hidden).toBe(true);
         expect(document.querySelectorAll("#whatsNewList li").length).toBe(5);
     });
 
