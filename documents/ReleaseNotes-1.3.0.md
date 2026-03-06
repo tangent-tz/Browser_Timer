@@ -1,4 +1,4 @@
-# Release Notes - 1.2.x
+# Release Notes - 1.3.0
 
 ## Highlights
 
