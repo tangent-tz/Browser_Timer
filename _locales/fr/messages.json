@@ -312,5 +312,57 @@
   "installGuidePrivacy": {
     "message": "Aucun compte n’est requis. Les paramètres et l’état du minuteur sont stockés dans l’espace de stockage de l’extension du navigateur.",
     "description": "First-install onboarding quick-start content"
+  },
+  "updateGuideHeading": {
+    "message": "Comment utiliser les nouveautes de la version 1.3.0",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideIntro": {
+    "message": "Ce guide rapide explique comment appliquer les changements 1.3.0 dans votre usage quotidien.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep1": {
+    "message": "Saisissez la duree comme d'habitude. Les heures sont normalisees a 0..999, les minutes/secondes a 0..59.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep2": {
+    "message": "Si le total vaut 00:00:00, une erreur en ligne apparait maintenant. Entrez une duree valide puis redemarrez.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep3": {
+    "message": "Definissez l'action de fin sur chaque minuterie ou configurez une action par defaut dans Parametres.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep4": {
+    "message": "Utilisez Me notifier uniquement si vous voulez un rappel sans fermer l'onglet.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep5": {
+    "message": "Utilisez Fermer l'onglet si vous voulez un nettoyage automatique a la fin du compte a rebours.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep6": {
+    "message": "Pause, Reprendre, Reinitialiser et Annuler fonctionnent comme avant sur les minuteurs actifs.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTipsHeading": {
+    "message": "Conseils de mise a jour",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip1": {
+    "message": "Me notifier uniquement envoie toujours une notification et ne ferme jamais l'onglet.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip2": {
+    "message": "Fermer l'onglet respecte toujours votre interrupteur de notifications.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip3": {
+    "message": "Aucune migration de donnees n'est necessaire pour 1.3.0.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip4": {
+    "message": "Si vous testez avec ?locale=xx, l'override ne s'applique qu'aux pages onboarding.",
+    "description": "Update onboarding guide content"
   }
 }

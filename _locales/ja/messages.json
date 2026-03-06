@@ -312,5 +312,57 @@
   "installGuidePrivacy": {
     "message": "アカウントは不要です。設定とタイマーの状態は、ブラウザーの拡張機能ストレージに保存されます。",
     "description": "First-install onboarding quick-start content"
+  },
+  "updateGuideHeading": {
+    "message": "1.3.0 の新機能の使い方",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideIntro": {
+    "message": "このガイドでは、1.3.0 の変更点を日常の操作でどう使うかを説明します。",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep1": {
+    "message": "時間入力はこれまで通りです。時間は 0..999、分/秒は 0..59 に自動補正されます。",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep2": {
+    "message": "合計が 00:00:00 の場合、インラインエラーが表示されます。有効な時間を入力して再度開始してください。",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep3": {
+    "message": "完了時アクションはタイマーカードごとに設定するか、設定で既定値を指定できます。",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep4": {
+    "message": "タブを閉じずに通知だけ受けたい場合は 通知のみ を使います。",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep5": {
+    "message": "カウントダウン終了時に自動で整理したい場合は タブを閉じる を使います。",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep6": {
+    "message": "一時停止、再開、リセット、キャンセルは、これまで通りアクティブなタイマーで利用できます。",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTipsHeading": {
+    "message": "アップデートのヒント",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip1": {
+    "message": "通知のみ は常に通知を送り、タブは閉じません。",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip2": {
+    "message": "タブを閉じる は引き続き通知トグル設定に従います。",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip3": {
+    "message": "1.3.0 ではデータ移行は不要です。",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip4": {
+    "message": "?locale=xx での確認時、上書きは onboarding ページのみで有効です。",
+    "description": "Update onboarding guide content"
   }
 }

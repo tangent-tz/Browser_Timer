@@ -312,5 +312,57 @@
   "installGuidePrivacy": {
     "message": "No account is required. Settings and timer state are stored in your browser extension storage.",
     "description": "First-install onboarding quick-start content"
+  },
+  "updateGuideHeading": {
+    "message": "How to Use What's New in 1.3.0",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideIntro": {
+    "message": "Use this quick guide to apply the 1.3.0 changes in your normal timer workflow.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep1": {
+    "message": "Enter timer values as usual. Hours are normalized to 0..999, and minutes/seconds to 0..59.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep2": {
+    "message": "If the total time is 00:00:00, you will now see an inline error. Enter a valid duration, then start again.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep3": {
+    "message": "Set the completion action directly on each timer card, or set your default action in Settings.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep4": {
+    "message": "Use Notify me only when you want a reminder but need the tab to stay open.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep5": {
+    "message": "Use Close tab when you want the tab cleaned up automatically after countdown ends.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep6": {
+    "message": "Manage running timers with Pause, Resume, Reset, and Cancel exactly as before.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTipsHeading": {
+    "message": "Update Tips",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip1": {
+    "message": "Notify me only always sends a notification and never closes the tab.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip2": {
+    "message": "Close tab behavior still follows your notification toggle.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip3": {
+    "message": "No data migration is required for 1.3.0.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip4": {
+    "message": "If you test locales with ?locale=xx, the override affects onboarding pages only.",
+    "description": "Update onboarding guide content"
   }
 }

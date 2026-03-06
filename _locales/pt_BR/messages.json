@@ -312,5 +312,57 @@
   "installGuidePrivacy": {
     "message": "Nenhuma conta é necessária. As configurações e o estado do timer são armazenados no armazenamento da extensão no navegador.",
     "description": "First-install onboarding quick-start content"
+  },
+  "updateGuideHeading": {
+    "message": "Como usar as novidades da versao 1.3.0",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideIntro": {
+    "message": "Use este guia rapido para aplicar as mudancas da versao 1.3.0 no seu fluxo diario.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep1": {
+    "message": "Digite o tempo como de costume. Horas sao normalizadas para 0..999 e minutos/segundos para 0..59.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep2": {
+    "message": "Se o total for 00:00:00, agora aparece um erro em linha. Digite uma duracao valida e inicie novamente.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep3": {
+    "message": "Defina a acao de conclusao em cada timer ou configure uma acao padrao em Configuracoes.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep4": {
+    "message": "Use Apenas me notificar quando quiser um lembrete sem fechar a aba.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep5": {
+    "message": "Use Fechar aba quando quiser limpeza automatica ao fim da contagem regressiva.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep6": {
+    "message": "Pausar, Retomar, Reiniciar e Cancelar continuam funcionando como antes nos timers ativos.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTipsHeading": {
+    "message": "Dicas da atualizacao",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip1": {
+    "message": "Apenas me notificar sempre envia notificacao e nunca fecha a aba.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip2": {
+    "message": "Fechar aba continua respeitando seu botao de notificacoes.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip3": {
+    "message": "A versao 1.3.0 nao exige migracao de dados.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip4": {
+    "message": "Se testar com ?locale=xx, o override afeta somente as paginas de onboarding.",
+    "description": "Update onboarding guide content"
   }
 }

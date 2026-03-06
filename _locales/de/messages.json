@@ -312,5 +312,57 @@
   "installGuidePrivacy": {
     "message": "Es ist kein Konto erforderlich. Einstellungen und Timerstatus werden im Erweiterungsspeicher Ihres Browsers gespeichert.",
     "description": "First-install onboarding quick-start content"
+  },
+  "updateGuideHeading": {
+    "message": "So nutzen Sie die Neuigkeiten in Version 1.3.0",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideIntro": {
+    "message": "Diese Kurzanleitung zeigt, wie Sie die Änderungen aus 1.3.0 im Alltag nutzen.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep1": {
+    "message": "Geben Sie Zeiten wie gewohnt ein. Stunden werden auf 0..999, Minuten/Sekunden auf 0..59 normalisiert.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep2": {
+    "message": "Bei 00:00:00 erscheint jetzt ein Inline-Fehler. Geben Sie eine gueltige Dauer ein und starten Sie erneut.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep3": {
+    "message": "Legen Sie die Abschlussaktion pro Timer-Karte fest oder definieren Sie eine Standardaktion in den Einstellungen.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep4": {
+    "message": "Verwenden Sie Nur benachrichtigen, wenn der Tab offen bleiben soll und nur eine Erinnerung noetig ist.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep5": {
+    "message": "Verwenden Sie Tab schliessen, wenn der Tab nach Ablauf automatisch bereinigt werden soll.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideStep6": {
+    "message": "Pausieren, Fortsetzen, Zuruecksetzen und Abbrechen funktionieren bei aktiven Timern unveraendert.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTipsHeading": {
+    "message": "Update-Hinweise",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip1": {
+    "message": "Nur benachrichtigen sendet immer eine Meldung und schliesst den Tab nie.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip2": {
+    "message": "Tab schliessen folgt weiterhin Ihrem Benachrichtigungsschalter.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip3": {
+    "message": "Fuer Version 1.3.0 ist keine Datenmigration erforderlich.",
+    "description": "Update onboarding guide content"
+  },
+  "updateGuideTip4": {
+    "message": "Bei Tests mit ?locale=xx gilt der Override nur fuer Onboarding-Seiten.",
+    "description": "Update onboarding guide content"
   }
 }

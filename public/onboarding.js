@@ -110,6 +110,7 @@ function renderIntro(mode) {
     }
 
     if (mode === "update") {
+        whatsNewList.innerHTML = "";
         titleNode.textContent = getLocalizedMessage("onboardingUpdateTitle");
         subtitleNode.textContent = getLocalizedMessage("onboardingUpdateSubtitle");
         whatsNewHeading.textContent = getLocalizedMessage("whatsNew130Heading");
@@ -198,6 +199,67 @@ function renderInstallGuide(mode) {
     });
 
     privacy.textContent = getLocalizedMessage("installGuidePrivacy");
+    section.hidden = false;
+}
+
+function renderUpdateGuide(mode) {
+    const section = document.getElementById("updateGuideSection");
+    const heading = document.getElementById("updateGuideHeading");
+    const intro = document.getElementById("updateGuideIntro");
+    const stepsList = document.getElementById("updateGuideSteps");
+    const tipsHeading = document.getElementById("updateGuideTipsHeading");
+    const tipsList = document.getElementById("updateGuideTips");
+
+    if (!section || !heading || !intro || !stepsList || !tipsHeading || !tipsList) {
+        return;
+    }
+
+    stepsList.innerHTML = "";
+    tipsList.innerHTML = "";
+
+    if (mode !== "update") {
+        section.hidden = true;
+        return;
+    }
+
+    heading.textContent = getLocalizedMessage("updateGuideHeading");
+    intro.textContent = getLocalizedMessage("updateGuideIntro");
+
+    const stepKeys = [
+        "updateGuideStep1",
+        "updateGuideStep2",
+        "updateGuideStep3",
+        "updateGuideStep4",
+        "updateGuideStep5",
+        "updateGuideStep6"
+    ];
+    stepKeys.forEach((key) => {
+        const text = getLocalizedMessage(key);
+        if (!text) {
+            return;
+        }
+        const li = document.createElement("li");
+        li.textContent = text;
+        stepsList.appendChild(li);
+    });
+
+    tipsHeading.textContent = getLocalizedMessage("updateGuideTipsHeading");
+    const tipKeys = [
+        "updateGuideTip1",
+        "updateGuideTip2",
+        "updateGuideTip3",
+        "updateGuideTip4"
+    ];
+    tipKeys.forEach((key) => {
+        const text = getLocalizedMessage(key);
+        if (!text) {
+            return;
+        }
+        const li = document.createElement("li");
+        li.textContent = text;
+        tipsList.appendChild(li);
+    });
+
     section.hidden = false;
 }
 
@@ -332,6 +394,7 @@ async function initOnboardingPage(options) {
 
     renderIntro(mode);
     renderInstallGuide(mode);
+    renderUpdateGuide(mode);
 
     if (!fetchImpl) {
         renderPromoFallback(null);
