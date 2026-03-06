@@ -5,7 +5,35 @@ function getChromeApi() {
     return null;
 }
 
+const SUPPORTED_DEBUG_LOCALES = new Set([
+    "en",
+    "es",
+    "de",
+    "fr",
+    "ja",
+    "pt_BR",
+    "zh_CN"
+]);
+
+let localeOverrideMessages = null;
+
+function applySubstitutions(message, substitutions) {
+    if (!message || substitutions === undefined || substitutions === null) {
+        return message || "";
+    }
+
+    const values = Array.isArray(substitutions) ? substitutions : [substitutions];
+    return values.reduce((result, value, index) => {
+        const pattern = new RegExp(`\\$${index + 1}\\$`, "g");
+        return result.replace(pattern, String(value));
+    }, message);
+}
+
 function getLocalizedMessage(key, substitutions) {
+    if (localeOverrideMessages && localeOverrideMessages[key] && typeof localeOverrideMessages[key].message === "string") {
+        return applySubstitutions(localeOverrideMessages[key].message, substitutions);
+    }
+
     const chromeApi = getChromeApi();
     if (!chromeApi || !chromeApi.i18n || typeof chromeApi.i18n.getMessage !== "function") {
         return "";
@@ -17,6 +45,38 @@ function getLocalizedMessage(key, substitutions) {
 function getModeFromSearch(search) {
     const query = new URLSearchParams(search || "");
     return query.get("mode") === "update" ? "update" : "install";
+}
+
+function normalizeLocaleOverride(rawLocale) {
+    if (!rawLocale || typeof rawLocale !== "string") {
+        return null;
+    }
+
+    const normalized = rawLocale.trim().replace(/-/g, "_");
+    if (!normalized) {
+        return null;
+    }
+
+    const lowerCaseLocale = normalized.toLowerCase();
+    if (lowerCaseLocale === "pt_br") {
+        return "pt_BR";
+    }
+    if (lowerCaseLocale === "zh_cn") {
+        return "zh_CN";
+    }
+    if (SUPPORTED_DEBUG_LOCALES.has(lowerCaseLocale)) {
+        return lowerCaseLocale;
+    }
+    if (SUPPORTED_DEBUG_LOCALES.has(normalized)) {
+        return normalized;
+    }
+
+    return null;
+}
+
+function getLocaleOverrideFromSearch(search) {
+    const query = new URLSearchParams(search || "");
+    return normalizeLocaleOverride(query.get("locale"));
 }
 
 function isValidPromotionEntry(entry) {
@@ -236,11 +296,39 @@ async function loadPromoConfig(fetchImpl) {
     return response.json();
 }
 
+async function loadLocaleOverride(fetchImpl, locale) {
+    if (!fetchImpl || !locale) {
+        return null;
+    }
+
+    const chromeApi = getChromeApi();
+    const localeUrl = chromeApi && chromeApi.runtime && typeof chromeApi.runtime.getURL === "function"
+        ? chromeApi.runtime.getURL(`_locales/${locale}/messages.json`)
+        : `_locales/${locale}/messages.json`;
+
+    const response = await fetchImpl(localeUrl);
+    if (!response || !response.ok) {
+        throw new Error(`Failed to load locale override: ${locale}`);
+    }
+
+    return response.json();
+}
+
 async function initOnboardingPage(options) {
     const runtimeOptions = options || {};
     const search = runtimeOptions.search || (typeof window !== "undefined" ? window.location.search : "");
     const mode = getModeFromSearch(search);
+    const localeOverride = getLocaleOverrideFromSearch(search);
     const fetchImpl = runtimeOptions.fetchImpl || (typeof fetch === "function" ? fetch.bind(window) : null);
+
+    localeOverrideMessages = null;
+    if (localeOverride && fetchImpl) {
+        try {
+            localeOverrideMessages = await loadLocaleOverride(fetchImpl, localeOverride);
+        } catch (error) {
+            localeOverrideMessages = null;
+        }
+    }
 
     renderIntro(mode);
     renderInstallGuide(mode);
@@ -267,8 +355,10 @@ if (typeof window !== "undefined") {
 if (typeof module !== "undefined") {
     module.exports = {
         getModeFromSearch,
+        getLocaleOverrideFromSearch,
         isValidPromotionEntry,
         loadPromoConfig,
-        initOnboardingPage
+        initOnboardingPage,
+        normalizeLocaleOverride
     };
 }

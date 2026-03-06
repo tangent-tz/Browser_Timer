@@ -1,5 +1,11 @@
 const { createChromeMock } = require("../mocks/chrome");
-const { initOnboardingPage, getModeFromSearch, isValidPromotionEntry } = require("../public/onboarding.js");
+const {
+    initOnboardingPage,
+    getLocaleOverrideFromSearch,
+    getModeFromSearch,
+    isValidPromotionEntry,
+    normalizeLocaleOverride
+} = require("../public/onboarding.js");
 
 global.chrome = createChromeMock();
 
@@ -40,6 +46,20 @@ describe("Onboarding page helpers", () => {
         expect(getModeFromSearch("?mode=update")).toBe("update");
         expect(getModeFromSearch("?mode=install")).toBe("install");
         expect(getModeFromSearch("")).toBe("install");
+    });
+
+    test("should normalize locale override aliases", () => {
+        expect(normalizeLocaleOverride("ja")).toBe("ja");
+        expect(normalizeLocaleOverride("pt-BR")).toBe("pt_BR");
+        expect(normalizeLocaleOverride("pt_BR")).toBe("pt_BR");
+        expect(normalizeLocaleOverride("zh-CN")).toBe("zh_CN");
+        expect(normalizeLocaleOverride("unknown")).toBe(null);
+    });
+
+    test("should parse locale override from query string", () => {
+        expect(getLocaleOverrideFromSearch("?mode=install&locale=ja")).toBe("ja");
+        expect(getLocaleOverrideFromSearch("?locale=pt-BR")).toBe("pt_BR");
+        expect(getLocaleOverrideFromSearch("")).toBe(null);
     });
 
     test("should validate promo entry shape", () => {
@@ -121,6 +141,126 @@ describe("Onboarding page rendering", () => {
         expect(document.getElementById("whatsNewSection").hidden).toBe(false);
         expect(document.getElementById("installGuideSection").hidden).toBe(true);
         expect(document.querySelectorAll("#whatsNewList li").length).toBe(5);
+    });
+
+    test("renders onboarding in locale override without changing browser language", async () => {
+        const fetchImpl = jest.fn(async (url) => {
+            if (url.includes("_locales/ja/messages.json")) {
+                return {
+                    ok: true,
+                    json: async () => ({
+                        onboardingInstallTitle: {
+                            message: "Auto Tab Timer へようこそ"
+                        },
+                        onboardingInstallSubtitle: {
+                            message: "現在のタブにタイマーを設定し、時間切れ時に動作を実行します。"
+                        },
+                        installGuideHeading: {
+                            message: "クイックスタート"
+                        },
+                        installGuideIntro: {
+                            message: "最初のタイマーは数秒で設定できます。"
+                        },
+                        installGuideStep1: {
+                            message: "手順1"
+                        },
+                        installGuideStep2: {
+                            message: "手順2"
+                        },
+                        installGuideStep3: {
+                            message: "手順3"
+                        },
+                        installGuideStep4: {
+                            message: "手順4"
+                        },
+                        installGuideStep5: {
+                            message: "手順5"
+                        },
+                        installGuideStep6: {
+                            message: "手順6"
+                        },
+                        installGuideTipsHeading: {
+                            message: "ヒント"
+                        },
+                        installGuideTip1: {
+                            message: "ヒント1"
+                        },
+                        installGuideTip2: {
+                            message: "ヒント2"
+                        },
+                        installGuideTip3: {
+                            message: "ヒント3"
+                        },
+                        installGuideTip4: {
+                            message: "ヒント4"
+                        },
+                        installGuidePrivacy: {
+                            message: "データはブラウザーに保存されます。"
+                        },
+                        promoSectionTitle: {
+                            message: "このデベロッパーの他の拡張機能"
+                        },
+                        promoSectionSubtitle: {
+                            message: "役立つ追加ツール"
+                        },
+                        promoUnavailableFallback: {
+                            message: "現在おすすめを読み込めません。"
+                        },
+                        promoDeveloperProfileLink: {
+                            message: "すべての拡張機能を見る"
+                        }
+                    })
+                };
+            }
+
+            return {
+                ok: true,
+                json: async () => ({
+                    schemaVersion: 1,
+                    developerProfile: {
+                        chromeUrl: "https://example.com/chrome"
+                    },
+                    extensions: []
+                })
+            };
+        });
+
+        await initOnboardingPage({
+            search: "?mode=install&locale=ja",
+            fetchImpl
+        });
+
+        expect(document.getElementById("onboardingTitle").textContent).toBe("Auto Tab Timer へようこそ");
+        expect(document.getElementById("installGuideHeading").textContent).toBe("クイックスタート");
+        expect(fetchImpl).toHaveBeenCalledWith(expect.stringContaining("_locales/ja/messages.json"));
+    });
+
+    test("falls back to default browser locale when locale override fails", async () => {
+        const fetchImpl = jest.fn(async (url) => {
+            if (url.includes("_locales/zh_CN/messages.json")) {
+                return {
+                    ok: false
+                };
+            }
+
+            return {
+                ok: true,
+                json: async () => ({
+                    schemaVersion: 1,
+                    developerProfile: {
+                        chromeUrl: "https://example.com/chrome"
+                    },
+                    extensions: []
+                })
+            };
+        });
+
+        await initOnboardingPage({
+            search: "?mode=install&locale=zh-CN",
+            fetchImpl
+        });
+
+        expect(document.getElementById("onboardingTitle").textContent).toBe("Welcome to Auto Tab Timer");
     });
 
     test("shows localized fallback when promo config loading fails", async () => {
