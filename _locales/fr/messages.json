@@ -234,11 +234,11 @@
     "description": "Fallback text when promoted extensions config cannot be loaded"
   },
   "promoExt1Title": {
-    "message": "Extension fictive un",
+    "message": "SortIt - Organisateur automatique de telechargements",
     "description": "Placeholder title for first promoted extension"
   },
   "promoExt1Description": {
-    "message": "TODO : Remplacer par le titre et la description définitifs avant publication.",
+    "message": "Trie automatiquement les fichiers telecharges dans des dossiers pour garder vos Telechargements propres.",
     "description": "Placeholder description for first promoted extension"
   },
   "installGuideHeading": {

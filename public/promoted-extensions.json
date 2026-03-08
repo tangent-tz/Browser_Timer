@@ -9,9 +9,8 @@
       "id": "promo-ext-1",
       "titleKey": "promoExt1Title",
       "descriptionKey": "promoExt1Description",
-      "chromeUrl": "https://chromewebstore.google.com/search/tangent-tz",
-      "edgeUrl": "https://microsoftedge.microsoft.com/addons/search/tangent-tz",
-      "iconPath": "icons/icon48.png"
+      "chromeUrl": "https://chromewebstore.google.com/detail/sortit-%E2%80%93-automatic-downlo/hlcecohiabkbkpcbkfgbphhijhobgmhg",
+      "iconPath": "icons/sortit-promo.png"
     }
   ]
 }

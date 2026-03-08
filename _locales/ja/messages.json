@@ -234,11 +234,11 @@
     "description": "Fallback text when promoted extensions config cannot be loaded"
   },
   "promoExt1Title": {
-    "message": "プレースホルダー拡張機能 1",
+    "message": "SortIt - 自動ダウンロード整理",
     "description": "Placeholder title for first promoted extension"
   },
   "promoExt1Description": {
-    "message": "TODO: リリース前に最終的なタイトルと説明に置き換えてください。",
+    "message": "ダウンロードしたファイルを自動でフォルダ分けし、ダウンロードフォルダを整理します。",
     "description": "Placeholder description for first promoted extension"
   },
   "installGuideHeading": {

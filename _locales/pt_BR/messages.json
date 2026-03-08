@@ -234,11 +234,11 @@
     "description": "Fallback text when promoted extensions config cannot be loaded"
   },
   "promoExt1Title": {
-    "message": "Extensão de placeholder um",
+    "message": "SortIt - Organizador automatico de downloads",
     "description": "Placeholder title for first promoted extension"
   },
   "promoExt1Description": {
-    "message": "TODO: Substituir pelo título e descrição finais antes da publicação.",
+    "message": "Organiza automaticamente os arquivos baixados em pastas para manter seus Downloads limpos.",
     "description": "Placeholder description for first promoted extension"
   },
   "installGuideHeading": {

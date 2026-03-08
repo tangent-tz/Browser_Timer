@@ -234,11 +234,11 @@
     "description": "Fallback text when promoted extensions config cannot be loaded"
   },
   "promoExt1Title": {
-    "message": "Platzhalter-Erweiterung Eins",
+    "message": "SortIt - Automatischer Download-Organizer",
     "description": "Placeholder title for first promoted extension"
   },
   "promoExt1Description": {
-    "message": "TODO: Vor der Veröffentlichung durch finalen Titel und Beschreibung ersetzen.",
+    "message": "Sortiert heruntergeladene Dateien automatisch in Ordner, damit Ihr Download-Ordner sauber bleibt.",
     "description": "Placeholder description for first promoted extension"
   },
   "installGuideHeading": {

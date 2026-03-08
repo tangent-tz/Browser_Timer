@@ -234,11 +234,11 @@
     "description": "Fallback text when promoted extensions config cannot be loaded"
   },
   "promoExt1Title": {
-    "message": "占位扩展一",
+    "message": "SortIt - 自动下载整理器",
     "description": "Placeholder title for first promoted extension"
   },
   "promoExt1Description": {
-    "message": "TODO：发布前请替换为最终标题和描述。",
+    "message": "自动将下载文件分类到文件夹，让你的下载目录保持整洁。",
     "description": "Placeholder description for first promoted extension"
   },
   "installGuideHeading": {
