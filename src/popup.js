@@ -202,14 +202,34 @@ function PopupApp() {
         };
     }, []);
 
-    const onDurationInputWheel = (event) => {
-        event.preventDefault();
-        const input = event.currentTarget;
-        const current = parseInputValue(input.value);
-        const delta = event.deltaY < 0 ? 1 : -1;
-        const next = Math.max(0, current + delta);
-        input.value = next.toString();
-    };
+    useEffect(() => {
+        const durationInputIds = ["hoursInput", "minutesInput", "secondsInput"];
+        const attachedListeners = [];
+
+        durationInputIds.forEach((id) => {
+            const input = document.getElementById(id);
+            if (!input) {
+                return;
+            }
+
+            const onWheel = (event) => {
+                event.preventDefault();
+                const current = parseInputValue(input.value);
+                const delta = event.deltaY < 0 ? 1 : -1;
+                const next = Math.max(0, current + delta);
+                input.value = next.toString();
+            };
+
+            input.addEventListener("wheel", onWheel, { passive: false });
+            attachedListeners.push({ input, onWheel });
+        });
+
+        return () => {
+            attachedListeners.forEach(({ input, onWheel }) => {
+                input.removeEventListener("wheel", onWheel);
+            });
+        };
+    }, []);
 
     const startTimer = () => {
         const hoursInput = document.getElementById("hoursInput");
@@ -341,8 +361,7 @@ function PopupApp() {
                         type: "number",
                         id: "hoursInput",
                         defaultValue: "0",
-                        min: "0",
-                        onWheel: onDurationInputWheel
+                        min: "0"
                     })
                 ),
                 h(
@@ -353,8 +372,7 @@ function PopupApp() {
                         type: "number",
                         id: "minutesInput",
                         defaultValue: "0",
-                        min: "0",
-                        onWheel: onDurationInputWheel
+                        min: "0"
                     })
                 ),
                 h(
@@ -365,8 +383,7 @@ function PopupApp() {
                         type: "number",
                         id: "secondsInput",
                         defaultValue: "0",
-                        min: "0",
-                        onWheel: onDurationInputWheel
+                        min: "0"
                     })
                 )
             ),
